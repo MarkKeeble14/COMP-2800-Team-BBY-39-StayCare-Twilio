@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useRef } from "react"
 import axios from "axios"
-import TwilioVideo from "twilio-video"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+
+let TwilioVideo = null;
+if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
+  TwilioVideo = require('twilio-video');
+  console.log(TwilioVideo);
+}
+
 
 
 const StartForm = ({storeToken}) => {
