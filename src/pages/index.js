@@ -50,7 +50,7 @@ const StartForm = ({storeToken}) => {
 
 const Video = ({token}) => {
   const localVidRef = useRef(null)
-  const remoteVidRef = useRef();
+  const remoteVidRef = useRef(null);
 
   useEffect(() => {
       TwilioVideo.connect(token, { video: true, audio: true, name: 'test' }).then(
