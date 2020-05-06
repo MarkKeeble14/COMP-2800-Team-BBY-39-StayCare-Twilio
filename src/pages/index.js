@@ -42,23 +42,38 @@ const StartForm = ({storeToken}) => {
 }
 
 const Video = ({token}) => {
-  const localVidRef = useRef()
-  const remoteVidRef = useRef();
-
-  useEffect(() => {
-      TwilioVideo.connect(token, { video: true, audio: true, name: 'test' }).then(result => {
-          console.log('Successfully joined room');
-          console.log(result);
-      })
-  }, [token])
-
-  return  (
-      <div>
-          <div ref={localVidRef}/>
-          <div ref={remoteVidRef}/>
-      </div>
-  )
-}
+    const localVidRef = useRef(null)
+    const remoteVidRef = useRef();
+  
+    useEffect(() => {
+        TwilioVideo
+        .connect(token, { video: true, audio: true, name: 'test' }).then(
+          room => {
+          // Attach local video
+          TwilioVideo.createLocalVideoTrack().then(track => {
+            localVidRef.current.appendChild(track.attach())
+          })
+          // Attaching the other peoples videos
+          room.participants.forEach(participant => {
+            participant.tracks.forEach(publication => {
+              if (publication.isSubscribed) {
+                const track = publication.track;
+  
+                remoteVidRef.appendChild(track.attach());
+              } 
+            }) 
+          })
+        }
+      )
+    }, [token])
+  
+    return  (
+        <div>
+            <div ref={localVidRef}/>
+            <div ref={remoteVidRef}/>
+        </div>
+    )
+  }
 
 const IndexPage = () => {
   const [token, setToken] = useState(false)
