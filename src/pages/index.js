@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
 import axios from "axios"
-import TwilioVideo from "twilio-video"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -46,6 +45,8 @@ const Video = ({token}) => {
   const remoteVidRef = useRef();
 
   useEffect(() => {
+    const TwilioVideo = import('twilio-video');
+    
       TwilioVideo
       .connect(token, { video: true, audio: true, name: 'test' }).then(
         room => {
