@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react"
 import axios from "axios"
+import TwilioVideo from "twilio-video"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+
 
 const StartForm = ({storeToken}) => {
   const [name, setName] = useState('')
@@ -45,18 +47,16 @@ const Video = ({token}) => {
   const remoteVidRef = useRef();
 
   useEffect(() => {
-    const TwilioVideo = import('twilio-video');
     
-      TwilioVideo
-      .connect(token, { video: true, audio: true, name: 'test' }).then(
+      TwilioVideo.connect(token, { video: true, audio: true, name: 'test' }).then(
         room => {
         // Attach local video
         TwilioVideo.createLocalVideoTrack().then(track => {
           localVidRef.current.appendChild(track.attach())
         })  
 
-        const addParticipant = partcipant => {
-          console.log("New Participant: " + partcipant.identity);
+        const addParticipant = participant => {
+          console.log("New Participant: " + participant.identity);
           participant.tracks.forEach(publication => {
             if (publication.isSubscribed) {
               const track = publication.track;
@@ -64,13 +64,13 @@ const Video = ({token}) => {
               remoteVidRef.appendChild(track.attach());
             } 
           }) 
-          partcipant.on('trackSubscribed', track => {
+          participant.on('trackSubscribed', track => {
             remoteVidRef.appendChild(track.attach());
           })
         }
 
         // Attaching the other peoples videos
-        room.particopants.forEach(addParticipant)
+        room.participants.forEach(addParticipant)
         room.on('participantConnected', addParticipant)
         
         
