@@ -66,11 +66,11 @@ const Video = ({token}) => {
             if (publication.isSubscribed) {
               const track = publication.track;
 
-              remoteVidRef.appendChild(track.attach());
+              remoteVidRef.current.appendChild(track.attach());
             } 
           }) 
           participant.on('trackSubscribed', track => {
-            remoteVidRef.appendChild(track.attach());
+            remoteVidRef.current.appendChild(track.attach());
           })
         }
 
