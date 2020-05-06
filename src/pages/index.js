@@ -42,14 +42,39 @@ const StartForm = ({storeToken}) => {
 }
 
 const Video = ({token}) => {
-  const localVidRef = useRef()
+  const localVidRef = useRef(null)
   const remoteVidRef = useRef();
 
   useEffect(() => {
-      TwilioVideo.connect(token, { video: true, audio: true, name: 'test' }).then(result => {
-          console.log('Successfully joined room');
-          console.log(result);
-      })
+      TwilioVideo
+      .connect(token, { video: true, audio: true, name: 'test' }).then(
+        room => {
+        // Attach local video
+        TwilioVideo.createLocalVideoTrack().then(track => {
+          localVidRef.current.appendChild(track.attach())
+        })  
+
+        const addParticipant = partcipant => {
+          console.log("New Participant: " + partcipant.identity);
+          participant.tracks.forEach(publication => {
+            if (publication.isSubscribed) {
+              const track = publication.track;
+
+              remoteVidRef.appendChild(track.attach());
+            } 
+          }) 
+          partcipant.on('trackSubscribed', track => {
+            remoteVidRef.appendChild(track.attach());
+          })
+        }
+
+        // Attaching the other peoples videos
+        room.particopants.forEach(addParticipant)
+        room.on('participantConnected', addParticipant)
+        
+        
+      }
+    )
   }, [token])
 
   return  (
