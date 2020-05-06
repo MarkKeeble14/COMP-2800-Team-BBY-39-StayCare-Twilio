@@ -47,7 +47,6 @@ const Video = ({token}) => {
   const remoteVidRef = useRef();
 
   useEffect(() => {
-    
       TwilioVideo.connect(token, { video: true, audio: true, name: 'test' }).then(
         room => {
         // Attach local video
@@ -72,8 +71,6 @@ const Video = ({token}) => {
         // Attaching the other peoples videos
         room.participants.forEach(addParticipant)
         room.on('participantConnected', addParticipant)
-        
-        
       }
     )
   }, [token])
