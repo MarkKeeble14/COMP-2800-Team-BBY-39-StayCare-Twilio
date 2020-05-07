@@ -51,7 +51,7 @@ export default class Navbar extends Component {
   render() {
     return (
       <footer
-        className={classnames("w-shadow footer", {
+        className={classnames("footer", {
           "footer--hidden": !this.state.visible
         })}
       >

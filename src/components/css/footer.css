@@ -1,16 +1,20 @@
-footer {
+.footer {
     position: fixed;
     bottom: 0;
 
     height: 7.5vh;
     width: 100%;
 
-    opacity: 0.95;
+    opacity: 1;
     z-index: 300;
     transition: all 0.35s ease-in-out;
     background: rgb(2,0,36);
     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(237,238,31,1) 0%, rgba(255,162,0,1) 100%);
     border: 1px solid black;
+}
+
+.footer--hidden {
+    bottom: -20vh;
 }
 
 footer h1 {
@@ -23,8 +27,4 @@ footer h1 {
     height: 100%;
     padding: 0.5%;
     float: left;
-}
-
-.footer--hidden {
-    bottom: -20vh;
 }

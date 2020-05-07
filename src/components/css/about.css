@@ -1,0 +1,41 @@
+#about-us-container {
+    display: grid;
+    grid-template-columns: auto;
+    padding: 2%;
+
+    border: 1px solid black;
+}
+
+#about-us-container p {
+    font-size: 18px;
+
+    text-align: left;
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+#images-container h1 {
+    padding: 2%;
+    font-size: 32px;
+
+    text-align: center;
+}
+
+@media only screen and (max-width: 800px) {
+    #images-container {
+        display: grid;
+        grid-template-columns: repeat(2, 50%);
+    }
+}
+
+@media only screen and (min-width: 800px) {
+    #images-container {
+        display: grid;
+        grid-template-columns: repeat(4, 25%);
+    }
+}
+
+
+.portrait-container Img {
+    padding: 2%;
+}
