@@ -4,15 +4,15 @@ import axios from "axios"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 
+import "../components/js/firebase_config"
+import "../components/css/main.css"
+
 let TwilioVideo = null;
 if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
   TwilioVideo = require('twilio-video');
-  console.log(TwilioVideo);
 }
 
-
-
-const StartForm = ({storeToken}) => {
+const JoinRoomForm = ({storeToken}) => {
   const [name, setName] = useState('')
   const [room, setRoom] = useState('')
 
@@ -24,6 +24,7 @@ const StartForm = ({storeToken}) => {
         url: 'https://puce-bobcat-5743.twil.io/-token',
         data: {
             identity: name,
+            room: room
         },
     })
 
@@ -35,12 +36,12 @@ const StartForm = ({storeToken}) => {
       <form onSubmit={handleSubmit}>
           <label htmlFor="name">
               DisplayName: <br/>
-              <input type='text' id="name" name="name" value = {name} onChange={e => setName(e.target.value)}/>
+              <input type='text' id="display-name" name="name" value = {name} onChange={e => setName(e.target.value)}/>
           </label>
           <br/>
           <label htmlFor="room">
               Room To Join: <br/>
-              <input type='text' id="room" name="room" value = {room} onChange={e => setRoom(e.target.value)}/>
+              <input type='text' id="room-to-join" name="room" value = {room} onChange={e => setRoom(e.target.value)}/>
           </label>
           <br/>
           <button type="submit">Join Video Chat</button>
@@ -92,11 +93,10 @@ const Video = ({token}) => {
 const IndexPage = () => {
   const [token, setToken] = useState(false)
   return (
-  <Layout>
-    <SEO title="Home" />
-    {!token ? <StartForm storeToken={setToken} /> : <Video token={token}/>}
-    <p> TODO: FUCKKK </p>
-  </Layout>
+    <Layout>
+      <SEO title="Home" />
+      {!token ? <JoinRoomForm storeToken={setToken} /> : <Video token={token}/>}
+    </Layout>
   )
 }
 

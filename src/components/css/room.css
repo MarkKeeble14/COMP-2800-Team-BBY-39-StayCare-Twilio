@@ -1,0 +1,85 @@
+.content {
+    padding: 2%;
+}
+
+.frame {
+    margin: 0;
+}
+
+.frame img {
+    width: 100%;
+}
+
+#room-info {
+    display: grid;
+    grid-template-columns: 60% 40%;
+
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+
+h1 {
+    font-size: 72px;
+}
+
+h3 {
+    font-size: 48px;
+    text-align: right;
+}
+
+#stream-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 2%;
+    transition: 0.1s;
+}
+
+.config-one div {
+    width: 50%;
+    transition: 0.1s;
+}
+
+.config-one div img {
+    border: 1px solid green;
+}
+
+.config-two div {
+    width: 100%;
+    transition: 0.1s;
+}
+
+.config-two div img {
+    border: 1px solid yellow;
+}
+
+.config-three div {
+    width: 100%;
+    transition: 0.1s;
+}
+
+.config-three div img {
+    border: 1px solid red;
+}
+
+.config-three div + div {
+    width: 50%;
+    transition: 0.1s;
+}
+
+.config-three div + div img {
+    border: 1px solid blue;
+}
+
+.config-four div {
+    width: 100%;
+    transition: 0.1s;
+}
+
+.config-four div + div + div {
+    width: 50%;
+    transition: 0.1s;
+}
+
+.config-four div + div + div img {
+    border: 1px solid pink;
+}

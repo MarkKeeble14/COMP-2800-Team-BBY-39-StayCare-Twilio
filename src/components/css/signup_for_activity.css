@@ -1,0 +1,61 @@
+#signupForm {
+    position: fixed;
+    top: 150%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 80%;
+    padding: 3%;
+    background: #fff;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
+    font-size: 36px;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+#signup-container {
+    padding: 2%;
+    text-align: center;
+
+    border: 1px solid black;
+}
+
+#signupForm.active {
+    top: 30%;
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+#activityTitle {
+    text-align: center;
+    background-color: #f9c803;
+}
+
+#signupSub {
+    height: 50%;
+    width: 50%;
+    padding: 2%;
+    background-color: #f9c803;
+    font-size: large;
+}
+
+#register {
+    text-align: center;
+}
+
+#contactMethod {
+    font-size: larger;
+    padding-right: 10%;
+}
+
+#childrenSignup {
+    font-size: larger;
+}
+
+/*Need to continue working on checkboxes, they do not look the way they should yet, also need to set up requiring at least 1 chosen in JS file */
+input[type='checkbox'] {
+    border-radius: 50%;
+}

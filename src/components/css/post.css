@@ -1,0 +1,40 @@
+#post-form {
+    display: none;
+    margin: auto;
+    margin-top: 10px;
+    width: 90%;
+    padding: 15px;
+    border: 1px solid black;
+    background-color: rgb(228, 255, 205);
+    border: 1px solid rgb(102, 255, 0);
+    border-radius: 10px;
+    max-width: 600px;
+}
+
+#image-container {
+    background-image: url("../images/img_placeholder.png");
+    background-color: darkgray;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    max-width: 300px;
+    max-height: 200px;
+    width: 90%;
+    height: 25vh;
+    margin: 0 auto;
+    margin: 15px;
+    
+}
+
+#image-container > label {
+    width: 100%;
+    height: 100%;
+}
+
+#description {
+    height: 200px;
+}
+
+#filetoRead {
+    display: none;
+}

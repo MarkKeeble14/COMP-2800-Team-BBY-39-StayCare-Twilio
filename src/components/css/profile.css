@@ -1,0 +1,102 @@
+#profile-card {
+    position: fixed;
+    top: 150%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    width: 80%;
+    padding: 2%;
+    background: #fff;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
+    font-size: 36px;
+
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+}
+
+#profile-card.active {
+    top: 50%;
+    visibility: visible;
+    opacity: 1;
+    transition: 0.5s;
+}
+
+#blur.active {
+    filter: blur(30px);
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+#blur {
+    filter: blur(0px);
+    pointer-events: all;
+    transition: 0.5s;
+}
+
+.image-container {
+    position: relative;
+}
+
+.info {
+    margin: auto;
+    color: #4b4fe2;
+}
+
+.label {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 10% 90%;
+}
+
+.textbox {
+    margin: auto;
+
+    background-color: #fff;
+    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
+    border: 1px solid black;
+    font-size: 32px;
+    padding: 2%;
+}
+
+.textbox i {
+    text-align: center;
+    font-size: 100%;
+}
+
+.textbox input {
+    margin-left: 2%;
+    padding-left: 2%;
+}
+
+.main-container {
+    padding: 2%;
+}
+
+.title h2 {
+    position: absolute;
+    left: 4%;
+    bottom: 4%;
+}
+
+.title-text {
+    font-size: 10vw;
+    color: #fff;
+}
+
+#child-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#child-container img {
+    flex: 1;
+    padding: 5%;
+    width: 12.5%;
+}
+
+#name {
+    font-size: 36px;
+    text-align: right;
+    padding: 2%;
+}
