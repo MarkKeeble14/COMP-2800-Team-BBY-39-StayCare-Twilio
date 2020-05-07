@@ -6,6 +6,7 @@ import SEO from "../components/seo"
 
 import "../components/js/firebase_config"
 import "../components/css/main.css"
+import "../components/css/room.css"
 
 let TwilioVideo = null;
 if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
@@ -15,7 +16,6 @@ if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
 const JoinRoomForm = ({storeToken}) => {
   const [name, setName] = useState('')
   const [room, setRoom] = useState('')
-
   const handleSubmit = async event => {
     event.preventDefault()
 
@@ -30,6 +30,7 @@ const JoinRoomForm = ({storeToken}) => {
 
       const jwt = result.data;
       storeToken(jwt);
+      console.log(jwt);
   }
     
   return (
@@ -52,7 +53,7 @@ const JoinRoomForm = ({storeToken}) => {
 const Video = ({token}) => {
   const localVidRef = useRef(null)
   const remoteVidRef = useRef(null);
-
+  
   useEffect(() => {
       TwilioVideo.connect(token, { video: true, audio: true, name: 'test' }).then(
         room => {
@@ -83,7 +84,7 @@ const Video = ({token}) => {
   }, [token])
 
   return  (
-      <div>
+      <div id="stream-container">
           <div ref={localVidRef}/>
           <div ref={remoteVidRef}/>
       </div>
@@ -94,7 +95,7 @@ const IndexPage = () => {
   const [token, setToken] = useState(false)
   return (
     <Layout>
-      <SEO title="Home" />
+      <SEO title="StayCare | Home"/>
       {!token ? <JoinRoomForm storeToken={setToken} /> : <Video token={token}/>}
     </Layout>
   )

@@ -1,7 +1,9 @@
 module.exports = {
   siteMetadata: {
     title: `StayCare`,
-    description: `Fun, interactive, and safe entertainment!.`,
+    description: `This is a fun place for young children to participate in real-time activities hosted by certified child care workers! 
+    We aim to give children the social interaction they need during this time, and give parents a much-needed moment of respite, 
+    away from their child.`,
     author: `@StayCare Team`,
   },
   plugins: [
@@ -18,10 +20,10 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `StayCare`,
-        short_name: `StaryCare`,
+        name: `StayCare | Online Daycare`,
+        short_name: ``,
         start_url: `/`,
-        background_color: `#663399`,
+        background_color: `#ff8000`,
         theme_color: `#663399`,
         display: `minimal-ui`,
         icon: `src/images/StayCare-02-icon.png`, // This path is relative to the root of the site.
