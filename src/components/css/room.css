@@ -1,15 +1,3 @@
-.content {
-    padding: 2%;
-}
-
-.frame {
-    margin: 0;
-}
-
-.frame img {
-    width: 100%;
-}
-
 #room-info {
     display: grid;
     grid-template-columns: 60% 40%;
@@ -32,6 +20,15 @@ h3 {
     flex-wrap: wrap;
     padding: 2%;
     transition: 0.1s;
+}
+
+#stream-container div div {
+    padding: 2%;
+    margin: 0;
+}
+
+#stream-container div div video {
+    width: 100%;
 }
 
 .config-one div {
