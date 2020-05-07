@@ -8,9 +8,6 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/js/bootstrap.js';
-
 import BlurArea from "../components/blur_area"
 import Profile from "../components/profile";
 import SignupActivity from "./signup_for_activity"

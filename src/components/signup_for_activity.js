@@ -18,21 +18,22 @@ const Signup = () => {
                     </div>
                     <h3>Time: </h3>
                     <h3>Date: </h3>
-                    <br/>
                     <div id="childrenSignup">
                         <h3>Which Children would you like to sign up?</h3>
-                        <input className="checkboxes" type="checkbox" id="ChildNames"/>
-                        <label htmlFor="ChildNames">Tim</label>
+                        <div className="response-container">
+                            <input className="checkboxes" type="checkbox" id="ChildNames"/>
+                            <label htmlFor="ChildNames">Tim</label>
+                        </div>
                     </div>
-                    <br/>
                     <h3>Contact Method</h3>
                     <div id="contactMethod">
+                    <div className="response-container">
                         <input className="checkboxes" type="checkbox" id="Email"/>
                         <label htmlFor="Email">Email</label>
                         <input className="checkboxes" type="checkbox" id="Text"/>
                         <label htmlFor="Text">Text</label>
+                        </div>
                     </div>
-                    <br/>
                     <div id="register">
                         <input id="signupSub" type="submit" value="Register"/>
                     </div>
