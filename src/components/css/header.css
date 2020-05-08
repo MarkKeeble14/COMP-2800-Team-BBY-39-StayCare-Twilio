@@ -41,3 +41,24 @@
       color: rgba(255, 136, 0, 0.849);
       background-color: rgb(255, 254, 183);
   }
+
+@media only screen and (min-width: 991px) {
+  .nav-item {
+    margin-left: 2%;
+    margin-right: 2%;
+    
+    font-size: 14px;
+    text-align: center;
+    width: 10vw;
+  }
+
+  .navbar-nav {
+    margin-left: 2%;
+  }
+}
+
+
+
+.navbar > a {
+  font-size: 24px;
+}

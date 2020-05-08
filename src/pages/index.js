@@ -12,7 +12,7 @@ import "../components/css/start-form.css"
 import BlurArea from "../components/blur_area"
 import SignupActivity from "../components/signup_for_activity"
 import PostForm from "../components/post_form"
-import * as postFunctions from '../components/js/post'
+// import * as postFunctions from '../components/js/post'
 
 let TwilioVideo = null;
 if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {

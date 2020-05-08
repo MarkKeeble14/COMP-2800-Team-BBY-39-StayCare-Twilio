@@ -1,4 +1,3 @@
-
 import $ from "jquery"
 import { db } from "../js/firebase"
 import { ref } from "../js/firebase"
@@ -34,7 +33,6 @@ function showFeaturedActivities() {
     }
 }
 
-
-
 getActivities();
 
+export default getActivities()

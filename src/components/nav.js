@@ -15,7 +15,7 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <a className="nav-link" href="#">My Activities</a>
+                        <Link to="/">My Activities</Link>
                     </li>
                     <li className="nav-item">
                     <Link to="/login">Login</Link>
@@ -24,12 +24,11 @@ const Navbar = () => {
                         <Link to="/post-activity">Post Activity</Link>
                     </li>
                     <li className="nav-item" id="worker-link">
-                        <a type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
-                            className="nav-link" href="#">Become a Worker!</a>
+                        <Link 
+                            to="/post-activity">Apply</Link>
                     </li>
-                    <li>
-                        <Link to="about">About Us</Link>
+                    <li className="nav-item">
+                        <Link to="/about">About Us</Link>
                     </li>
                 </ul>
 
