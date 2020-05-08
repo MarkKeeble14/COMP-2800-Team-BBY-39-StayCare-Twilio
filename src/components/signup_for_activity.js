@@ -4,23 +4,17 @@ import './css/profile.css'
 
 function toggle() {
     var signup = document.getElementById('signupForm');
+    console.log(signup);
     signup.classList.toggle('active');
 
     var blur = document.getElementById('blur');
-    if (blur != null) {
-        blur.classList.toggle('active');
-    }
-
-    var profile = document.getElementById('profile-card');
-    if (profile != null) {
-        profile.classList.toggle('active');
-    }
+    blur.classList.toggle('active');
 }
 
 const Signup = () => {
     return (
         <div id="signup-container">
-            <button type="button" className="bounceInUp" onClick={toggle}>Sign Up!</button>
+            <button type="button" className="bounceInUp" onClick={toggle}>Sign Up for Activity!</button>
             <div id="signupForm">
                 <form>
                     <div id="activityTitle">

@@ -1,9 +1,8 @@
-import firebase from 'firebase/app';
+import * as firebase from 'firebase';
 import 'firebase/firestore';
-import 'firebase/auth';
 import 'firebase/storage';
 
-const firebaseConfig = {
+const config = {
     apiKey: "AIzaSyDLkAOfVmsw8ZEEhK8tro4OaptcGlmY3VA",
     authDomain: "dayca-9d9f3.firebaseapp.com",
     databaseURL: "https://dayca-9d9f3.firebaseio.com",
@@ -15,11 +14,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-//firebase.analytics();
-const db = firebase.firestore();
-var storage = firebase.storage();
-let storageRef = storage.ref();
+firebase.initializeApp(config);
 
-export {db};
-export {storageRef};
+var db = firebase.firestore();
+var ref = firebase.storage().ref();
+
+export { db };
+export { ref };

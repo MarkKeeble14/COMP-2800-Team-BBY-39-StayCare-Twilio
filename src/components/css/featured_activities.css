@@ -1,28 +1,49 @@
 #featuredActivities {
     border: 1px solid black;
     padding: 4%;
+
+    height: 80vh;
+}
+
+#carouselContainer {
+    position: relative;
+    height: 90%;
+}
+
+#carouselExampleIndicators {
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    filter: invert(1);
+}
+
+.carousel-indicators li {
+    background-color: grey;
+    position: relative;
+    bottom: 10%;
+}
+.carousel-indicators .active {
+    background-color: black;
 }
 
 #title {
     text-align: center;
-    font-size: 32px;
+    font-size: 250%;
     padding: 2%;
 }
 
-.caption {
-    display: grid;
-    grid-template-columns: 60% 40%;
-
-    padding-top: 2%;
-    padding-bottom: 2%;
+.info h3 {
+    font-size: 200%;
 }
 
-.caption h2 {
-    text-align: left;
-    font-size: 32px;
+.carousel-item img {
+    height: 35vh;
+    display: block;
+    margin: auto;
 }
 
-.caption h3 {
-    text-align: right;
-    font-size: 16px;
+.activityInfo {
+    margin-top: 3%;
 }

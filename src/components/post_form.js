@@ -1,7 +1,8 @@
 import React from "react"
-// import "./js/post.js"
+import "./css/post.css"
 
 const PostForm = () => {
+
     return (
         <div id="post-form">
             <input type="file" id="filetoRead"/>

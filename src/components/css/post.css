@@ -1,5 +1,4 @@
 #post-form {
-    display: none;
     margin: auto;
     margin-top: 10px;
     width: 90%;
@@ -14,7 +13,7 @@
 }
 
 #image-container {
-    background-image: url("../images/img_placeholder.png");
+    background-image: url("../../images/img_placeholder.png");
     background-color: darkgray;
     background-size: cover;
     background-repeat: no-repeat;
@@ -49,6 +48,3 @@
     height: 35px;
     padding: 12px;
 }
-
-
-  

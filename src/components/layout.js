@@ -8,17 +8,15 @@
 import React from "react"
 import PropTypes from "prop-types"
 
-import BlurArea from "../components/blur_area"
 import Profile from "../components/profile";
-import SignupActivity from "./signup_for_activity"
 import Footer from "./footer"
+import NAV from "./nav"
 
 const Layout = ({ children }) => {
   return (
     <>
-      <BlurArea></BlurArea>
+      <NAV></NAV>
       <Profile></Profile>
-      <SignupActivity></SignupActivity>
       <Footer></Footer>
       <main id="layout-contents">
         {children}

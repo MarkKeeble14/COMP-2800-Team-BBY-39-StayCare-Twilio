@@ -11,11 +11,11 @@ const About = () => {
                     <h1>Jakob Fipke</h1>
                 </div>
                 <div className="portrait-container">
-                    <Img alt="Jakob Fipke" filename="Jakob.png"/>
+                    <Img alt="Jakob Fipke" filename="Justin.png"/>
                     <h1>Justin Xie</h1>
                 </div>
                 <div className="portrait-container">
-                    <Img alt="Jakob Fipke" filename="Jakob.png"/>
+                    <Img alt="Jakob Fipke" filename="Jonny.png"/>
                     <h1>Jonathan Orfani</h1>
                 </div>
                 <div className="portrait-container">

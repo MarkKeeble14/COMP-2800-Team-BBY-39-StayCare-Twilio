@@ -3,11 +3,16 @@ import axios from "axios"
 
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import { Link } from "gatsby"
 
-import "../components/js/firebase_config"
+import "../components/js/firebase.js"
 import "../components/css/main.css"
 import "../components/css/room.css"
-// import switchDisplay from "../components/js/switch_room_display.js"
+import "../components/css/start-form.css"
+import BlurArea from "../components/blur_area"
+import SignupActivity from "../components/signup_for_activity"
+import PostForm from "../components/post_form"
+import * as postFunctions from '../components/js/post'
 
 let TwilioVideo = null;
 if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
@@ -35,9 +40,9 @@ const JoinRoomForm = ({storeToken}) => {
   }
     
   return (
-      <form onSubmit={handleSubmit}>
+      <form id="start-form" onSubmit={handleSubmit}>
           <label htmlFor="name">
-              DisplayName: <br/>
+              Display Name: <br/>
               <input type='text' id="display-name" name="name" value = {name} onChange={e => setName(e.target.value)}/>
           </label>
           <br/>
@@ -55,7 +60,6 @@ const Video = ({token}) => {
   const localVidRef = useRef(null)
   const remoteVidRef = useRef(null);
   const streamCont = useRef(null);
-
 
   function switchDisplay() {
       var classes = streamCont.current.classList;
@@ -76,7 +80,6 @@ const Video = ({token}) => {
           classes.remove('config-four');
       }
   }
-    
 
   useEffect(() => {
       TwilioVideo.connect(token, { video: true, audio: true, name: 'test' }).then(
@@ -127,7 +130,9 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="StayCare | Home"/>
+      <BlurArea></BlurArea>
       {!token ? <JoinRoomForm storeToken={setToken} /> : <Video token={token} id="video"/>}
+      <SignupActivity></SignupActivity>
     </Layout>
   )
 }
