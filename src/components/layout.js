@@ -20,7 +20,7 @@ const Layout = ({ children }) => {
       <Profile></Profile>
       <SignupActivity></SignupActivity>
       <Footer></Footer>
-      <main id="main-container">
+      <main id="layout-contents">
         {children}
       </main>
     </>

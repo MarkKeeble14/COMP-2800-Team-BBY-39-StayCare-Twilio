@@ -7,6 +7,7 @@ import SEO from "../components/seo"
 import "../components/js/firebase_config"
 import "../components/css/main.css"
 import "../components/css/room.css"
+// import switchDisplay from "../components/js/switch_room_display.js"
 
 let TwilioVideo = null;
 if (typeof window !== 'undefined' && typeof window.navigator !== 'undefined') {
@@ -53,7 +54,30 @@ const JoinRoomForm = ({storeToken}) => {
 const Video = ({token}) => {
   const localVidRef = useRef(null)
   const remoteVidRef = useRef(null);
-  
+  const streamCont = useRef(null);
+
+
+  function switchDisplay() {
+      var classes = streamCont.current.classList;
+      if (classes.contains('config-one')) {
+          classes.add('config-two');
+          classes.remove('config-one');
+      }
+      else if (classes.contains('config-two')) {
+          classes.add('config-three');
+          classes.remove('config-two');
+      }
+      else if (classes.contains('config-three')) {
+          classes.add('config-four');
+          classes.remove('config-three');
+      }
+      else if (classes.contains('config-four')) {
+          classes.add('config-one');
+          classes.remove('config-four');
+      }
+  }
+    
+
   useEffect(() => {
       TwilioVideo.connect(token, { video: true, audio: true, name: 'test' }).then(
         room => {
@@ -84,10 +108,17 @@ const Video = ({token}) => {
   }, [token])
 
   return  (
-      <div id="stream-container">
-          <div ref={localVidRef}/>
-          <div ref={remoteVidRef}/>
-      </div>
+      <div className="content">
+          <button onClick={switchDisplay}>Swap Config</button>
+          <div id="room-info">
+              <h1 className="room-name">Room Name</h1>
+              <h3 className="room-activity">Room Activity</h3>
+          </div>
+          <div id="stream-container" className="config-one" ref={streamCont}>
+              <div ref={localVidRef}/>
+              <div ref={remoteVidRef}/>
+          </div>
+    </div>
   )
 }
 
@@ -96,7 +127,7 @@ const IndexPage = () => {
   return (
     <Layout>
       <SEO title="StayCare | Home"/>
-      {!token ? <JoinRoomForm storeToken={setToken} /> : <Video token={token}/>}
+      {!token ? <JoinRoomForm storeToken={setToken} /> : <Video token={token} id="video"/>}
     </Layout>
   )
 }

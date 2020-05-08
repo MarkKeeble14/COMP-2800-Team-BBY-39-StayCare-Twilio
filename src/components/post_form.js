@@ -15,7 +15,7 @@ const PostForm = () => {
                     <label htmlFor="description">Description</label>
                     <textarea className="form-control" id="description"></textarea>
                 </div>
-                <input id="datetimepicker" placeholder="Schedule a time htmlFor your activity"/>
+                <input id="datetimepicker" placeholder="Schedule a time for your activity!"/>
             
                 <select className="custom-select" id="maxOccupants" defaultValue="0">
                     <option value="0">Choose Max Number of Occupants</option>

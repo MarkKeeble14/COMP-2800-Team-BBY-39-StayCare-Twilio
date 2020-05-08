@@ -1,9 +1,20 @@
 import React from 'react'
 import './css/signup_for_activity.css'
+import './css/profile.css'
 
 function toggle() {
     var signup = document.getElementById('signupForm');
     signup.classList.toggle('active');
+
+    var blur = document.getElementById('blur');
+    if (blur != null) {
+        blur.classList.toggle('active');
+    }
+
+    var profile = document.getElementById('profile-card');
+    if (profile != null) {
+        profile.classList.toggle('active');
+    }
 }
 
 const Signup = () => {

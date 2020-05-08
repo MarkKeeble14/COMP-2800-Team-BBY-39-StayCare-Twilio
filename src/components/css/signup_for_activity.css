@@ -13,6 +13,7 @@
     visibility: hidden;
     opacity: 0;
     transition: 0.5s;
+    text-align: center;
 }
 
 #signupForm.active {
@@ -24,7 +25,7 @@
 
 #signup-container {
     padding: 2%;
-    text-align: center;
+    text-align: left;
 
     border: 1px solid black;
 }
@@ -65,8 +66,8 @@ h3 {
 /*Need to continue working on checkboxes, they do not look the way they should yet, also need to set up requiring at least 1 chosen in JS file */
 input[type='checkbox'] {
     -webkit-appearance:none;
-    width:10vw;
-    height:10vw;
+    width:5vw;
+    height:5vw;
     background:white;
     border-radius:5px;
     border:2px solid #555;
