@@ -12,7 +12,7 @@ const FeaturedActivities = () => {
         db.collection("activities").get()
         .then(function (snap) {      
             snap.forEach(function (doc) {
-                console.log(doc);
+                // console.log(doc);
                 activityDocs.push(doc);
             });
         }).then(function () {  
@@ -27,7 +27,7 @@ const FeaturedActivities = () => {
             let path = data.image;
 
             ref.child(path).getDownloadURL().then(function(url) {
-                console.log("image found at path: " + path);
+                // console.log("image found at path: " + path);
                 $(id + " img").attr("src", url);
                 $(id + " .activityInfo .title").text(data.title);
                 $(id + " .activityInfo .description").text(data.description);

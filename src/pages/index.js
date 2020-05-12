@@ -66,6 +66,8 @@ const Video = ({token}) => {
   const remoteVidRef = useRef(null);
   const streamCont = useRef(null);
 
+  const [roomValue, setRoom] = useState({});
+
   // Move these to a seperate file eventually
   function switchDisplay() {
       var classes = streamCont.current.classList;
@@ -86,13 +88,13 @@ const Video = ({token}) => {
           classes.remove('config-four');
       }
   }
-  let activeRoom;
+
   useEffect(() => {
     // Can put code here to set database info on room -------------------
     console.log("Joined " + roomname);
       TwilioVideo.connect(token, { video: true, audio: true, name: roomname }).then(
         room => {
-          activeRoom = room;
+          setRoom({ roomVal: room});
         // Attach local video
         TwilioVideo.createLocalVideoTrack().then(track => {
           localVidRef.current.appendChild(track.attach())
@@ -115,39 +117,44 @@ const Video = ({token}) => {
         // Attaching the other peoples videos
         room.participants.forEach(addParticipant)
         room.on('participantConnected', addParticipant)
+
+        function unmute_mute_audio() {
+          var localParticipant = room.localParticipant;
+          localParticipant.audioTracks.forEach(function(track) {
+            if ( track.track.isEnabled == true ) {
+                  console.log("disabling audio track");
+                  track.track.disable();
+            } else {
+                console.log("enabling audio track");
+                track.track.enable();
+            }
+            });
+          }
+
+          function unmute_mute_video() {
+            var localParticipant = room.localParticipant;
+            localParticipant.videoTracks.forEach(function(track) {
+              if ( track.track.isEnabled == true ) {
+                    console.log("disabling video track");
+                    track.track.disable();
+              } else {
+                  console.log("enabling video track");
+                  track.track.enable();
+              }
+              });
+            }
+
+          // Add event listener
+          $('#mute-video').on('click', event => {
+            unmute_mute_video();
+          })
+
+          $('#mute-audio').on('click', event => {
+            unmute_mute_audio();
+          })
       }
     )
   }, [token])
-
-// Move these to a seperate file eventually
-function muteVideo(){
-  var localParticipant = activeRoom.localParticipant;
-  localParticipant.videoTracks.forEach(function (videoTracks) {
-      videoTracks.track.disable();
-
-  });
-}
-
-function unMuteVideo(){
-  var localParticipant = activeRoom.localParticipant;
-  localParticipant.videoTracks.forEach(function (videoTracks) {
-      videoTracks.track.enable();
-  });
-}
-
-function unMuteAudio(){
-  var localParticipant = activeRoom.localParticipant;
-  localParticipant.audioTracks.forEach(function (audioTrack) {
-      audioTrack.track.enable();
-  });
-}
-
-function muteAudio(){
-  var localParticipant = activeRoom.localParticipant;
-  localParticipant.audioTracks.forEach(function (audioTrack) {
-      audioTrack.track.disable();
-  });
-}
 
   return  (
       <div className="content">
@@ -160,10 +167,8 @@ function muteAudio(){
               <div ref={localVidRef}/>
               <div ref={remoteVidRef}/>
               <div id="controls">
-                <input type="button" onClick={muteAudio} value="muteA"></input>
-                <input type="button" onClick={unMuteAudio} value="unmuteA"></input>
-                <input type="button" onClick={muteVideo} value="muteV"></input>
-                <input type="button" onClick={unMuteVideo} value="unmuteV"></input>
+                <input type="button" id="mute-video" value="Video"/>
+                <input type="button" id="mute-audio" value="Audio"/>
               </div>
           </div>
     </div>
