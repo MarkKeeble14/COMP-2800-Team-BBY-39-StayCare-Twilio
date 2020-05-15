@@ -1,19 +1,20 @@
 import React from 'react'
 import "./css/featured_activities.css"
 import "./js/carousel_controller.js"
-import $ from "jquery"
+import * as $ from 'jquery';
 import { db } from "./js/firebase"
 import { ref } from "./js/firebase"
 
 
 const FeaturedActivities = () => {
-    let activityDocs = [];
+    let activityDocs = []; 
 
     function getActivities() {   
         db.collection("activities").get()
         .then(function (snap) {      
+            console.log('accessed');
             snap.forEach(function (doc) {
-                console.log(doc);
+                // console.log(doc);
                 activityDocs.push(doc);
             });
         }).then(function () {  
@@ -21,22 +22,63 @@ const FeaturedActivities = () => {
         })
     }
 
+    function getWrittenDate(dateString) {
+
+
+        let hour = parseInt(dateString.substr(0, 2));
+        
+        let ampm = "AM";
+        if (hour > 12) {
+          hour -= 12;
+          ampm = "PM";
+        }
+        
+        let minutes = dateString.substr(3, 3);
+        let time = hour + ":" + minutes + " " + ampm;
+      
+        let monthNum = parseInt(dateString.substr(6, 7));
+        const MONTHS = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
+      
+        let monthName = MONTHS[monthNum - 1];
+      
+        let day = parseInt(dateString.substr(9, 10));
+      
+        let year = parseInt(dateString.substr(12, 15));
+      
+        let date = monthName + " " + day + ", " + year;
+      
+      
+        return {
+          date: date,
+          time: time
+        }
+      
+      }
+
+
     function showFeaturedActivities() {
         for (let i = 0; i < 5; i++) {
             let id = "#featured" + (i + 1);
             let data = activityDocs[i].data();
             let path = data.image;
-
+            let thisDate = getWrittenDate(data.time);
+            let sched = "Scheduled for: " + thisDate.time + " on " + thisDate.date; 
+            let size = "Room Size: " + data.size + " spots";
             ref.child(path).getDownloadURL().then(function(url) {
-                console.log("image found at path: " + path);
+                // console.log("image found at path: " + path);
                 $(id + " img").attr("src", url);
                 $(id + " .activityInfo .title").text(data.title);
                 $(id + " .activityInfo .description").text(data.description);
+                $(id + " .activityInfo .schedule").text(sched);
+                $(id + " .activityInfo .roomSize").text(size);
             }).catch(function(error) {
-                console.log(error);
+                console.log("error getting download url");
             });
         }
     }
+    
     getActivities();
 
     return (
@@ -51,6 +93,8 @@ const FeaturedActivities = () => {
                                 <h3 className="title"></h3>
                                 <h4 className="leaderName"></h4>
                                 <p className="description"></p>
+                                <h6 className="schedule"></h6>
+                                <h6 className="roomSize"></h6>
                             </div>
                         </div>
                         <div id="featured2" className="carousel-item">
@@ -59,6 +103,8 @@ const FeaturedActivities = () => {
                                 <h3 className="title"></h3>
                                 <h4 className="leaderName"></h4>
                                 <p className="description"></p>
+                                <h6 className="schedule"></h6>
+                                <h6 className="roomSize"></h6>
                             </div>
                         </div>
                         <div id="featured3" className="carousel-item">
@@ -67,6 +113,8 @@ const FeaturedActivities = () => {
                                 <h3 className="title"></h3>
                                 <h4 className="leaderName"></h4>
                                 <p className="description"></p>
+                                <h6 className="schedule"></h6>
+                                <h6 className="roomSize"></h6>
                             </div>
                         </div>
                         <div id="featured4" className="carousel-item">
@@ -75,6 +123,8 @@ const FeaturedActivities = () => {
                                 <h3 className="title"></h3>
                                 <h4 className="leaderName"></h4>
                                 <p className="description"></p>
+                                <h6 className="schedule"></h6>
+                                <h6 className="roomSize"></h6>
                             </div>
                         </div>
                         <div id="featured5" className="carousel-item">
@@ -83,6 +133,8 @@ const FeaturedActivities = () => {
                                 <h3 className="title"></h3>
                                 <h4 className="leaderName"></h4>
                                 <p className="description"></p>
+                                <h6 className="schedule"></h6>
+                                <h6 className="roomSize"></h6>
                             </div>
                         </div>
                     </div>

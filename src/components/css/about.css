@@ -3,6 +3,7 @@
     grid-template-columns: auto;
     padding: 2%;
     border: 1px solid black;
+    display: none;
 }
 
 #about-us-container p {
