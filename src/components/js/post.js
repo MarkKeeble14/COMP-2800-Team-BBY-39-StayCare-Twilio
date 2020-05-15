@@ -117,8 +117,6 @@ function postActivity() {
                 uploadImage(file, fileRef);        
             }
             refreshSearchResults();
-            $("#post-form").hide();
-            $("#featuredActivities").show();
         });        
     } else {
         console.log("error. did not upload");
@@ -130,7 +128,7 @@ function refreshSearchResults() {
     clearSearchResults();
     getSearchResults(["activities"]);
     
-    autocomplete(document.getElementById("myInput"), search);
+    autocomplete($("#myInput"), search);
 }
 
 /*

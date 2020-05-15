@@ -108,7 +108,6 @@ const Video = ({token}) => {
             })
   
             $('#disconnect').on('click', event => {
-              console.log('tried to leave');
               room.disconnect();
             });
   

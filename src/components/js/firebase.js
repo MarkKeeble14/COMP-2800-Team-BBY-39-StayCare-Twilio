@@ -62,14 +62,8 @@ const getUserDocument = async uid => {
   }
 };
 
-
-
-
 export { db };
 export { ref };
-<<<<<<< HEAD
 export { auth };
-=======
 
 export { firebase }
->>>>>>> 882976112fd26cc1a6861a53e14b047950da6d63

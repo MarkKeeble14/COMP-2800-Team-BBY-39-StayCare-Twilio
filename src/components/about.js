@@ -3,11 +3,15 @@ import "./css/about.css"
 import Img from "./image"
 import $ from "jquery"
 
-var easterEgg = 0;
+
+
+const About = () => {
+    var easterEgg = 0;
 var mark = $('#mk');
 var jonny = $('#jo');
 var justin = $('#jx');
 var jakob = $('#jf');
+
 if (mark) {
     mark.on('click', function() {
 
@@ -20,7 +24,6 @@ if (mark) {
 
 if (jakob) {
     jakob.on('click', function() {
-
         if (easterEgg === 1) {
             easterEgg++;
             console.log(easterEgg);
@@ -68,8 +71,6 @@ if (jonny) {
     });
 }
 
-
-const About = () => {
     return (
         <div id="about-us-container">
             <div id="images-container">
