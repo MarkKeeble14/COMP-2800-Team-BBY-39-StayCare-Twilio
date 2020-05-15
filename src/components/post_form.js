@@ -1,8 +1,8 @@
-import React from "react"
+import React, { useRef } from "react"
 import "./css/post.css"
+// import "./js/post.js"
 
 const PostForm = () => {
-
     return (
         <div id="post-form">
             <input type="file" id="filetoRead"/>
@@ -17,7 +17,7 @@ const PostForm = () => {
                     <textarea className="form-control" id="description"></textarea>
                 </div>
                 <input id="datetimepicker" placeholder="Schedule a time for your activity!"/>
-            
+                
                 <select className="custom-select" id="maxOccupants" defaultValue="0">
                     <option value="0">Choose Max Number of Occupants</option>
                     <option value="1">1</option>
@@ -31,7 +31,7 @@ const PostForm = () => {
                     <option value="9">9</option>
                     <option value="10">10</option>
                 </select>
-                <input type="button" id="post" value="Post Activity!" className="btn btn-outline-success my-2 my-sm-0"/>
+                <input type="button" id="post" value="Post Activity!" className="btn btn-outline-success"/>
             </form>        
         </div>
     )

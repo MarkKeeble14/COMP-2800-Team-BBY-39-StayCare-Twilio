@@ -4,7 +4,6 @@ import { Link } from "gatsby"
 
 const Navbar = () => {
     return (
-        <>
         <nav className="navbar navbar-expand-lg navbar-light bg-yellow w-shadow">
             <Link to="/">StayCare</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -15,7 +14,7 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <Link to="/">My Activities</Link>
+                        <Link to="/room">My Activities</Link>
                     </li>
                     <li className="nav-item">
                         <Link to="/login">Login</Link>
@@ -40,7 +39,6 @@ const Navbar = () => {
                 </form>
             </div>
         </nav>
-        </>
     )
   }
 

@@ -1,16 +1,17 @@
 import React from 'react'
 import "./css/featured_activities.css"
 import "./js/carousel_controller.js"
-import $ from "jquery"
+import * as $ from 'jquery';
 import { db } from "./js/firebase"
 import { ref } from "./js/firebase"
 
 const FeaturedActivities = () => {
-    let activityDocs = [];
+    let activityDocs = []; 
 
     function getActivities() {   
         db.collection("activities").get()
         .then(function (snap) {      
+            console.log('accessed');
             snap.forEach(function (doc) {
                 // console.log(doc);
                 activityDocs.push(doc);

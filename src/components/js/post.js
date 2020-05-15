@@ -1,8 +1,12 @@
 import $ from "jquery"
 
-import firebase from "firebase/app"
 import { db } from "../js/firebase"
 import { ref } from "../js/firebase"
+
+import { clearSearchResults } from "./search"
+import { getSearchResults } from "./search"
+import { autocomplete } from "./search"
+import { search } from "./search"
 
 let photo = document.getElementById("image-container");
 let fileRef;
@@ -28,11 +32,12 @@ function uploadImage(file) {
  * For adding image to activity in post form, input type of filetoRead is file.
  */
 document.getElementById("filetoRead").addEventListener("change",function(){
+    console.log('event logged');
     file = this.files[0];
     //if a file was chosen   
     if (file) {
         //if the file chosen is an image
-        if ((file.type == 'image/png') || (file.type == 'image/jpg') || (file.type == 'image/jpeg')) {       
+        if ((file.type === 'image/png') || (file.type === 'image/jpg') || (file.type === 'image/jpeg')) {       
             fullPath = "Images/activities/" + postId + file.name;
             fileRef = ref.child(fullPath);
 
@@ -148,14 +153,13 @@ document.getElementById("post").onclick = function () {
     } else {
         console.log("error. did not upload");
     }
-
-
 }
 
 // resets search results
 function refreshSearchResults() {
     clearSearchResults();
     getSearchResults(["activities"]);
+    
     autocomplete(document.getElementById("myInput"), search);
 }
 

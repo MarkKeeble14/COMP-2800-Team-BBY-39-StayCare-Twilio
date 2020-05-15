@@ -12,18 +12,22 @@
     overflow: auto;
 }
 
+#post-form > form {
+    margin: 2%;
+}
+
 #image-container {
     background-image: url("../../images/img_placeholder.png");
+    border: 1px solid black;
     background-color: darkgray;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
     max-width: 300px;
     max-height: 200px;
-    width: 90%;
+    width: 100%;
     height: 25vh;
-    margin: 0 auto;
-    margin: 15px;    
+    margin: 0 auto;   
 }
 
 #image-container > label {
@@ -47,4 +51,11 @@
     font-family: "Fresca";
     height: 35px;
     padding: 12px;
+}
+
+#post {
+    float: right;
+    width: 50%;
+    padding: 2%;
+    margin-top: 2%;
 }

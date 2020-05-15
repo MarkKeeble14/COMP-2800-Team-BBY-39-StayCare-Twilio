@@ -1,11 +1,13 @@
 import $ from "jquery"
+import { db } from "../js/firebase"
+import { ref } from "../js/firebase"
 
 let searchButton = document.getElementById("searchButton");
 let search = [];
 let results = [];
+export { search }
 
 window.onload = getSearchResults(["activities"]);
-
 
 function getSearchResults(array) {
   for (let i = 0; i < array.length; i++) {
@@ -17,16 +19,16 @@ function getSearchResults(array) {
     })
   }
 }
+export {getSearchResults}
 
 function clearSearchResults() {
     search = [];
 }
-
+export {clearSearchResults}
 
 function autocomplete(input, array) {
   var currentFocus;
-
-  input.addEventListener("input", function (e) {
+  input.addEventListener("input", function(e) {
     let val = this.value;
 
     results = [];
@@ -48,7 +50,7 @@ function autocomplete(input, array) {
 
       let typed = suggestion.substr(0, val.length);
 
-      if (typed.toUpperCase() == val.toUpperCase()) {
+      if (typed.toUpperCase() === val.toUpperCase()) {
 
         this.parentNode.appendChild(a);      
         
@@ -94,8 +96,6 @@ function autocomplete(input, array) {
       } else {
         searchButton.click();
       }
-      
-      
     }
   });
 
@@ -120,7 +120,7 @@ function autocomplete(input, array) {
   function closeAllLists(element) {
     let x = document.getElementsByClassName("autocomplete-items");
     for (let i = 0; i < x.length; i++) {
-      if (element != x[i] && element != input) {
+      if (element !== x[i] && element !== input) {
         x[i].parentNode.removeChild(x[i]);
       }
     }
@@ -131,11 +131,12 @@ function autocomplete(input, array) {
   })
 }
 
+export {autocomplete}
+
+console.log(document.getElementById("myInput"));
 autocomplete(document.getElementById("myInput"), search);
 
-
 searchButton.onclick = showSearchResults;
-
 
 function showSearchResults() {
   $("#searchResultsActivities *").remove();
@@ -155,7 +156,7 @@ function showActivity(result) {
   $(resultId).css("width", "80%");
   $(resultId).css("margin", "5% auto");
   $(resultId).css("padding", "5%");
-  storageRef.child(result.data().image).getDownloadURL().then(function(url) {
+  ref.child(result.data().image).getDownloadURL().then(function(url) {
     $("<img class='card-img-top' src='" + url + "'></img>").prependTo(resultId);
   })
   $("<div class='card-body'></div>").appendTo(resultId);

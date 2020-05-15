@@ -21,3 +21,5 @@ var ref = firebase.storage().ref();
 
 export { db };
 export { ref };
+
+export { firebase }
