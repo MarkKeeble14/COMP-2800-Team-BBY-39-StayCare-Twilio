@@ -1,3 +1,65 @@
+@media (max-width: 600px) {
+    #stream-container {
+        display: grid;
+        width: 95vw;
+        grid-template-columns: 1fr;
+    }
+    
+    #stream-container div {
+        width: 100%;
+    }
+    
+    #remote {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+        background-color: rgb(217, 236, 255);
+    }
+    
+    #remote video {
+        width: 100%;
+    }
+    
+    #local {
+        background-color: rgb(228, 255, 205);
+    }
+
+    #local video {
+        width: 100%;
+    }
+}
+
+@media (min-width: 600px) {
+    #stream-container {
+        display: grid;
+        width: 95vw;
+        grid-template-columns: 1fr 2fr;
+    }
+    
+    #stream-container div {
+        width: 100%;
+    }
+    
+    #remote {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(4, 1fr);
+        background-color: rgb(217, 236, 255);
+    }
+    
+    #remote video {
+        width: 100%;
+    }
+    
+    #local {
+        background-color: rgb(228, 255, 205);
+    }
+    
+    #local video {
+        margin-top: 25%;
+    }
+}
+
 #room-info {
     position: absolute;
     top: 70px;
@@ -19,40 +81,8 @@
     border-radius: 5px;
 }
 
-#stream-container {
-    display: grid;
-    width: 95vw;
-    height: 100vh;
-    grid-template-columns: 1fr 2fr;
-    
-}
 
-#stream-container div {
-    width: 100%;
-    height: 100vh;
-}
-
-#remote {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(4, 1fr);
-    background-color: rgb(217, 236, 255);
-
-}
-
-#remote video {
-    width: 100%;
-}
-
-#local {
-    background-color: rgb(228, 255, 205);
-}
-
-#local video {
-    margin-top: 25%;
-}
-
-
+/*
 .config-one div {
     width: 50%;
     transition: 0.1s;
@@ -102,3 +132,4 @@
 .config-four div + div + div img {
     border: 1px solid pink;
 }
+*/
