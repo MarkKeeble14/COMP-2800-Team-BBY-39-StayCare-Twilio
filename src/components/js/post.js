@@ -1,17 +1,17 @@
 import $ from "jquery"
-
 import { db } from "../js/firebase"
 import { ref } from "../js/firebase"
+import {search} from "./search"
 
-import { clearSearchResults } from "./search"
-import { getSearchResults } from "./search"
-import { autocomplete } from "./search"
-import { search } from "./search"
+import {getSearchResults} from "./search"
+import {autocomplete} from "./search"
 
-let photo = document.getElementById("image-container");
-let fileRef;
-let file;
-let fullPath;
+import {clearSearchResults} from "./search"
+import {fileRef} from "../file-select"
+import {file} from "../file-select"
+import {fullPath} from "../file-select"
+
+let photo = $("#image-container");
 
 //random id for activity
 let newPostId = function () {
@@ -22,50 +22,20 @@ let newPostId = function () {
 };
 let postId = newPostId();
 
-function uploadImage(file) {
-    fileRef.put(file).then(function() {
+function uploadImage(file, ref) {
+    ref.put(file).then(function() {
         console.log("uploaded file");
     })
 }
 
 /**
- * For adding image to activity in post form, input type of filetoRead is file.
- */
-document.getElementById("filetoRead").addEventListener("change",function(){
-    console.log('event logged');
-    file = this.files[0];
-    //if a file was chosen   
-    if (file) {
-        //if the file chosen is an image
-        if ((file.type === 'image/png') || (file.type === 'image/jpg') || (file.type === 'image/jpeg')) {       
-            fullPath = "Images/activities/" + postId + file.name;
-            fileRef = ref.child(fullPath);
-
-            let reader = new FileReader();
-            // show the image in the form
-            reader.onload = function (e) {
-                photo.style.backgroundImage = "url('" + e.target.result + "')";
-            };
-            reader.onerror = function (e) {
-                console.error("An error ocurred reading the file", e);
-            };        
-            reader.readAsDataURL(file);            
-        } else {
-            alert("Please provide a png or jpg image.");
-            return false;
-        }
-    }
-}, false);
-
-
-/**
  * For clicking post button at bottom of form.
  */
-document.getElementById("post").onclick = function () {
-    let activityName = document.getElementById("activityName").value;
-    let desc = document.getElementById("description").value;
-    let time = document.getElementById("datetimepicker").value;
-    let sel = document.getElementById("maxOccupants");
+function postActivity() { 
+    let activityName = $("#activityName").val();
+    let desc = $("#description").val();
+    let time = $("#datetimepicker").val();
+    let sel = $("#maxOccupants")[0];
     let opt = sel.options[sel.selectedIndex]; 
     let maxOccupants = parseInt(opt.text);
 
@@ -115,7 +85,7 @@ document.getElementById("post").onclick = function () {
 
     if (!time || time === "") {
         $("#timeError").remove();
-        $("<p id='timeError'>" + MESSAGE.TIME + "</p>").insertBefore("#maxOccupants");
+        $("<p id='timeError'>" + MESSAGE.TIME + "</p>").insertAfter("#datetimepicker");
         $("#timeError").css("color", "red");
         $("#timeError").css("font-size", "80%");
 
@@ -134,7 +104,7 @@ document.getElementById("post").onclick = function () {
     } else {
         $("#sizeError").remove();
     }
-
+    console.log(shouldipost);
     if (shouldipost) {
         db.collection("activities").doc(postId).set({
             "title": activityName,
@@ -144,7 +114,7 @@ document.getElementById("post").onclick = function () {
             "size": maxOccupants
         }).then(function () {
             if (file) {
-                uploadImage(file);        
+                uploadImage(file, fileRef);        
             }
             refreshSearchResults();
             $("#post-form").hide();
@@ -163,24 +133,28 @@ function refreshSearchResults() {
     autocomplete(document.getElementById("myInput"), search);
 }
 
-// form is cleared when clicking on the post link button, 
-document.getElementById("post-link").onclick = function () {
-    clearForm();
-    $("#featuredActivities").hide();
-    $("#searchResultsActivities").hide();
-    $("#post-form").show();
-}
-
+/*
 document.getElementById("worker-link").onclick = function () {
     clearForm();
-    $("#featuredActivities").hide();
-    $("#searchResultsActivities").hide();
-    $("worker-registration-form").show();
-}
+    hideElement("featuredActivities");
+    hideElement("post-form");
+    showElement("worker-registration-form");
+}*/
 
 function clearForm() {
-    photo.style.backgroundImage = "url('images/img_placeholder.png')";
-    document.getElementById("activityName").value = "";
-    document.getElementById("description").value = "";
+    photo.css("background-image", "url('images/img_placeholder.png')");
+    $("#activityName").val("");
+    $("#description").val("");
     postId = newPostId();
 }
+
+export {photo}
+export {fileRef}
+export {file}
+export {fullPath}
+export {newPostId}
+export {postId}
+export {uploadImage}
+export {postActivity}
+export {refreshSearchResults}
+export {clearForm}

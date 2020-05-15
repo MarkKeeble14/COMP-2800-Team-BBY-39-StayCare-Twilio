@@ -10,6 +10,8 @@
     max-width: 600px;
     height: 80vh;
     overflow: auto;
+    display: none;
+    text-align: left;
 }
 
 #post-form > form {
@@ -27,7 +29,8 @@
     max-height: 200px;
     width: 100%;
     height: 25vh;
-    margin: 0 auto;   
+    margin: 15px auto 0;
+    border: 2px inset;    
 }
 
 #image-container > label {
@@ -44,7 +47,6 @@
 }
 
 #datetimepicker {
-    margin: 2% 0;
     background-color: white;
     border: 1px solid lightgray;
     border-radius: 5px;
