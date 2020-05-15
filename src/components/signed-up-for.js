@@ -12,7 +12,7 @@ const SignedUpFor = () => {
     let activities = [];
 
     function GetActivities() {
-        ClearActivities();
+        // ClearActivities();
 
         firebase.auth().onAuthStateChanged(function (user) {
             if (user != null) {
