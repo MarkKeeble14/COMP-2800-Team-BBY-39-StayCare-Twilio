@@ -37,7 +37,7 @@ const Navbar = () => {
                         <Link to="/room">My Activities</Link>
                     </li>
                     <li className="nav-item">
-                        Login
+                        <Link to="/login">login</Link>
                     </li>
                     <li className="nav-item" id="post-link" onClick={post}>
                         Post Activity
