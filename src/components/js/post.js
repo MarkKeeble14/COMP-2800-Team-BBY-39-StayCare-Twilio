@@ -110,6 +110,7 @@ function postActivity() {
     console.log(shouldipost);
     if (shouldipost) {
         db.collection("activities").doc(postId).set({
+            "key": Math.random().toString(36).substr(2, 9),
             "title": activityName,
             "description": desc,
             "image": fullPath,
@@ -120,6 +121,7 @@ function postActivity() {
                 uploadImage(file, fileRef);        
             }
             refreshSearchResults();
+            window.location.replace("./");
         });        
     } else {
         console.log("error. did not upload");
