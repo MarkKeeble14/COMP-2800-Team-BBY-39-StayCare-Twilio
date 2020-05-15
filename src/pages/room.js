@@ -53,7 +53,7 @@ const RoomPage = () => {
   
   return (
     <Layout>
-      <SEO title="StayCare | Home"/>
+      <SEO title="StayCare | Rooms"/>
       <SignedUpFor></SignedUpFor>
       <CustomQueryString></CustomQueryString>
       {!token ? <JoinRoomForm storeToken={setToken} /> : <Video token={token} id="video"/>}

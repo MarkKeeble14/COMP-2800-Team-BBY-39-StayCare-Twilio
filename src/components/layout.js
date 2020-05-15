@@ -11,13 +11,15 @@ import PropTypes from "prop-types"
 import Profile from "../components/profile";
 import Footer from "./footer"
 import NAV from "./nav"
+import SearchResults from "../components/search-results"
 
 const Layout = ({ children }) => {
   return (
     <>
       <NAV />
-      <Profile />
+      <SearchResults />
       <Footer />
+      <Profile />
       <main id="layout-contents">
         {children}
       </main>

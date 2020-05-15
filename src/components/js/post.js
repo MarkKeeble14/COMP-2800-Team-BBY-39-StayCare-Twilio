@@ -1,6 +1,5 @@
 import $ from "jquery"
 import { db } from "../js/firebase"
-import { ref } from "../js/firebase"
 import {search} from "./search"
 
 import {getSearchResults} from "./search"
@@ -11,7 +10,11 @@ import {fileRef} from "../file-select"
 import {file} from "../file-select"
 import {fullPath} from "../file-select"
 
-let photo = $("#image-container");
+let photo = null;
+if (typeof window !== "undefined" && typeof window.document !== "undefined") {
+    // browser
+    let photo = $("#image-container");
+}
 
 //random id for activity
 let newPostId = function () {

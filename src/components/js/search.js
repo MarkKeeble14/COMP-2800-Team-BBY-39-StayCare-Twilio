@@ -1,6 +1,7 @@
 import $ from "jquery"
 import {db} from "./firebase"
 import {ref} from "./firebase"
+import { firebase } from "./firebase"
 import "../css/search.css"
 
 let search = [];
@@ -133,7 +134,6 @@ function autocomplete(input, array) {
 }
 
 function showSearchResults() {
-  console.log("clicked this");
   toggleNav();
 
   if ($("#myInput").val() !== "") {
@@ -165,6 +165,23 @@ function showActivity(result) {
 
   $("<p class='card-text left'>Room Size: " + result.data().size + " spots</p>").appendTo(resultId + " .card-body");
 
+  $("<button id='signUpButton'>Sign Up</button>").appendTo(resultId + " .card-body");
+
+  function signUp() {
+    $('#signUpButton').on('click', function() {
+      console.log('signing up for an activity');
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          db.collection("users").doc(user.uid)
+            .update({
+              myActivities: firebase.firestore.FieldValue.arrayUnion(result.data()) //Add the result object to "my activities" database
+            });
+        }
+      })
+    })
+  }
+
+  signUp();
 }
 
 function getWrittenDate(dateString) {
@@ -207,7 +224,6 @@ function clearInput() {
 }
 
 function toggleNav() {
-  console.log("clicked");
   let expanded = $("#navToggler").attr("aria-expanded");
   if (expanded === "true" && window.innerWidth < 992) {
     $("#navToggler").click();

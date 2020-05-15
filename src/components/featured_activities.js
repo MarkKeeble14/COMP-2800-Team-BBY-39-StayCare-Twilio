@@ -12,9 +12,7 @@ const FeaturedActivities = () => {
     function getActivities() {   
         db.collection("activities").get()
         .then(function (snap) {      
-            console.log('accessed');
             snap.forEach(function (doc) {
-                // console.log(doc);
                 activityDocs.push(doc);
             });
         }).then(function () {  
@@ -23,8 +21,6 @@ const FeaturedActivities = () => {
     }
 
     function getWrittenDate(dateString) {
-
-
         let hour = parseInt(dateString.substr(0, 2));
         
         let ampm = "AM";
@@ -54,7 +50,6 @@ const FeaturedActivities = () => {
           date: date,
           time: time
         }
-      
       }
 
 

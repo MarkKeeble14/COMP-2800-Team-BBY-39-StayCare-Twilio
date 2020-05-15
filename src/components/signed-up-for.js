@@ -8,7 +8,7 @@ import $ from "jquery"
 
 const SignedUpFor = () => {
     const [room, setRoom] = useQueryParam("room", StringParam);
-    let enrolledIn = [4];
+    let activities = [];
 
     let testacts = { 0: 'Fingerpainting', 1: 'Mixing Colors', 2: 'Playing Guitar', 3: 'Just Chatting' , 4: 'Storytime' };
     let testworkers = { 0: 'Charlie', 1: 'Maddie', 2: 'Todd', 3: 'Philis' , 4: 'Chad', 5: 'Tanner' };
@@ -21,37 +21,35 @@ const SignedUpFor = () => {
         // Append to signed-up-for? 
         firebase.auth().onAuthStateChanged(function (user) {
             if (user != null) {
-                db.collection("users").doc(user.uid)
-                .collection("EnrolledIn").get().then(function (snap) {
-                    snap.forEach(function (doc) {
-                        console.log(doc);
-                        enrolledIn.push(doc);
+                db.collection("users").doc(user.uid).get()
+                .then(function (snap) {
+                    snap.data().myActivities.forEach(function (myActivity) {
+                        activities.push(myActivity);
                     })
+                }).then(function (result) {
+                    ShowMyActivities();
                 })
             }
         })
     }
 
-    function ShowEnrolledIn() {
-        for (let i = 0; i < testamnt; i++) {
-            let id = "activity" + (Object.keys(enrolledIn).length);
-            let i = Math.floor(Math.random() * 4);
-            let name = testacts[i];
+    function ShowMyActivities() {
+        for (let i = 0; i < (Object.keys(activities).length); i++) {
+            let id = "activity" + i;
+            let name = activities[i].title;
+            // key should be the document name
             let key = Math.random().toString(36).substr(2, 9);
-            i = Math.floor(Math.random() * 5);
+
+            // temp
+            let p = Math.floor(Math.random() * 5);
             let worker = testworkers[i];
-            let time = Math.floor(Math.random() * 12) + ':' + Math.floor(Math.random() * 60) + ' - ' 
-                + Math.floor(Math.random() * 12) + ':' + Math.floor(Math.random() * 60);
-            let activity = { 0: id, 1: name, 2: key, 3: worker, 4: time };
-            enrolledIn.push(activity);
-            // console.log([Object.keys(enrolledIn).length]);
+
+            let time = activities[i].time;
             CreateActivity(id, name, key, worker, time);
         }
     }
 
     function CreateActivity(id, name, key, worker, time) {
-        // console.log(name);
-        
         $('#signed-up-for').append(
             $( "<div class='activity' id='" + id + "'></div>" )
         );
@@ -78,7 +76,7 @@ const SignedUpFor = () => {
 
     return (
         <div id="signed-up-for">
-            <input type="button" onClick={ShowEnrolledIn} value="generate" id="tmp"/>
+            <input type="button" onClick={GetActivities} value="generate" id="tmp"/>
         </div>
     )
 }

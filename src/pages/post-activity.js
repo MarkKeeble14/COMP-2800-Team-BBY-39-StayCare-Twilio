@@ -7,7 +7,7 @@ import "../components/css/main.css"
 const PostActivityPage = () => {
     return (
       <Layout>
-        <SEO title="StayCare | About"/>
+        <SEO title="StayCare | Post"/>
         <PostForm></PostForm>
       </Layout>
     )
