@@ -1,10 +1,11 @@
 import React, { useState, useContext } from "react";
 import { firebase } from "./js/firebase"
-import { Link } from "gatsby"
+import { db } from "./js/firebase"
+import { generateUserDocument } from "./js/firebase"
 
 const AuthContext = React.createContext(null);
 
-const Login = () => {
+const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setErrors] = useState("");
@@ -13,21 +14,24 @@ const Login = () => {
   const handleForm = e => {
     e.preventDefault();
     firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(res => {
-      console.log(res)
-      console.log(res.user.displayName);
-      window.location.replace("./");
-    })
-    .catch(e => {
-      setErrors(e.message);
-    });
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(res => {
+        generateUserDocument(res.user)
+        .then(result => function() {
+          db.collection('users').add(result);
+        }).then(res => {
+            window.location.replace("./");
+        });
+      })
+      .catch(e => {
+        setErrors(e.message);
+      });
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Sign Up Now!</h1>
       <form onSubmit={e => handleForm(e)}>
         <input
           value={email}
@@ -44,12 +48,13 @@ const Login = () => {
           placeholder="password"
         />
         <hr />
+
         <button type="submit">Login</button>
-        <Link to="/signup">Don't have an account? Sign up here!</Link>
+
         <span>{error}</span>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;

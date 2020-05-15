@@ -1,20 +1,18 @@
 import React from "react"
 
-
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import Login from "../components/login"
+import SignUp from "../components/signUp"
 
 import "../components/css/main.css"
 
-const LoginPage = () => {
+const SignUpPage = () => {
     return (
       <Layout>
-        <SEO title="StayCare | Login"/>
-        <Login></Login>
-        
+        <SEO title="StayCare | Signup"/>
+        <SignUp></SignUp>
       </Layout>
     )
   }
   
-  export default LoginPage
+  export default SignUpPage
