@@ -10,6 +10,8 @@
     max-width: 600px;
     height: 80vh;
     overflow: auto;
+    display: none;
+    text-align: left;
 }
 
 #image-container {
@@ -22,8 +24,8 @@
     max-height: 200px;
     width: 90%;
     height: 25vh;
-    margin: 0 auto;
-    margin: 15px;    
+    margin: 15px auto 0;
+    border: 5px inset;    
 }
 
 #image-container > label {
@@ -40,7 +42,6 @@
 }
 
 #datetimepicker {
-    margin: 2% 0;
     background-color: white;
     border: 1px solid lightgray;
     border-radius: 5px;
@@ -48,3 +49,5 @@
     height: 35px;
     padding: 12px;
 }
+
+

@@ -24,7 +24,7 @@ const About = () => {
                 </div>
             </div>
             <div id="paragraph-container">
-                <p> Hey! We're the team behind StayCare, the online daycare! Our goal was to created some kind of service which would help give parents
+                <p> Hey! We're the team behind StayCare, the online daycare! Our goal was to create some kind of service which would help give parents
                     an opporotunity away from their kids while offering a fun, healthy, and interactive form of entertainment.
                     <br/>
                     <br/>
