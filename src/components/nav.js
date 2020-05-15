@@ -16,10 +16,7 @@ const Navbar = () => {
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
                         <Link to="/">My Activities</Link>
-                    </li>
-                    <li className="nav-item">
-                        <Link to="/login">Login</Link>
-                    </li>
+                    </li>  
                     <li className="nav-item" id="post-link">
                         <Link to="/post-activity">Post Activity</Link>
                     </li>
@@ -30,6 +27,10 @@ const Navbar = () => {
                     <li className="nav-item">
                         <Link to="/about">About Us</Link>
                     </li>
+                    <li className="nav-item">
+                        <Link to="/login">Login</Link>
+                    </li>
+
                 </ul>
 
                 <form className="form-inline my-2 my-lg-0" autoComplete="off">
