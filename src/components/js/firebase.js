@@ -27,6 +27,7 @@ export const signInWithGoogle = () => {
 };
 
 export const generateUserDocument = async (user, additionalData) => {
+  console.log(user);
   if (!user) return;
 
   const userRef = db.doc(`users/${user.uid}`);
@@ -65,5 +66,4 @@ const getUserDocument = async uid => {
 export { db };
 export { ref };
 export { auth };
-
 export { firebase }

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
-import * as firebase from 'firebase'
+import { firebase } from "./js/firebase"
 import { Link } from "gatsby"
-
 
 const AuthContext = React.createContext(null);
 
@@ -12,7 +11,6 @@ const Login = () => {
 
   const Auth = useContext(AuthContext);
   const handleForm = e => {
-
     e.preventDefault();
     firebase
     .auth()
@@ -21,7 +19,6 @@ const Login = () => {
       console.log(res)
       console.log(res.user.displayName);
       window.location.replace("./");
-
     })
     .catch(e => {
       setErrors(e.message);

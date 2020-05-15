@@ -59,7 +59,6 @@ const RoomPage = () => {
           <>
           <SignedUpFor />
           <JoinRoomForm storeToken={setToken} /> 
-          
           </>
         : <Video token={token} id="video"/>
       }

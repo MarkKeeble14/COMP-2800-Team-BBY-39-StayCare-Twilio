@@ -1,5 +1,7 @@
 import React, { useState, useContext } from "react";
-import * as firebase from 'firebase'
+import { firebase } from "./js/firebase"
+import { db } from "./js/firebase"
+import { generateUserDocument } from "./js/firebase"
 
 const AuthContext = React.createContext(null);
 
@@ -15,8 +17,12 @@ const SignUp = () => {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(res => {
-        console.log(res)
-        window.location.replace("./");
+        generateUserDocument(res.user)
+        .then(result => function() {
+          db.collection('users').add(result);
+        }).then(res => {
+            window.location.replace("./");
+        });
       })
       .catch(e => {
         setErrors(e.message);

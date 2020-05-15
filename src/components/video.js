@@ -48,7 +48,7 @@ const Video = ({token}) => {
       // Can put code here to set database info on room -------------------
         TwilioVideo.connect(token, { video: true, audio: true, name: roomname }).then(
           room => {
-        //console.log(roomname);
+        console.log("Joining: " + roomname);
           // Attach local video
           TwilioVideo.createLocalVideoTrack().then(track => {
             localVidRef.current.appendChild(track.attach())
