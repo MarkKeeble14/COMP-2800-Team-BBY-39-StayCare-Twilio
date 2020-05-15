@@ -12,8 +12,6 @@ const SignedUpFor = () => {
     let activities = [];
 
     function GetActivities() {
-        ClearActivities();
-        
         firebase.auth().onAuthStateChanged(function (user) {
             if (user != null) {
                 db.collection("users").doc(user.uid).get()
@@ -54,13 +52,6 @@ const SignedUpFor = () => {
             CreateActivity(id, name, key, worker, time);
         }
     }
-
-    
-    function ClearActivities() {
-        $('#signed-up-for').replaceWith("<div id='signed-up-for'></div>");
-        console.log('cleared');
-    }
-    
 
     function CreateActivity(id, name, key, worker, time) {
         $('#signed-up-for').append(
