@@ -1,4 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
+import $ from "jquery"
+import {db} from "./js/firebase"
+import {firebase} from "./js/firebase"
 import classnames from "classnames";
 import "./css/footer.css"
 
@@ -12,7 +15,6 @@ function toggle() {
     if (profile != null) {
         profile.classList.toggle('active');
     }
-    console.log("Blur: " + blur + ", Profile: " + profile);
 }
 
 export default class Navbar extends Component {
@@ -28,6 +30,14 @@ export default class Navbar extends Component {
   // Adds an event listener when the component is mount.
   componentDidMount() {
     window.addEventListener("scroll", this.handleScroll);
+
+    // Set Name
+    firebase.auth().onAuthStateChanged(function (user) {
+      if (user != null) {
+        console.log('logged in as: ' + user.email);
+        $('#footer-name-display').text(user.email);
+      }
+    })
   }
 
   // Remove the event listener when the component is unmount.
@@ -57,7 +67,7 @@ export default class Navbar extends Component {
       >
             <img src="https://dummyimage.com/400x400/000/fff" alt="pic" id="profile-pic" className="rounded-circle"
                 onClick={toggle}/>
-            <h1>Todd</h1>
+            <h1 id="footer-name-display"></h1>
       </footer>
     );
   }

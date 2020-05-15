@@ -6,31 +6,41 @@ import "./css/signed-up-for.css"
 import { useQueryParam, StringParam } from "use-query-params";
 import $ from "jquery"
 
+let generated;
 const SignedUpFor = () => {
+    generated = false;
     const [room, setRoom] = useQueryParam("room", StringParam);
+    let testworkers = { 0: 'Charlie', 1: 'Maddie', 2: 'Todd', 3: 'Philis' , 4: 'Chad', 5: 'Tanner' };
     let activities = [];
 
-    let testacts = { 0: 'Fingerpainting', 1: 'Mixing Colors', 2: 'Playing Guitar', 3: 'Just Chatting' , 4: 'Storytime' };
-    let testworkers = { 0: 'Charlie', 1: 'Maddie', 2: 'Todd', 3: 'Philis' , 4: 'Chad', 5: 'Tanner' };
-    let testamnt = 4;
-    
     function GetActivities() {
-        // Access Database
-        // See the activities the current user is signed up for
-        // Create an 'activity' in the list for each activity, pass in correct values
-        // Append to signed-up-for? 
+        console.log(generated);
+        if (generated) {
+            return;
+        }
         firebase.auth().onAuthStateChanged(function (user) {
             if (user != null) {
                 db.collection("users").doc(user.uid).get()
                 .then(function (snap) {
                     snap.data().myActivities.forEach(function (myActivity) {
-                        activities.push(myActivity);
+                        var contains = false;
+                        var i;
+                        for (i = 0; i < activities.length; i++) {
+                            if (activities[i] == myActivity) {
+                                contains = true;
+                                break;
+                            }
+                        }
+                        if (!contains) {
+                            activities.push(myActivity);
+                        }
                     })
                 }).then(function (result) {
                     ShowMyActivities();
                 })
             }
         })
+        generated = true;
     }
 
     function ShowMyActivities() {
@@ -42,9 +52,10 @@ const SignedUpFor = () => {
 
             // temp
             let p = Math.floor(Math.random() * 5);
-            let worker = testworkers[i];
+            let worker = testworkers[p];
 
             let time = activities[i].time;
+
             CreateActivity(id, name, key, worker, time);
         }
     }
@@ -68,16 +79,18 @@ const SignedUpFor = () => {
         })
     }
 
+    GetActivities();
+
     function EnterRoom(name) {
-        console.log(name);
+        generated = true;
         setRoom(name);
         $('#join').text('Join: ' + name);
     }
 
     return (
         <div id="signed-up-for">
-            <input type="button" onClick={GetActivities} value="generate" id="tmp"/>
         </div>
     )
 }
 export default SignedUpFor
+export { generated }
