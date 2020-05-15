@@ -6,18 +6,14 @@ import "./css/signed-up-for.css"
 import { useQueryParam, StringParam } from "use-query-params";
 import $ from "jquery"
 
-let generated;
 const SignedUpFor = () => {
-    generated = false;
     const [room, setRoom] = useQueryParam("room", StringParam);
     let testworkers = { 0: 'Charlie', 1: 'Maddie', 2: 'Todd', 3: 'Philis' , 4: 'Chad', 5: 'Tanner' };
     let activities = [];
 
     function GetActivities() {
-        console.log(generated);
-        if (generated) {
-            return;
-        }
+        ClearActivities();
+        
         firebase.auth().onAuthStateChanged(function (user) {
             if (user != null) {
                 db.collection("users").doc(user.uid).get()
@@ -40,7 +36,6 @@ const SignedUpFor = () => {
                 })
             }
         })
-        generated = true;
     }
 
     function ShowMyActivities() {
@@ -48,7 +43,7 @@ const SignedUpFor = () => {
             let id = "activity" + i;
             let name = activities[i].title;
             // key should be the document name
-            let key = Math.random().toString(36).substr(2, 9);
+            let key = activities[i].key;
 
             // temp
             let p = Math.floor(Math.random() * 5);
@@ -59,6 +54,13 @@ const SignedUpFor = () => {
             CreateActivity(id, name, key, worker, time);
         }
     }
+
+    
+    function ClearActivities() {
+        $('#signed-up-for').replaceWith("<div id='signed-up-for'></div>");
+        console.log('cleared');
+    }
+    
 
     function CreateActivity(id, name, key, worker, time) {
         $('#signed-up-for').append(
@@ -82,7 +84,6 @@ const SignedUpFor = () => {
     GetActivities();
 
     function EnterRoom(name) {
-        generated = true;
         setRoom(name);
         $('#join').text('Join: ' + name);
     }
@@ -93,4 +94,3 @@ const SignedUpFor = () => {
     )
 }
 export default SignedUpFor
-export { generated }
