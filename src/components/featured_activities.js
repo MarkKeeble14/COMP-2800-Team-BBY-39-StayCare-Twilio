@@ -5,6 +5,7 @@ import * as $ from 'jquery';
 import { db } from "./js/firebase"
 import { ref } from "./js/firebase"
 
+
 const FeaturedActivities = () => {
     let activityDocs = []; 
 
