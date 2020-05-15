@@ -5,9 +5,6 @@ import "../css/search.css"
 
 let search = [];
 let results = [];
-export { search }
-
-getSearchResults(["activities"]);
 
 function getSearchResults(array) {
   for (let i = 0; i < array.length; i++) {
@@ -21,16 +18,13 @@ function getSearchResults(array) {
       })
   }
 }
-export {getSearchResults}
 
 function clearSearchResults() {
   search = [];
 }
-export {clearSearchResults}
 
 function autocomplete(input, array) {
   var currentFocus;
-
   input.on("input", function (e) {
     let val = input.val();
 
@@ -42,7 +36,6 @@ function autocomplete(input, array) {
       return false;
     }
     currentFocus = -1;
-
 
     let a = document.createElement("div");
     a.setAttribute("id", this.id + "autocomplete-list");

@@ -7,22 +7,6 @@ import { clearForm } from "./js/post"
 import {toggleNav} from "./js/search"
 
 const Navbar = () => {
-
-    function post() {
-        toggleNav();
-        clearForm();
-        $("#featuredActivities").hide();
-        $("#about-us-container").hide();
-        $("#post-form").show();
-    }
-
-    function about() {
-        toggleNav();
-        $("#featuredActivities").hide();
-        $("#post-form").hide();
-        $("#about-us-container").show();
-    }
-
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-yellow w-shadow">
             <Link to="/" id="home">StayCare</Link>
@@ -37,19 +21,19 @@ const Navbar = () => {
                         <Link to="/room">My Activities</Link>
                     </li>
                     <li className="nav-item">
-                        Login
+                        <Link to="/login">Login</Link>
                     </li>
-                    <li className="nav-item" id="post-link" onClick={post}>
-                        Post Activity
+                    <li className="nav-item" id="post-link">
+                        <Link to="/post-activity">Post Activity</Link>
                     </li>
                     <li className="nav-item" id="worker-link"> 
-                        Apply
+                        <Link to="/">Apply</Link>
                     </li>
-                    <li className="nav-item" id="about-us-link" onClick={about}> 
-                        About Us
+                    <li className="nav-item" id="about-us-link"> 
+                        <Link to="/about">About Us</Link>
                     </li>
                 </ul>
-                <SearchBar />
+                <SearchBar/>
             </div>
         </nav>
     )

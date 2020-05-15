@@ -8,9 +8,7 @@ const BlurArea = () => {
     return (
         <div id="blur">
             <SearchResults />
-            <PostForm />
             <FeaturedActivities />
-            <About />
         </div>
     )
 }

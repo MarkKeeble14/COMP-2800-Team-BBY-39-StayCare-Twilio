@@ -17,7 +17,7 @@ export class FileSelector extends React.Component
     }
 
     handleChange(selectorFiles) {
-        console.log(selectorFiles);
+        // console.log(selectorFiles);
         file = selectorFiles[0];
         //if a file was chosen   
         if (file) {
@@ -30,7 +30,7 @@ export class FileSelector extends React.Component
                 // show the image in the form
                 reader.onload = function (e) {
                     console.log("working");
-                    console.log(e.target.result);
+                    // console.log(e.target.result);
                     $("#image-container").css("background-image", "url('" + e.target.result + "')");
                 };
                 reader.onerror = function (e) {
