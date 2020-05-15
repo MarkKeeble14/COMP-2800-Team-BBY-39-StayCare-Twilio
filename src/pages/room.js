@@ -32,7 +32,6 @@ const JoinRoomForm = ({storeToken}) => {
     
           const jwt = result.data;
           storeToken(jwt);
-          console.log(jwt);
     }
   }
 
@@ -53,10 +52,16 @@ const RoomPage = () => {
   
   return (
     <Layout>
-      <SEO title="StayCare | Rooms"/>
-      <SignedUpFor></SignedUpFor>
+      <SEO title="StayCare | Home"/>
       <CustomQueryString></CustomQueryString>
-      {!token ? <JoinRoomForm storeToken={setToken} /> : <Video token={token} id="video"/>}
+      {
+        !token ? 
+          <>
+          <SignedUpFor />
+          <JoinRoomForm storeToken={setToken} /> 
+          </>
+        : <Video token={token} id="video"/>
+      }
     </Layout>
   )
 }

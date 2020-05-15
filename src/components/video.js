@@ -55,7 +55,7 @@ const Video = ({token}) => {
           })  
   
           const addParticipant = participant => {
-            console.log("New Participant: " + participant.identity);
+            //console.log("New Participant: " + participant.identity);
             participant.tracks.forEach(publication => {
               if (publication.isSubscribed) {
                 const track = publication.track;
@@ -132,20 +132,24 @@ const Video = ({token}) => {
 
     return  (
         <div className="content">
-            <input type="button" id="mute-video" value="Video"/>
-            <input type="button" id="mute-audio" value="Audio"/>
-            <input type="button" id="swap-config" value="Swap"/>
-            <input type="button" id="disconnect" value="Leave"/>
+            <div id="controls">
+                <input type="button" id="mute-video" value="Video"/>
+                <input type="button" id="mute-audio" value="Audio"/>
+                <input type="button" id="disconnect" value="Leave"/>
+            </div>
+            
             <div id="room-info">
-                <h1 className="room-name">Room Name</h1>
+                <h2 className="room-name">Room Name</h2>
                 <h3 className="room-activity">Room Activity</h3>
             </div>
             <div id="stream-container" className="config-one" ref={streamCont}>
-                <div ref={localVidRef}/>
-                <div ref={remoteVidRef}/>
+                <div id="local" ref={localVidRef}/>
+                <div id="remote" ref={remoteVidRef}/>
             </div>
-      </div>
+        </div>
     )
 }
 
 export default Video;
+
+//<input type="button" id="swap-config" value="Swap"/>
