@@ -1,15 +1,16 @@
 import React from "react"
-import Layout from "../components/layout"
 import SEO from "../components/seo"
-import About from "../components/about"
-
+import Layout from "../components/layout-no-nav"
+import LandingContents from "../components/landing-cotents-about"
+import AboutPictures from "../components/about-us-pictures"
 import "../components/css/main.css"
 
 const AboutPage = () => {
     return (
       <Layout>
         <SEO title="StayCare | About"/>
-        <About></About>
+        <LandingContents></LandingContents>
+        <AboutPictures></AboutPictures>
       </Layout>
     )
   }

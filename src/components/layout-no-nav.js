@@ -16,8 +16,6 @@ import SearchResults from "../components/search-results"
 const Layout = ({ children }) => {
   return (
     <>
-      <NAV />
-      <SearchResults/>
       <main id="layout-contents">
         {children}
       </main>

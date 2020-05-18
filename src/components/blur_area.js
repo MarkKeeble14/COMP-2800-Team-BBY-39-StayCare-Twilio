@@ -6,7 +6,7 @@ import About from "../components/about"
 const BlurArea = () => {
     return (
         <div id="blur">
-            <FeaturedActivities />
+            <FeaturedActivities/>
         </div>
     )
 }

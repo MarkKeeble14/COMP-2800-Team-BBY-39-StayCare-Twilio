@@ -64,6 +64,8 @@
     position: absolute;
     top: 70px;
     text-align: left;
+
+    padding: 2%;
 }
 
 #controls {

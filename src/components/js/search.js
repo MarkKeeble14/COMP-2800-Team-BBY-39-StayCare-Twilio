@@ -91,7 +91,7 @@ function autocomplete(input, array) {
       e.preventDefault();
       if (currentFocus > -1) {
         // and simulate a click on the "active" item
-        if (x) {
+        if (x && x[currentFocus]) {
           x[currentFocus].click();
         }
         currentFocus = -1;
@@ -133,6 +133,11 @@ function autocomplete(input, array) {
   })
 }
 
+function hideSearchResults() {
+  console.log('search results hidden');
+  $("#searchResultsActivities *").remove();
+}
+
 function showSearchResults() {
   toggleNav();
 
@@ -142,14 +147,19 @@ function showSearchResults() {
 
     let searchInput = $("#myInput").val();
     $("<h4 id='showingFor'>Showing search results for \"" + searchInput + "\"</h4>").appendTo("#searchResultsActivities");
-    $("#showingFor").css("padding", "5%");
+    $("<input type='button' id='hideSearchResults' value='Hide Search Results' class='btn btn-white btn-animation-1'></input>").appendTo("#searchResultsActivities");
+    $("#hideSearchResults").on('click', function() {
+      console.log('search results hidden');
+      $("#searchResultsActivities *").remove();
+    })
+    $("<div id='searchResultsActivitiesContainer'></div>").appendTo("#searchResultsActivities");
     results.forEach(result => showActivity(result));    
   }
 }
 
 function showActivity(result) {
   let resultId = "#" + result.id;
-  $("<div class='card flex' id='" + result.id + "'></div>").appendTo("#searchResultsActivities");
+  $("<div class='card flex' id='" + result.id + "'></div>").appendTo("#searchResultsActivitiesContainer");
 
   ref.child(result.data().image).getDownloadURL().then(function (url) {
     $("<img class='card-img-top' src='" + url + "'></img>").prependTo(resultId);
@@ -157,6 +167,7 @@ function showActivity(result) {
   $("<div class='card-body'></div>").appendTo(resultId);
 
   $("<h4 class='card-title left'>" + result.data().title + "</h4>").appendTo(resultId + " .card-body");
+  $("<p class='card-worker left'>" + "with " + result.data().worker + "</p>").appendTo(resultId + " .card-body");
   $("<p class='card-text left'>" + result.data().description + "</p>").appendTo(resultId + " .card-body");
 
   let scheduledTime = getWrittenDate(result.data().time);
@@ -165,17 +176,20 @@ function showActivity(result) {
 
   $("<p class='card-text left'>Room Size: " + result.data().size + " spots</p>").appendTo(resultId + " .card-body");
 
-  $("<button id='signUpButton'>Sign Up</button>").appendTo(resultId + " .card-body");
+  $("<div class='box'><input type='submit' id='signUpButton' class='btn btn-white btn-animation-1 middled-button' value='Sign Up!'/></div>").appendTo(resultId + " .card-body");
 
   function signUp() {
     $('#signUpButton').on('click', function() {
       console.log('signing up for an activity');
       firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
+          alert("You've signed up for " + result.data().title + '!');
           db.collection("users").doc(user.uid)
             .update({
               myActivities: firebase.firestore.FieldValue.arrayUnion(result.data()) //Add the result object to "my activities" database
             });
+        } else {
+          alert('please login or signup for an account');
         }
       })
     })

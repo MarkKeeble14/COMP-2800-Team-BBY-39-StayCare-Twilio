@@ -1,10 +1,11 @@
 import React from 'react'
 import "./css/featured_activities.css"
+import "./css/temp.css"
 import "./js/carousel_controller.js"
-import * as $ from 'jquery';
-import { db } from "./js/firebase"
-import { ref } from "./js/firebase"
-
+import $ from "jquery"
+import {db} from "./js/firebase"
+import {ref} from "./js/firebase"
+import {firebase} from "./js/firebase"
 
 const FeaturedActivities = () => {
     let activityDocs = []; 
@@ -61,13 +62,17 @@ const FeaturedActivities = () => {
             let thisDate = getWrittenDate(data.time);
             let sched = "Scheduled for: " + thisDate.time + " on " + thisDate.date; 
             let size = "Room Size: " + data.size + " spots";
+            let key = data.key;
             ref.child(path).getDownloadURL().then(function(url) {
                 // console.log("image found at path: " + path);
                 $(id + " img").attr("src", url);
-                $(id + " .activityInfo .title").text(data.title);
+                $(id + " .activityInfo .title").text(data.title + " with " + data.worker);
                 $(id + " .activityInfo .description").text(data.description);
                 $(id + " .activityInfo .schedule").text(sched);
                 $(id + " .activityInfo .roomSize").text(size);
+
+                $(id + " .activityInfo .keyValue").text(key);
+                $(id + " .activityInfo .keyValue").addClass('inactive');
             }).catch(function(error) {
                 console.log("error getting download url");
             });
@@ -75,6 +80,32 @@ const FeaturedActivities = () => {
     }
     
     getActivities();
+
+    async function AddToActivities() {
+        let activeItem = $('.active')[0];
+        let slide = activeItem.id.substring(activeItem.id.length - 1, activeItem.id.length);
+        let key = $('#keyValue' + slide).html();
+
+        console.log($('#keyValue' + slide).html());
+        console.log('signing up for an activity');
+        const snapshot = await firebase.firestore().collection('activities').get();
+        console.log(snapshot.docs);
+        for (let i = 0; i < snapshot.docs.length; i++) {
+            if (snapshot.docs[i].data().key == key) {
+                firebase.auth().onAuthStateChanged(function (user) {
+                if (user) {
+                    alert("You've signed up for " + snapshot.docs[i].data().title + '!');
+                    db.collection("users").doc(user.uid)
+                    .update({
+                        myActivities: firebase.firestore.FieldValue.arrayUnion(snapshot.docs[i].data()) //Add the result object to "my activities" database
+                    });
+                } else {
+                    alert('please login or signup for an account');
+                }
+                })
+            }
+        }
+    }
 
     return (
         <div id="featuredActivities">
@@ -86,50 +117,65 @@ const FeaturedActivities = () => {
                             <img className="d-block" src="images/img_placeholder.png" alt="First slide"/>
                             <div className="activityInfo">
                                 <h3 className="title"></h3>
-                                <h4 className="leaderName"></h4>
                                 <p className="description"></p>
-                                <h6 className="schedule"></h6>
-                                <h6 className="roomSize"></h6>
+                                <p className="schedule"></p>
+                                <p className="roomSize"></p>
+                                <p className="keyValue" id="keyValue1"></p>
+                            </div>
+                            <div className="box">
+                                <input type="button" className="btn btn-white btn-animation-1 middled-button" value='Add To Activities' onClick={AddToActivities}/>
                             </div>
                         </div>
                         <div id="featured2" className="carousel-item">
                             <img className="d-block" src="images/img_placeholder.png" alt="Second slide"/>
                             <div className="activityInfo">
                                 <h3 className="title"></h3>
-                                <h4 className="leaderName"></h4>
                                 <p className="description"></p>
-                                <h6 className="schedule"></h6>
-                                <h6 className="roomSize"></h6>
+                                <p className="schedule"></p>
+                                <p className="roomSize"></p>
+                                <p className="keyValue" id="keyValue2"></p>
+                            </div>
+                            <div className="box">
+                                <input type="button" className="btn btn-white btn-animation-1 middled-button" value='Add To Activities' onClick={AddToActivities}/>
                             </div>
                         </div>
                         <div id="featured3" className="carousel-item">
                             <img className="d-block" src="images/img_placeholder.png" alt="Third slide"/>
                             <div className="activityInfo">
                                 <h3 className="title"></h3>
-                                <h4 className="leaderName"></h4>
                                 <p className="description"></p>
-                                <h6 className="schedule"></h6>
-                                <h6 className="roomSize"></h6>
+                                <p className="schedule"></p>
+                                <p className="roomSize"></p>
+                                <p className="keyValue" id="keyValue3"></p>
+                            </div>
+                            <div className="box">
+                                <input type="button" className="btn btn-white btn-animation-1 middled-button" value='Add To Activities' onClick={AddToActivities}/>
                             </div>
                         </div>
                         <div id="featured4" className="carousel-item">
                             <img className="d-block" src="images/img_placeholder.png" alt="Fourth slide"/>
                             <div className="activityInfo">
                                 <h3 className="title"></h3>
-                                <h4 className="leaderName"></h4>
                                 <p className="description"></p>
-                                <h6 className="schedule"></h6>
-                                <h6 className="roomSize"></h6>
+                                <p className="schedule"></p>
+                                <p className="roomSize"></p>
+                                <p className="keyValue" id="keyValue4"></p>
+                            </div>
+                            <div className="box">
+                                <input type="button" className="btn btn-white btn-animation-1 middled-button" value='Add To Activities' onClick={AddToActivities}/>
                             </div>
                         </div>
                         <div id="featured5" className="carousel-item">
                             <img className="d-block" src="images/img_placeholder.png" alt="Fifth slide"/>
                             <div className="activityInfo">
                                 <h3 className="title"></h3>
-                                <h4 className="leaderName"></h4>
                                 <p className="description"></p>
-                                <h6 className="schedule"></h6>
-                                <h6 className="roomSize"></h6>
+                                <p className="schedule"></p>
+                                <p className="roomSize"></p>
+                                <p className="keyValue" id="keyValue5"></p>
+                            </div>
+                            <div className="box">
+                                <input type="button" className="btn btn-white btn-animation-1 middled-button" value='Add To Activities' onClick={AddToActivities}/>
                             </div>
                         </div>
                     </div>
@@ -141,13 +187,6 @@ const FeaturedActivities = () => {
                         <span className="carousel-control-next-icon" aria-hidden="true"></span>
                         <span className="sr-only">Next</span>
                     </a>
-                    <ol className="carousel-indicators">
-                        <li data-target="#carouselExampleIndicators" data-slide-to="0" className="active"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-                        <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
-                    </ol>
                 </div>
 
             </div>

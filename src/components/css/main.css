@@ -9,44 +9,16 @@ White: FFFDDD
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Fresca');
 
-* {
-    padding: 0;
-    margin: 0;
-    /* overflow-x:hidden; */  
-    /*    
-
-    background: #000 !important;
-    color: #0f0 !important;
-    outline: solid #f00 1px !important;
-
-    */  
-}
-
 html, body {
     padding: 0;
     margin: 0;
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-
+    box-sizing: border-box;
     font-family: "Fresca";
 }
 
-body {
-    margin-bottom: 5vh;
-}
-
-.border {
-    border: 1px solid black;
-}
-
-.padded {
-    padding: 2%;
-}
-
-#layout-contents {
-    padding: 2%;
-    text-align: center;
-
-    border: 1px solid black;
+.inactive {
+    display: none;
 }

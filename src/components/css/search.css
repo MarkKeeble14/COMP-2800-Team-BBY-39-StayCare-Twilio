@@ -2,12 +2,25 @@
     text-align: left;
 }
 
-.flex{
+.flex {
     display: flex;
     max-width: 500px;
     width: 80%;
     flex-wrap: wrap;
     justify-content: space-around;
     margin: 5% auto;
+    padding: 2%;
+}
+
+#searchResultsActivities {
+    padding: 2%;
+}
+
+#searchResultsActivitiesContainer {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.card {
     padding: 2%;
 }

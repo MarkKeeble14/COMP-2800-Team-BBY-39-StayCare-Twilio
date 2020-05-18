@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import axios from "axios"
 
-import Layout from "../components/layout"
+import Layout from "../components/layout-no-nav"
 import SEO from "../components/seo"
-
+import $ from "jquery"
 import "../components/js/firebase.js"
 import "../components/css/main.css"
 import "../components/css/room.css"
@@ -11,6 +11,8 @@ import "../components/css/start-form.css"
 import CustomQueryString from "../components/custom-query-string"
 import SignedUpFor from "../components/signed-up-for"
 import Video from "../components/video"
+import NAV from "../components/nav"
+import SearchResults from "../components/search-results"
 
 import { roomname } from "../components/video"
 
@@ -18,10 +20,13 @@ const JoinRoomForm = ({storeToken}) => {
   const [name, setName] = useState('')
 
   const handleSubmit = async event => {
-    event.preventDefault()
+    event.preventDefault();
 
-    console.log("Room: " + roomname);
-    if (roomname != '') {
+    console.log(name + " tried to join room: " + roomname);
+    if (roomname != '' && roomname != null & roomname != undefined && name != '') {
+      $('#signed-up-for').addClass('inactive');
+      $('#signed-up-for').removeClass('active');
+
         const result = await axios({
             method: 'POST',
             url: 'https://puce-bobcat-5743.twil.io/-token',
@@ -52,12 +57,16 @@ const RoomPage = () => {
   
   return (
     <Layout>
-      <SEO title="StayCare | Home"/>
+      <SEO title="StayCare | Rooms"/>
       <CustomQueryString></CustomQueryString>
+      <div id="gradient">
+        <NAV></NAV>
+        <SearchResults/>
+        <SignedUpFor/>
+      </div>
       {
         !token ? 
           <>
-          <SignedUpFor />
           <JoinRoomForm storeToken={setToken} /> 
           </>
         : <Video token={token} id="video"/>

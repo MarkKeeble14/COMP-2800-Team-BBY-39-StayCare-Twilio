@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { firebase } from "./js/firebase"
 import { Link } from "gatsby"
-
+import "./css/temp.css"
 const AuthContext = React.createContext(null);
 
 const Login = () => {
@@ -26,16 +26,15 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={e => handleForm(e)}>
-        <input
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          name="email"
-          type="email"
-          placeholder="email"
-        />
+    <form onSubmit={e => handleForm(e)} className="signup-form" id="login-form">
+      <h2>Welcome Back</h2>
+      <input
+        value={email}
+        onChange={e => setEmail(e.target.value)}
+        name="email"
+        type="email"
+        placeholder="email"
+      />
         <input
           onChange={e => setPassword(e.target.value)}
           name="password"
@@ -43,12 +42,13 @@ const Login = () => {
           type="password"
           placeholder="password"
         />
-        <hr />
-        <button type="submit">Login</button>
-        <Link to="/signup">Don't have an account? Sign up here!</Link>
+        <br/>
+        <div className="box">
+            <input type="submit" className="btn btn-white btn-animation-1" value="Login"/>
+        </div>
         <span>{error}</span>
+        <h4>or</h4>
       </form>
-    </div>
   );
 };
 

@@ -1,7 +1,7 @@
 import $ from "jquery"
 import { db } from "../js/firebase"
 import {search} from "./search"
-
+import { firebase } from "./firebase"
 import {getSearchResults} from "./search"
 import {autocomplete} from "./search"
 
@@ -41,6 +41,11 @@ function postActivity() {
     let sel = $("#maxOccupants")[0];
     let opt = sel.options[sel.selectedIndex]; 
     let maxOccupants = parseInt(opt.text);
+    let worker;
+    firebase.auth().onAuthStateChanged((user) => {
+        worker = (user.uid);
+    });
+    console.log(worker);
 
     const MESSAGE = {
         IMAGE: "Please add an image.", 
@@ -115,7 +120,8 @@ function postActivity() {
             "description": desc,
             "image": fullPath,
             "time": time,
-            "size": maxOccupants
+            "size": maxOccupants,
+            "worker": worker
         }).then(function () {
             if (file) {
                 uploadImage(file, fileRef);        
