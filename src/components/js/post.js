@@ -42,10 +42,7 @@ function postActivity() {
     let opt = sel.options[sel.selectedIndex]; 
     let maxOccupants = parseInt(opt.text);
     let worker;
-    firebase.auth().onAuthStateChanged((user) => {
-        worker = (user.uid);
-    });
-    console.log(worker);
+    
 
     const MESSAGE = {
         IMAGE: "Please add an image.", 
@@ -112,23 +109,27 @@ function postActivity() {
     } else {
         $("#sizeError").remove();
     }
-    console.log(shouldipost);
+
     if (shouldipost) {
-        db.collection("activities").doc(postId).set({
-            "key": Math.random().toString(36).substr(2, 9),
-            "title": activityName,
-            "description": desc,
-            "image": fullPath,
-            "time": time,
-            "size": maxOccupants,
-            "worker": worker
-        }).then(function () {
-            if (file) {
-                uploadImage(file, fileRef);        
-            }
-            refreshSearchResults();
-            window.location.replace("./");
-        });        
+        firebase.auth().onAuthStateChanged(function(user) {
+            worker = user.email;
+            db.collection("activities").doc(postId).set({
+                "key": Math.random().toString(36).substr(2, 9),
+                "title": activityName,
+                "description": desc,
+                "image": fullPath,
+                "time": time,
+                "size": maxOccupants,
+                "worker": worker,
+                "occupants": []
+            }).then(function () {
+                if (file) {
+                    uploadImage(file, fileRef);        
+                }
+                refreshSearchResults();
+                window.location.replace("./");
+            });        
+        })
     } else {
         console.log("error. did not upload");
     }

@@ -1,39 +1,125 @@
 import React from "react"
 import "./css/profile.css"
+import $ from "jquery"
+import {db} from "./js/firebase"
+import {firebase} from "./js/firebase"
+import { useQueryParam, StringParam } from "use-query-params";
 
 const Profile = () => {
+    const [profile, setProfile] = useQueryParam("profile", StringParam);
+    if (profile !== undefined) {
+        db.collection('users').doc(profile).get()
+        .then(function (result) {
+            if (result.data().isWorker !== undefined) {
+                DisplayProfile(result);
+            } else {
+                console.log('you do not have permission to view this profile. You will see your own.');
+                LoadChildren();
+                FillOutProfileData();
+            }
+        })
+        .catch(function(error){
+            console.log(error);
+        })
+    } else {
+        LoadChildren();
+        FillOutProfileData();
+    }
+
+    function DisplayProfile(snap) {
+        let role;
+        if (!snap.data().isWorker) {
+            $('.child-box').removeClass('inactive');
+            role = 'Parent';
+        } else {
+            role = 'Worker';
+            $('#favorite-worker').removeClass('inactive');
+        }
+        $('#display-name').text(snap.data().firstName + ', ' + role);
+        $('#email').val(snap.data().email);
+        $('#phone-number').val(snap.data().phoneNumber);
+    }
+    
+    function FillOutProfileData() {
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user !== null) {
+                db.collection("users").doc(user.uid).get()
+                .then(function (snap) {
+                    DisplayProfile(snap);
+                });
+            }
+        })
+    }
+    
+    function LoadChildren() {
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user !== null) {
+                db.collection("users").doc(user.uid).get()
+                .then(function (snap) {
+                    if (snap.data().children !== undefined) {
+                        for (let i = 0; i < snap.data().children.length; i++) {
+                            AddChild(snap.data().children[i]);
+                        }
+                    }
+                })
+            }
+        })
+    }
+
+    const handleForm = e => {
+        e.preventDefault();
+        let children = $("input[class='childname']");
+        firebase.auth().onAuthStateChanged(function(user) {
+            if (user) {
+                for (let i = 0; i < children.length; i++) {
+                    var Subject = children.eq(i).val();
+                    console.log(Subject + ' added to your children!');
+                    db.collection("users").doc(user.uid)
+                        .update({
+                            children: firebase.firestore.FieldValue.arrayUnion(Subject)
+                        });
+                }
+            } else {
+                alert('please login or signup for an account');
+            }
+        })
+    };
+
+    function AddChild(name) {
+        $('#child-form').prepend(" <input type='text' class='childname' placeholder='Child' value='" + name + "'></input> ");
+    }
+
     return (
         <div id="profile-card">
             <div className="image-container">
-                <img src="https://dummyimage.com/600x400/000/fff" alt="user-pic" width="100%"/>
+                <img src="https://dummyimage.com/600x400/000/fff" alt="user-pic" width="100%" id="profile-pic"/>
                 <div className="title">
-                    <h2>John Doe</h2>
+                    <h2 id="display-name"></h2>
                 </div>
             </div>
             <div className="main-container">
                 <div className="textbox label">
-                    <i className="fa fa-compass info"></i>
-                    <input type="text" placeholder="Location"/>
+                    <label htmlFor='email'>Email</label>
+                    <input type="email" placeholder="Email" id="email" name='email'/>
                 </div>
                 <div className="textbox label">
-                    <i className="fa fa-envelope-square info"></i>
-                    <input type="text" placeholder="Email"/>
+                    <label htmlFor='phone-number'>Phone Number</label>
+                    <input type="text" placeholder="Phone Number" id="phone-number" name='phone-number'/>
                 </div>
-                <div className="textbox label">
-                    <i className="fa fa-phone info"></i>
-                    <input type="text" placeholder="Phone Number"/>
+                <div className="box">
+                    <input type="button" className="btn btn-white btn-animation-1 inactive middled-button" id='favorite-worker' value='Favorite This Worker!'/>
                 </div>
-                <div className="textbox">
-                    <div className="textbox">
-                        <div className="label">
-                            <i className="fa fa-child info"></i>
-                            <p>Children</p>
-                        </div>
-                        <div id="child-container">
-                            <img src="https://dummyimage.com/400x400/000/fff" alt="pic" className="rounded-circle"/>
-                            <img src="https://dummyimage.com/400x400/000/fff" alt="pic" className="rounded-circle"/>
-                        </div>
+                <div className="child-box inactive">
+                    <div className="box">
+                        <input type="button" className="btn btn-white btn-animation-1 middled-button" id='add-child' 
+                        value='Add Child' onClick={() => AddChild('')}/>
                     </div>
+                    <p id='child-box-title'>Children</p>
+                    <form id='child-form' onSubmit={e => handleForm(e)}>
+                        <div className="box">
+                            <input type="submit" className="btn btn-white btn-animation-1 middled-button"/>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

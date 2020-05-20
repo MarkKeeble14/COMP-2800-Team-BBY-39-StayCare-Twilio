@@ -23,7 +23,7 @@ const JoinRoomForm = ({storeToken}) => {
     event.preventDefault();
 
     console.log(name + " tried to join room: " + roomname);
-    if (roomname != '' && roomname != null & roomname != undefined && name != '') {
+    if (roomname !== '' && roomname !== null & roomname !== undefined && name !== '') {
       $('#signed-up-for').addClass('inactive');
       $('#signed-up-for').removeClass('active');
 
@@ -57,7 +57,7 @@ const RoomPage = () => {
   
   return (
     <Layout>
-      <SEO title="StayCare | Rooms"/>
+      <SEO title="Rooms"/>
       <CustomQueryString></CustomQueryString>
       <div id="gradient">
         <NAV></NAV>

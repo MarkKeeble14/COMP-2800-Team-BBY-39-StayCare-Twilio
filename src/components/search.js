@@ -1,14 +1,8 @@
 import React from "react"
-import {search} from "./js/search"
-import {results} from "./js/search"
 import {getSearchResults} from "./js/search"
-import {autocomplete} from "./js/search"
 import {showSearchResults} from "./js/search"
-import {showActivity} from "./js/search"
-import {getWrittenDate} from "./js/search"
 import {clearSearchResults} from "./js/search"
 import {clearInput} from "./js/search"
-import {toggleNav} from "./js/search"
 
 const SearchBar = () => {
     clearSearchResults();

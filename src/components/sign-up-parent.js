@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { firebase } from "./js/firebase"
 import { db } from "./js/firebase"
 import { generateUserDocument } from "./js/firebase"
@@ -39,7 +39,6 @@ const ParentSignup = () => {
                     setErrors(e.message);
                 });
         } else {
-            console.log('please accept the terms and conditions');
             alert('please accept the terms and conditions');
         }
     };

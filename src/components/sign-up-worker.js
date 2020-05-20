@@ -40,7 +40,6 @@ const WorkerSignup = () => {
                     setErrors(e.message);
                 });
         } else {
-            console.log('please accept the terms and conditions');
             alert('please accept the terms and conditions');
         }
     };

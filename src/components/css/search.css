@@ -3,13 +3,27 @@
 }
 
 .flex {
-    display: flex;
-    max-width: 500px;
-    width: 80%;
-    flex-wrap: wrap;
+    display: block;
+    width: 90%;
     justify-content: space-around;
-    margin: 5% auto;
-    padding: 2%;
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    height: fit-content;
+
+    transition: 1s;
+}
+
+.flex-halved {
+    display: block;
+    width: 40%;
+    justify-content: space-around;
+    margin: 0 auto;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    height: fit-content;
+
+    transition: 1s;
 }
 
 #searchResultsActivities {

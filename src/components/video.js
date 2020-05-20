@@ -109,6 +109,7 @@ const Video = ({token}) => {
   
             $('#disconnect').on('click', event => {
               room.disconnect();
+              window.location.replace('./room');
             });
   
             $('#swap-config').on('click', event => {
