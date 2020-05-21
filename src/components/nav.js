@@ -7,6 +7,7 @@ import { firebase } from "./js/firebase"
 import $ from "jquery"
 
 const Navbar = () => {
+    // This removes/adds the class 'inactive' to elements depending on the status of authentication
     function DetermineWhatToRender() {
         firebase.auth().onAuthStateChanged(function(user) {
             $('#about-us-link').removeClass('inactive');

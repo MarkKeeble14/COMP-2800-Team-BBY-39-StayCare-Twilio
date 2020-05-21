@@ -24,10 +24,8 @@ const Video = ({token}) => {
     const remoteVidRef = useRef(null);
     const streamCont = useRef(null);
 
-    // $("#activityName").text(name);
-  
     useEffect(() => {
-      // Can put code here to set database info on room -------------------
+      // Connect to twilio using the token and the current keyed roomname
         TwilioVideo.connect(token, { video: true, audio: true, name: roomname }).then(
           room => {
         console.log("Joining: " + roomname);
@@ -36,8 +34,8 @@ const Video = ({token}) => {
             localVidRef.current.appendChild(track.attach())
           })  
   
+          // Adds a participant
           const addParticipant = participant => {
-            //console.log("New Participant: " + participant.identity);
             participant.tracks.forEach(publication => {
               if (publication.isSubscribed) {
                 const track = publication.track;
@@ -54,6 +52,7 @@ const Video = ({token}) => {
           room.participants.forEach(addParticipant)
           room.on('participantConnected', addParticipant)
   
+          // Toggling muting and unmuting audio
           function unmute_mute_audio() {
             var localParticipant = room.localParticipant;
             localParticipant.audioTracks.forEach(function(track) {
@@ -69,6 +68,7 @@ const Video = ({token}) => {
               });
             }
   
+            // Toggling pausing and unpausing video
             function unmute_mute_video() {
               var localParticipant = room.localParticipant;
               localParticipant.videoTracks.forEach(function(track) {
@@ -83,26 +83,22 @@ const Video = ({token}) => {
                 }
                 });
               }
-
-            function reloadTracks() {
-
-            }
   
-            // Add event listener
+            // Add event listener for video toggle
             $('#mute-video').on('click', event => {
               unmute_mute_video();
-              
             })
   
+            // Add event listener for audio toggle
             $('#mute-audio').on('click', event => {
               unmute_mute_audio();
             })
   
+            // Add event listener for leaving room
             $('#disconnect').on('click', event => {
               room.disconnect();
               window.location.replace('../room');
             });
-  
   
             // Disconnect
             room.on('disconnected', room => {
@@ -139,5 +135,3 @@ const Video = ({token}) => {
 }
 
 export default Video;
-
-//<input type="button" id="swap-config" value="Swap"/>

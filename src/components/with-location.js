@@ -4,6 +4,7 @@ import React from 'react'
 import { Location } from '@reach/router'
 import queryString from 'query-string'
 
+// For use with the query-string component
 const withLocation = ComponentToWrap => props => (
   <Location>
     {({ location, navigate }) => (

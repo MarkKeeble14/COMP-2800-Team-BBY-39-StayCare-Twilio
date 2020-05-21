@@ -6,10 +6,6 @@ import {FileSelector} from "./file-select"
 import { Mention} from "react-twitter-widgets"
 
 const PostForm = () => {
-
-    //console.log(datetimepicker);
-    //$('#datetimepicker').datetimepicker({ footer: true, modal: true });
-
     return (
         <div id="post-form">
             <FileSelector />            

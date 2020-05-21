@@ -7,9 +7,13 @@ import { useQueryParam, StringParam } from "use-query-params";
 
 const Profile = () => {
     const [profile, setProfile] = useQueryParam("profile", StringParam);
+
+    // Check if there is a query for a profile, if so it will show that profile, if not it will show your own.
     if (profile !== undefined) {
+        // Get the profile
         db.collection('users').doc(profile).get()
         .then(function (result) {
+            // if they are a worker, display their profile with their data.
             if (result.data().isWorker !== undefined) {
                 DisplayProfile(result);
                 addToFavorites(result);
@@ -96,10 +100,12 @@ const Profile = () => {
         })
     }
 
+    // Load the activities the worker has orginized.
     function LoadWorkerActivities() {
         let workerEmail;
         let intervel = null;
         
+        // Because of the delay in loading elements, I had to run this in an intervel to make sure that they actually displayed.
         intervel = setInterval(function(){ 
             workerEmail = $('#email').val();
             if (workerEmail != undefined && workerEmail != '') {
@@ -115,9 +121,9 @@ const Profile = () => {
             }
         }, 250);
     }
-    
     LoadWorkerActivities();
 
+    // Create an activity on screen
     function CreateCreatedActivity(title, time, key, worker) {
         let id = key + "-profile-activity";
         let buttonID = "profile-signup-" + key;
@@ -126,6 +132,7 @@ const Profile = () => {
         $("#" + id).append("<div class='box'><input type='button' id='" + buttonID + 
             "' class='btn btn-white btn-animation-1 middled-button inactive' value='Sign Up!'/>");
 
+        // Add the event listener to the sign up button
         function AddSignupListener() {
             $("#" + buttonID).on('click', function() {
                 firebase.auth().onAuthStateChanged(function (user) {
@@ -161,7 +168,7 @@ const Profile = () => {
                 })
             })
         }
-        // 
+        // Actually add the signup listener but only if the person viewing the profile is a parent.
         firebase.auth().onAuthStateChanged(function (user) {
             if (user != null) {
                 db.collection("users").doc(user.uid).get()
@@ -175,11 +182,14 @@ const Profile = () => {
         })
     }
 
+    // Handle the children form
     const handleForm = e => {
         e.preventDefault();
         let children = $("input[class='childname']");
+        // If the user is signed in
         firebase.auth().onAuthStateChanged(function(user) {
             if (user) {
+                // Add all of the children to the users children field if they don't already exist.
                 for (let i = 0; i < children.length; i++) {
                     var Subject = children.eq(i).val();
                     console.log(Subject + ' added to your children!');
