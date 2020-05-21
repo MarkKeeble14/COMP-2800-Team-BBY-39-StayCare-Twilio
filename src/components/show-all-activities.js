@@ -7,7 +7,6 @@ import $ from "jquery"
 import "./css/show-all-activities.css"
 
 const ShowAllActivities = () => {
-    let activeCard = false;
     const [activity, setActivity] = useQueryParam("activity", StringParam);
 
     let activities = [];
@@ -81,11 +80,6 @@ const ShowAllActivities = () => {
 
     return (
         <div id='show-all-activities'>
-            <div className='box'>
-            </div>
-            <div id='singled-out-activity'>
-                
-            </div>
             <h1 id='title'>Showing All Activities</h1>
             <div id='all-activities-container'>
             </div>
