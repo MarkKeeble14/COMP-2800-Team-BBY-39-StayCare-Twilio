@@ -108,3 +108,19 @@
     padding: 2%;
     margin: 0 auto;
 }
+
+.favorites-title {
+    text-decoration: underline;
+    text-align: center;
+}
+
+.favorites-body {
+    height: 28vh;
+    border: 1px solid black;
+    overflow-y: scroll;
+}
+
+.favorites-text {
+    font-size: 3vh;
+    text-align: center;
+}
