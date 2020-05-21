@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import $ from "jquery"
 import { query } from "./query-string"
-import {name} from "./signed-up-for"
+import {name} from "./my-activities"
 
 $("#activityName").text(name);
 

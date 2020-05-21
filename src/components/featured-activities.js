@@ -18,7 +18,7 @@ const FeaturedActivities = () => {
         db.collection("activities").get()
         .then(function (snap) {      
             snap.forEach(function (doc) {
-                if (doc.data().occupants.length < doc.data().size) {
+                if ((doc.data().occupants !== undefined) && doc.data().occupants.length < doc.data().size) {
                     activityDocs.push(doc);
                     for (let i = 1; i < activityDocs.length; i++) {
                         let lastRating = activityDocs[i - 1].data().occupants.length / activityDocs[i - 1].data().size;

@@ -6,6 +6,7 @@ import AboutPictures from "../components/about-us-pictures"
 
 import "../components/css/main.css"
 
+// This is the "About Us" Page.
 const AboutPage = () => {
     return (
       <Layout>
