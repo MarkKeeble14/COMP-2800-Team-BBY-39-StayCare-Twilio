@@ -1,11 +1,16 @@
 import React from "react"
 import $ from "jquery"
+
 import "./css/post.css"
 import "./file-select"
 import {postActivity} from "./js/post"
 import {FileSelector} from "./file-select"
 
 const PostForm = () => {
+
+    //console.log(datetimepicker);
+    //$('#datetimepicker').datetimepicker({ footer: true, modal: true });
+
     return (
         <div id="post-form">
             <FileSelector />            
