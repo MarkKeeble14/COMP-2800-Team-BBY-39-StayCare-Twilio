@@ -20,7 +20,6 @@ const FormArea = () => {
             }
         })
     }
-    ShowLoginArea();
 
     return (
         <div id="form-area">
