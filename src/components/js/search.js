@@ -119,6 +119,7 @@ function autocomplete(input, array) {
     }
   }
 
+  // removes search suggestions div
   function closeAllLists(element) {
     let x = $(".autocomplete-items");
     for (let i = 0; i < x.length; i++) {
@@ -133,11 +134,13 @@ function autocomplete(input, array) {
   })
 }
 
+// hides search results
 function hideSearchResults() {
   console.log('search results hidden');
   $("#searchResultsActivities *").remove();
 }
 
+//shows any activities that were in the search suggestions
 function showSearchResults() {
   toggleNav();
 
@@ -157,6 +160,7 @@ function showSearchResults() {
   }
 }
 
+// displays activity when passed an object that is an activity document
 function showActivity(result) {
   let resultId = "#" + result.id;
   $("<div class='card flex' id='" + result.id + "'></div>").appendTo("#searchResultsActivitiesContainer");
@@ -179,6 +183,7 @@ function showActivity(result) {
 
   $("<div class='box'><input type='submit' id='signUpButton' class='btn btn-white btn-animation-1 middled-button' value='Sign Up!'/></div>").appendTo(resultId + " .card-body");
 
+  
   function signUp() {
     $('#signUpButton').on('click', function() {
       firebase.auth().onAuthStateChanged(function (user) {
@@ -217,8 +222,10 @@ function showActivity(result) {
   signUp();
 }
 
-function getWrittenDate(dateString) {
 
+/*Currently not in use -- was meant to interpret format given by 
+datetimepicker which is currently not working*/
+function getWrittenDate(dateString) {
 
   let hour = parseInt(dateString.substr(0, 2));
   
@@ -252,10 +259,12 @@ function getWrittenDate(dateString) {
 
 }
 
+
 function clearInput() {
   $("#myInput").val("");
 }
 
+// toggles collapsible nav menu
 function toggleNav() {
   let expanded = $("#navToggler").attr("aria-expanded");
   if (expanded === "true" && window.innerWidth < 992) {

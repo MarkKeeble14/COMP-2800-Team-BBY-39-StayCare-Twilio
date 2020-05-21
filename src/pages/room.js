@@ -70,7 +70,10 @@ const RoomPage = () => {
           </div>
           <JoinRoomForm storeToken={setToken} /> 
           </>
-        : <Video token={token} id="video"/>
+        : 
+          <div id="gradient">  
+            <Video token={token} id="video"/>
+          </div>
       }
     </Layout>
   )

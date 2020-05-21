@@ -39,8 +39,6 @@ firebase.auth().onAuthStateChanged((user) => {
         worker = doc.data().firstName + " " + doc.data().lastName;
         console.log(worker);
     })
-    //worker = (user.uid);
-    
 })
 /**
  * For clicking post button at bottom of form.
@@ -54,7 +52,7 @@ function postActivity() {
     let maxOccupants = parseInt(opt.text);
 
 
-
+    // messages to display when a field isn't filled out properly
     const MESSAGE = {
         IMAGE: "Please add an image.", 
         TITLE: "Title for activity required.",
@@ -62,6 +60,12 @@ function postActivity() {
         SIZE: "Please select an option.",
         TIME: "Please schedule a time for this activity."
     }
+
+
+    /*Each field is checked to see if it is filled out.
+    If one of them is not filled out, an error will be inserted after the field where the
+    error is with the corresponding error message. If they are all filled out correctly, the
+    errors are removed and boolean shouldipost remains true.*/
 
     let shouldipost = true;
 
@@ -121,6 +125,8 @@ function postActivity() {
         $("#sizeError").remove();
     }
 
+    /*Posts activity to database, uploads the image to firebase storage, then
+    replaces the window */
     function postToDatabase() {
         db.collection("activities").doc(postId).set({
             "key": Math.random().toString(36).substr(2, 9),
@@ -138,7 +144,8 @@ function postActivity() {
             refreshSearchResults();
             
         }).then(function () {
-            window.location.replace("./");
+            alert("Activity has been posted.");
+            window.location.replace("../");
         });
     }
 
@@ -157,18 +164,10 @@ function postActivity() {
 function refreshSearchResults() {
     clearSearchResults();
     getSearchResults(["activities"]);
-    
     autocomplete($("#myInput"), search);
 }
 
-/*
-document.getElementById("worker-link").onclick = function () {
-    clearForm();
-    hideElement("featuredActivities");
-    hideElement("post-form");
-    showElement("worker-registration-form");
-}*/
-
+// reset fields in form
 function clearForm() {
     photo.css("background-image", "url('images/img_placeholder.png')");
     $("#activityName").val("");
