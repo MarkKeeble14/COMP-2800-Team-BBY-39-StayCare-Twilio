@@ -18,7 +18,7 @@ const Signup = () => {
                 let activity = snapshot.docs[i].data();
                 firebase.auth().onAuthStateChanged(function (user) {
                     // if the user is signed in
-                    if (user) {
+                    if (user && activity.occupants !== undefined) {
                         // No more room
                         if (activity.occupants.length >= activity.size) {
                             alert('There is no more room in this activity. Sorry!');

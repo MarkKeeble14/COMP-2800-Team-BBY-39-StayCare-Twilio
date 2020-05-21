@@ -8,6 +8,7 @@ import "../components/js/firebase.js"
 import "../components/css/main.css"
 import "../components/css/temp.css"
 
+// This is the index (home) page.
 const IndexPage = () => {
   return (
     <Layout>

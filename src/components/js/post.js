@@ -28,7 +28,7 @@ let postId = newPostId();
 function uploadImage(file, ref) {
     ref.put(file).then(function() {
         console.log("uploaded file");
-        window.location.replace("./");
+        window.location.replace("../room");
     })
 }
 
@@ -54,7 +54,7 @@ function postActivity() {
     let maxOccupants = parseInt(opt.text);
 
 
-
+    // messages to display when a field isn't filled out properly
     const MESSAGE = {
         IMAGE: "Please add an image.", 
         TITLE: "Title for activity required.",
@@ -62,6 +62,12 @@ function postActivity() {
         SIZE: "Please select an option.",
         TIME: "Please schedule a time for this activity."
     }
+
+
+    /*Each field is checked to see if it is filled out.
+    If one of them is not filled out, an error will be inserted after the field where the
+    error is with the corresponding error message. If they are all filled out correctly, the
+    errors are removed and boolean shouldipost remains true.*/
 
     let shouldipost = true;
 
@@ -120,6 +126,9 @@ function postActivity() {
     } else {
         $("#sizeError").remove();
     }
+
+    /*Posts activity to database, uploads the image to firebase storage, then
+    replaces the window */
     console.log(worker);
     let key = Math.random().toString(36).substr(2, 9);
     function postToDatabase() {
@@ -194,7 +203,6 @@ function AddToActivities(key) {
                 })
             }
         })
-    }).then(function () {
     })
 }
 
@@ -203,10 +211,10 @@ function AddToActivities(key) {
 function refreshSearchResults() {
     clearSearchResults();
     getSearchResults(["activities"]);
-    
     autocomplete($("#myInput"), search);
 }
 
+// reset fields in form
 function clearForm() {
     photo.css("background-image", "url('images/img_placeholder.png')");
     $("#activityName").val("");
