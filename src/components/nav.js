@@ -41,15 +41,6 @@ const Navbar = () => {
     }
     DetermineWhatToRender();
 
-    function ShowLoginArea() {
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user == null) {
-                $('#form-area').removeClass('inactive');
-            }
-        })
-    }
-    ShowLoginArea();
-
     function Logout() {
         firebase.auth().signOut().then(function() {
             // Sign-out successful.
