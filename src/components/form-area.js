@@ -15,16 +15,15 @@ import { firebase } from "./js/firebase"
 const FormArea = () => {
     function ShowLoginArea() {
         firebase.auth().onAuthStateChanged(function (user) {
-            if (user == null) {
-                $('#form-area').removeClass('inactive');
+            if (user != null) {
+                $('#form-area').addClass('inactive');
             }
         })
     }
     ShowLoginArea();
 
-
     return (
-        <div id="form-area" className='inactive'>
+        <div id="form-area">
             <Login></Login>
             <ChooseRole></ChooseRole>
             <ParentSignup></ParentSignup>
