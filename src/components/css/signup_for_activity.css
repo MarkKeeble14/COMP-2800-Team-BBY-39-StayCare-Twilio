@@ -132,3 +132,13 @@ h3 {
     background-color: #bfb;
     border-color: #bfb;
   }
+
+  .btn {
+    border: 1px outset;
+  }
+
+  .btn:active {
+    border: 1px inset;
+  }
+
+  

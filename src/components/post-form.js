@@ -3,8 +3,13 @@ import "./css/post.css"
 import "./file-select"
 import {postActivity} from "./js/post"
 import {FileSelector} from "./file-select"
+import { Mention} from "react-twitter-widgets"
 
 const PostForm = () => {
+
+    //console.log(datetimepicker);
+    //$('#datetimepicker').datetimepicker({ footer: true, modal: true });
+
     return (
         <div id="post-form">
             <FileSelector />            
@@ -36,6 +41,16 @@ const PostForm = () => {
                         <option value="10">10</option>
                     </select>                    
                 </div>
+
+                <div id="tweetActivity">
+                
+                <Mention
+                    username="StayCareApp"
+                    options={{size:"large", text:"Hi, I just created an activity using StayCare. Fell free to join at: "}}
+                    />
+
+                </div>
+
                 <div className="form-group">
                     <input type="button" id="post" value="Post Activity!" 
                             className="btn btn-outline-success my-2 my-sm-0" onClick={postActivity}/>                    

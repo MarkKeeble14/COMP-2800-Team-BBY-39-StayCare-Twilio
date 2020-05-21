@@ -59,14 +59,15 @@ const RoomPage = () => {
     <Layout>
       <SEO title="Rooms"/>
       <CustomQueryString></CustomQueryString>
-      <div id="gradient">
-        <NAV></NAV>
-        <SearchResults/>
-        <SignedUpFor/>
-      </div>
+      
       {
         !token ? 
           <>
+          <div id="gradient">
+            <NAV></NAV>
+            <SearchResults/>
+            <SignedUpFor/>
+          </div>
           <JoinRoomForm storeToken={setToken} /> 
           </>
         : <Video token={token} id="video"/>

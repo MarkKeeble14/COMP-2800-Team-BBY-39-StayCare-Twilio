@@ -161,6 +161,7 @@ function showActivity(result) {
   let resultId = "#" + result.id;
   $("<div class='card flex' id='" + result.id + "'></div>").appendTo("#searchResultsActivitiesContainer");
 
+  console.log(result.data().image);
   ref.child(result.data().image).getDownloadURL().then(function (url) {
     $("<img class='card-img-top' src='" + url + "'></img>").prependTo(resultId);
   })
@@ -170,8 +171,8 @@ function showActivity(result) {
   $("<p class='card-worker left'>" + "with " + result.data().worker + "</p>").appendTo(resultId + " .card-body");
   $("<p class='card-text left'>" + result.data().description + "</p>").appendTo(resultId + " .card-body");
 
-  let scheduledTime = getWrittenDate(result.data().time);
-  let timeHtml = "<p class='card-text left'>Scheduled for: " + scheduledTime.time + " on " + scheduledTime.date + "</p>";
+  let scheduledTime = result.data().time;
+  let timeHtml = "<p class='card-text left'>Scheduled for: " + scheduledTime + "</p>";
   $(timeHtml).appendTo(resultId + " .card-body");
 
   $("<p class='card-text left'>Room Size: " + result.data().size + " spots</p>").appendTo(resultId + " .card-body");
@@ -268,7 +269,6 @@ export {getSearchResults}
 export {autocomplete}
 export {showSearchResults}
 export {showActivity}
-export {getWrittenDate}
 export {clearSearchResults}
 export {clearInput}
 export {toggleNav}

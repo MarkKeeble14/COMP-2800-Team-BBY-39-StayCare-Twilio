@@ -31,6 +31,17 @@ function uploadImage(file, ref) {
     })
 }
 
+let worker;
+
+firebase.auth().onAuthStateChanged((user) => {
+    db.collection("users").doc(user.uid).get()
+    .then(function (doc) {
+        worker = doc.data().firstName + " " + doc.data().lastName;
+        console.log(worker);
+    })
+    //worker = (user.uid);
+    
+})
 /**
  * For clicking post button at bottom of form.
  */
@@ -41,8 +52,8 @@ function postActivity() {
     let sel = $("#maxOccupants")[0];
     let opt = sel.options[sel.selectedIndex]; 
     let maxOccupants = parseInt(opt.text);
-    let worker;
-    
+
+
 
     const MESSAGE = {
         IMAGE: "Please add an image.", 
@@ -110,30 +121,37 @@ function postActivity() {
         $("#sizeError").remove();
     }
 
+    function postToDatabase() {
+        db.collection("activities").doc(postId).set({
+            "key": Math.random().toString(36).substr(2, 9),
+            "title": activityName,
+            "description": desc,
+            "image": fullPath,
+            "time": time,
+            "size": maxOccupants,
+            "worker": worker
+        }).then(function () {
+            if (file) {
+                uploadImage(file, fileRef);
+                console.log("uploaded");        
+            }
+            refreshSearchResults();
+            
+        }).then(function () {
+            window.location.replace("./");
+        });
+    }
+
+    console.log(shouldipost);
     if (shouldipost) {
-        firebase.auth().onAuthStateChanged(function(user) {
-            worker = user.email;
-            db.collection("activities").doc(postId).set({
-                "key": Math.random().toString(36).substr(2, 9),
-                "title": activityName,
-                "description": desc,
-                "image": fullPath,
-                "time": time,
-                "size": maxOccupants,
-                "worker": worker,
-                "occupants": []
-            }).then(function () {
-                if (file) {
-                    uploadImage(file, fileRef);        
-                }
-                refreshSearchResults();
-                window.location.replace("./");
-            });        
-        })
+        postToDatabase();
     } else {
         console.log("error. did not upload");
     }
 }
+
+
+
 
 // resets search results
 function refreshSearchResults() {

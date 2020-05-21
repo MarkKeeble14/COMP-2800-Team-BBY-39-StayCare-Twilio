@@ -6,6 +6,7 @@ import { useQueryParam, StringParam } from "use-query-params";
 import $ from "jquery"
 
 let activities = [];
+let name;
 
 // 
 const MyActivities = () => {
@@ -18,6 +19,7 @@ const MyActivities = () => {
         const clear = (new Promise(ClearMyActivities))  
         .then(
             firebase.auth().onAuthStateChanged(function (user) {
+                console.log(user.uid);
                 if (user != null) {
                     // if there is a user, access the current users document
                     db.collection("users").doc(user.uid).get()
@@ -67,8 +69,10 @@ const MyActivities = () => {
         $('#signed-up-for').append(
             $( "<div class='activity' id='" + id + "'></div>" )
         );
+        $("#" + id).css("background", "#EEFFFF");
+        $("#" + id).css("margin", "10px");
         $('#' + id).append(
-            $( "<div class='info' id='" + id + "-info-div'></div>")
+            $( "<div id='" + id + "-info-div'></div>")
         );
         $('#' + id + "-info-div").append($('<p>' + name + ' with ' + worker + '</p>'));
         $('#' + id + "-info-div").append($('<p>At ' + time + '</p>'));
@@ -146,4 +150,6 @@ const MyActivities = () => {
         
     )
 }
+
 export default MyActivities
+export {name}
