@@ -13,16 +13,6 @@ import { firebase } from "./js/firebase"
 // Signup as a worker form 
 // Signup as a parent form
 const FormArea = () => {
-    function ShowLoginArea() {
-        firebase.auth().onAuthStateChanged(function (user) {
-            if (user == null) {
-                $('#form-area').removeClass('inactive');
-            }
-        })
-    }
-    ShowLoginArea();
-
-
     return (
         <div id="form-area" className='inactive'>
             <Login></Login>
