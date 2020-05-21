@@ -1,36 +1,46 @@
 import React from "react"
 import { db } from "./js/firebase"
 import { firebase } from "./js/firebase"
-import "./css/signed-up-for.css"
+import "./css/my-activities.css"
 import { useQueryParam, StringParam } from "use-query-params";
 import $ from "jquery"
 
 let activities = [];
 
-const SignedUpFor = () => {
+// 
+const MyActivities = () => {
     const [room, setRoom] = useQueryParam("room", StringParam);
     
+    // Clears the current myActivities elements, and then gets the myActivities field in the current users document 
+    // and adds them to the activities array.
+    // Once done, it then calls method ShowActivities();
     function GetActivities() {
-    const clear = (new Promise(ClearMyActivities))  
+        const clear = (new Promise(ClearMyActivities))  
         .then(
             firebase.auth().onAuthStateChanged(function (user) {
                 if (user != null) {
+                    // if there is a user, access the current users document
                     db.collection("users").doc(user.uid).get()
                     .then(function (snap) {
+                        // if the current user doesn't have a myActivities field or they are not currently signed up for 
+                        // any activities, display the message saying that they don't have any activities.
                         if (snap.data().myActivities === undefined || snap.data().myActivities.length === 0) {
                             $('#no-activities-scheduled').removeClass('inactive');
                         } else {
+                            $('#no-activities-scheduled').addClass('inactive');
                             if (activities.length === 0) {
                                 for (let i = 0; i < snap.data().myActivities.length; i++) {
-                                    let id = "activity" + i;
-                                    let name = snap.data().myActivities[i].mainActivity.title;
-                                    let key = snap.data().myActivities[i].mainActivity.key;
-                                    let worker = snap.data().myActivities[i].mainActivity.worker;
-                                    let time = snap.data().myActivities[i].mainActivity.time;
-                                    let createdActivity = [id, name, key, worker, time];
-                                    activities.push(createdActivity);
-                                }
-                            } 
+                                    if (snap.data().myActivities[i].mainActivity !== undefined) {
+                                        let id = "activity" + i;
+                                        let name = snap.data().myActivities[i].mainActivity.title;
+                                        let key = snap.data().myActivities[i].mainActivity.key;
+                                        let worker = snap.data().myActivities[i].mainActivity.worker;
+                                        let time = snap.data().myActivities[i].mainActivity.time;
+                                        let createdActivity = [id, name, key, worker, time];
+                                        activities.push(createdActivity);
+                                    }
+                                } 
+                            }
                             ShowActivities();
                         }
                     })
@@ -40,6 +50,7 @@ const SignedUpFor = () => {
     }
     GetActivities();
 
+    // Calls CreateActivity() on every activity in the activities array.
     function ShowActivities() {
         for (let i = 0; i < activities.length; i++) {
             let id = "activity" + i;
@@ -51,6 +62,7 @@ const SignedUpFor = () => {
         }
     }
 
+    // Creates a visual element to display an activity.
     function CreateActivity(id, name, key, worker, time) {
         $('#signed-up-for').append(
             $( "<div class='activity' id='" + id + "'></div>" )
@@ -74,6 +86,7 @@ const SignedUpFor = () => {
         });
     }
 
+    // Leaves the event
     function LeaveEvent(key) {
         let activity;
         firebase.auth().onAuthStateChanged(function(user) {
@@ -119,7 +132,6 @@ const SignedUpFor = () => {
     }
 
     function ClearMyActivities() {
-        console.log('clear');
         $('#signed-up-for').replaceWith("<div id='signed-up-for' class='active'></div>");
     }
 
@@ -134,4 +146,4 @@ const SignedUpFor = () => {
         
     )
 }
-export default SignedUpFor
+export default MyActivities

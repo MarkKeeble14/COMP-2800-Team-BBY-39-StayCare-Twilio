@@ -205,7 +205,7 @@ function showActivity(result) {
                       $('#signup-form-activity-worker').html(result.data().worker);
                       $('#signup-form-activity-time').html(result.data().time);
                 } else {
-                  alert("You don't currently have any children attached to your account.");
+                  alert("You don't currently have any children attached to your account. Please go to your Profile and add them.");
                 }
             })
         }

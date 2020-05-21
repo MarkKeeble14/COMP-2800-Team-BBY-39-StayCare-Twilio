@@ -108,3 +108,17 @@
     padding: 2%;
     margin: 0 auto;
 }
+
+#profile-created-activities {
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    font-size: 18px;
+    margin: 0 auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#profile-created-activities * {
+    margin: 0 auto;
+}

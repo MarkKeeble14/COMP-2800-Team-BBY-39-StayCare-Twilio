@@ -43,7 +43,7 @@ const Navbar = () => {
     function Logout() {
         firebase.auth().signOut().then(function() {
             // Sign-out successful.
-            window.location.replace("./");
+            console.log('sucessfully signed you out');
           }, function(error) {
             // An error happened.
             console.log('could not logout: ' + error);
@@ -52,7 +52,7 @@ const Navbar = () => {
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-yellow w-shadow" id="navbar">
-            <Link to="/" id="home">StayCare</Link>
+            <a id='home' href='/'>StayCare</a>
             <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="navToggler">
                 <span className="navbar-toggler-icon"></span>
@@ -60,12 +60,12 @@ const Navbar = () => {
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item inactive" id="post-link"><Link className='nav-bar-link' to="/post-activity">Post Activity</Link></li> 
-                    <li className="nav-item inactive" id="room-link"><Link className='nav-bar-link' to="/room">My Activities</Link></li>
-                    <li className="nav-item inactive" id="activities-link"><Link className='nav-bar-link' to="/activities">All Activities</Link></li>
-                    <li className="nav-item inactive" id="profile-link"><Link className='nav-bar-link' to="/profile">Profile</Link></li>
-                    <li className="nav-item inactive" id="about-us-link"><Link className='nav-bar-link' to="/about">About The Creators</Link></li>
-                    <li className="nav-item" id="logout"><p id="logout-button" className=""/></li>
+                    <li className="nav-item inactive" id="post-link"><a href='/post-activity/' className='top-nav-link'>Post An Activity</a></li> 
+                    <li className="nav-item inactive" id="room-link"><a href='/room/' className='top-nav-link'>My Activities</a></li>
+                    <li className="nav-item inactive" id="activities-link"><a href='/activities/' className='top-nav-link'>All Activities</a></li>
+                    <li className="nav-item inactive" id="profile-link"><a href='/profile/' className='top-nav-link'>Profile</a></li>
+                    <li className="nav-item inactive" id="about-us-link"><a href='/about/' className='top-nav-link'>About the Creators</a></li>
+                    <li className="nav-item" id="logout"><a id="logout-button" className="" href='/' className='top-nav-link'></a></li>
                 </ul>
                 <SearchBar/>
             </div>

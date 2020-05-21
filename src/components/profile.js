@@ -33,7 +33,16 @@ const Profile = () => {
             role = 'Parent';
         } else {
             role = 'Worker';
-            $('#favorite-worker').removeClass('inactive');
+            firebase.auth().onAuthStateChanged(function(user) {
+                if (user) {
+                    db.collection('users').doc(user.uid).get()
+                    .then(function(userRef) {
+                        if (!userRef.data().isWorker) {
+                            $('#favorite-worker').removeClass('inactive');
+                        }
+                    })
+                } 
+            })
         }
         $('#display-name').text(snap.data().firstName + ', ' + role);
         $('#email').val(snap.data().email);
@@ -60,6 +69,85 @@ const Profile = () => {
                         for (let i = 0; i < snap.data().children.length; i++) {
                             AddChild(snap.data().children[i]);
                         }
+                    }
+                })
+            }
+        })
+    }
+
+    function LoadWorkerActivities() {
+        let workerEmail;
+        let intervel = null;
+        
+        intervel = setInterval(function(){ 
+            workerEmail = $('#email').val();
+            if (workerEmail != undefined && workerEmail != '') {
+                db.collection("activities").get()
+                .then(function (snap) {      
+                    snap.forEach(function (activity) {
+                        if (activity.data().worker === workerEmail) {
+                            CreateCreatedActivity(activity.data().title, activity.data().time, activity.data().key, activity.data().worker);
+                        }
+                    })
+                    clearInterval(intervel);
+                })
+            }
+        }, 250);
+    }
+    
+    LoadWorkerActivities();
+
+    function CreateCreatedActivity(title, time, key, worker) {
+        let id = key + "-profile-activity";
+        let buttonID = "profile-signup-" + key;
+        $('#profile-created-activities').append("<div id='" + id + "'></div>");
+        $("#" + id).append("<p>" + title + " - " + time + "</p>");
+        $("#" + id).append("<div class='box'><input type='button' id='" + buttonID + 
+            "' class='btn btn-white btn-animation-1 middled-button inactive' value='Sign Up!'/>");
+
+        function AddSignupListener() {
+            $("#" + buttonID).on('click', function() {
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user != null) {
+                        db.collection("users").doc(user.uid).get()
+                        .then(function (snap) {
+                            $('.children-response-container').replaceWith("<div class='children-response-container'></div>");
+                            if (snap.data().children !== undefined) {
+                                for (let i = 0; i < snap.data().children.length; i++) {
+                                    let child = snap.data().children[i];
+                                    let id = child + '-Check';
+                                    $('.children-response-container').append("<input type='checkbox' class='child-select' id='" + id + 
+                                    "' name='" + id + "' value='" + child + "'/>" +
+                                    "<label for='" + id + "'>" + child + "</label>");
+                                }
+
+                                let signupForm = $('#signupForm');
+                                if (signupForm.hasClass('active')) {
+                                    signupForm.removeClass('active');
+                                } else {
+                                    signupForm.addClass('active');
+                                }
+                                
+                                $('#signup-form-activity-title').html(title);
+                                $('#signup-form-activity-key').html(key);
+                                $('#signup-form-activity-worker').html(worker);
+                                $('#signup-form-activity-time').html(time);
+                            } else {
+                                alert("You don't currently have any children attached to your account.");
+                            }
+                        })
+                    }
+                })
+            })
+        }
+        // 
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user != null) {
+                db.collection("users").doc(user.uid).get()
+                .then(function (userRef) {
+                    if (!userRef.data().isWorker) {
+                        AddSignupListener();
+                        $("#" + buttonID).removeClass('inactive');
                     }
                 })
             }
@@ -105,6 +193,8 @@ const Profile = () => {
                 <div className="textbox label">
                     <label htmlFor='phone-number'>Phone Number</label>
                     <input type="text" placeholder="Phone Number" id="phone-number" name='phone-number'/>
+                </div>
+                <div id='profile-created-activities'>
                 </div>
                 <div className="box">
                     <input type="button" className="btn btn-white btn-animation-1 inactive middled-button" id='favorite-worker' value='Favorite This Worker!'/>

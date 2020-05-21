@@ -3,8 +3,11 @@ import "./css/about.css"
 import Img from "./image"
 import $ from "jquery"
 
+// Component that holds all of the pictures of the dev's on the about us page. It also has the code
+// for our easter egg. Click on Mark's face, then Jakob's, Justin's, and finally Jonnies! 
 const PictureContainers = () => {
 
+    // Tells React to continousely run this in case of updates.
     useEffect(() => {
         if (typeof window !== "undefined" && typeof window.document !== "undefined") {
             console.log('easter egg');
@@ -14,6 +17,7 @@ const PictureContainers = () => {
             var justin = $('#jx');
             var jakob = $('#jf');
     
+            // if the variable mark is set and it is clicked, advance the egg! 
             if (mark) {
                 mark.on('click', function() {
                     if (easterEgg === 0) {
@@ -22,7 +26,8 @@ const PictureContainers = () => {
                     }        
                 });
             }
-    
+            
+            // if the variable jakob is set, it is clicked, and mark was already clicked, advance the egg!
             if (jakob) {
                 jakob.on('click', function() {
                     if (easterEgg === 1) {
@@ -35,6 +40,7 @@ const PictureContainers = () => {
                 });
             }
     
+            // same as the above chunk just with different subjects.
             if (justin) {
                 justin.on('click', function() {
     
@@ -47,7 +53,8 @@ const PictureContainers = () => {
                     }        
                 });
             }
-    
+
+            // if the rest of the egg has been completed in order, replace certain elements on screen with these other elements.
             if (jonny) {
                 jonny.on('click', function() {
                     if (easterEgg === 3) {
@@ -73,8 +80,7 @@ const PictureContainers = () => {
         }, null);
 
     return (
-        <div>
-            
+        <div>  
             <div id="images-container">
                 <div className="portrait-container" id="jf">
                     <Img alt="Jakob Fipke" filename="Jakob.png" />

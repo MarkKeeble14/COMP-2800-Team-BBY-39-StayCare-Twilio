@@ -1,17 +1,21 @@
 import React from 'react'
-import "./css/temp.css"
 import FormArea from "./form-area"
 import Intro from "./intro"
 import NAV from "./nav"
-import SearchResults from "../components/search-results"
-import About from "./about"
+import SearchResults from "./search-results"
 
+import "./css/temp.css"
+
+// The basic contents of the landing page.
 const LandingContents = () => {
     return (
     <div id="gradient">
         <NAV></NAV>
         <SearchResults/>
-        <About></About>
+         <div id="content">
+            <Intro></Intro>
+            <FormArea></FormArea>
+         </div>
     </div>
     )
 }

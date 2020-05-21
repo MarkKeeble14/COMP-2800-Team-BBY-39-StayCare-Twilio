@@ -129,7 +129,7 @@ const ShowAllActivities = () => {
     return (
         <div id='show-all-activities'>
             <div className='box'>
-                <input type='button' id='show-query-button' className='btn btn-white btn-animation-1 middled-button' 
+                <input type='button' id='show-query-button' className='btn btn-white btn-animation-1 middled-button inactive' 
                 value='Show Queried Activity' onClick={ShowQueriedActivity}/>
             </div>
             <div id='singled-out-activity'>

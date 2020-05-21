@@ -2,8 +2,9 @@ import React from "react"
 import "./css/about.css"
 import Img from "./image"
 
+// Holds the elements used on the top half of the 'About Us' page. Basically, the logo image, the text to the right of the logo image
+// that tells users about StayCare, as well as the paragraph that communicates about us devs.
 const About = () => {
-
     return (
         <div id="about-us-container">
             <div id="project-paragraph-container">

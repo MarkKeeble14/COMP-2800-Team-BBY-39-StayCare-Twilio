@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import $ from "jquery"
-import { query } from "./custom-query-string"
+import { query } from "./query-string"
 
 // Twilio
 let TwilioVideo = null;

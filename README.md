@@ -1,48 +1,90 @@
-<!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
-<p align="center">
-  <a href="https://www.gatsbyjs.org">
-    <img alt="Gatsby" src="https://www.gatsbyjs.org/monogram.svg" width="60" />
-  </a>
-</p>
-<h1 align="center">
-  Gatsby's default starter
-</h1>
+# StayCare
 
-Kick off your project with this default boilerplate. This starter ships with the main Gatsby configuration files you might need to get up and running blazing fast with the blazing fast app generator for React.
+## About the App
 
-_Have another more specific idea? You may want to check out our vibrant collection of [official and community-created starters](https://www.gatsbyjs.org/docs/gatsby-starters/)._
+StayCare is a webapp designed to provide respite for overworked parents while connecting their young children with a healthy and interactive
+form of entertainment. Due to the current COVID-19 pandemic, most if not all daycares have been closed down for the foreseeable future, leaving
+many parents with their youngins 24/7, as well as many child-care professionals out of a career. StayCare offers what is essentially 'online daycare'. Workers can schedule activities that parents can then view and sign up their children for. When the activities begin, any users who are signed up for the activitiy are able to join a video room where they can tal, interact, and have fun with each other!
 
-## 🚀 Quick start
+## How does it work?
 
-1.  **Create a Gatsby site.**
+When first visiting the page, you can sign up either as a parent or a worker. A parent can add
+kids to their profile, and sign them up for different activities. At the scheduled time for that
+activity, they can join the video conferencing room for that activity. A worker can post and
+schedule activities, enter the room when it is time to start, and lead a fun activity for all those
+who joined!
 
-    Use the Gatsby CLI to create a new site, specifying the default starter.
+## Getting Started
 
-    ```shell
-    # create a new Gatsby site using the default starter
-    gatsby new my-default-starter https://github.com/gatsbyjs/gatsby-starter-default
-    ```
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
-1.  **Start developing.**
+Note: This project has only been worked on using a windows PC, and so these instructions may not be accurate for mac or linux systems.
 
-    Navigate into your new site’s directory and start it up.
+1. Clone the repo onto your local machine
 
-    ```shell
-    cd my-default-starter/
-    gatsby develop
-    ```
+2. Ensure that you have Yarn installed by running command 'yarn develop' on your command line
 
-1.  **Open the source code and start editing!**
+3. Navigate into the cloned repo
 
-    Your site is now running at `http://localhost:8000`!
+4. Install gatsby CLI by running 'npm install -g gatsby-cli'
 
-    _Note: You'll also see a second link: _`http://localhost:8000/___graphql`_. This is a tool you can use to experiment with querying your data. Learn more about using this tool in the [Gatsby tutorial](https://www.gatsbyjs.org/tutorial/part-five/#introducing-graphiql)._
+5. Run command 'npm install'
 
-    Open the `my-default-starter` directory in your code editor of choice and edit `src/pages/index.js`. Save your changes and the browser will update in real time!
+6. Start localhost by running 'yarn develop'. This will start the server at url 'localhost:8000'
 
-## 🧐 What's inside?
+7. In your browser, enter url 'localhost:800'
 
-A quick look at the top-level files and directories you'll see in a Gatsby project.
+### Prerequisites
+
+To run, you'll need...
+
+1. Yarn
+
+2. Node Package Manager
+
+3. Some kind of text editor, ie Visual Studio, Notepad, etc.
+
+This project uses Firebase, and as such the firebase configuration is located in **`/src/components/js/firebase.js`**.
+
+## Languages / Frameworks
+
+For this project, we used...
+
+1. JSX
+
+2. React
+
+3. Gatsby
+
+4. HTML
+
+5. JavaScript
+
+6. CSS
+
+7. JQuery
+
+## Testing
+
+Here is our test plan: https://docs.google.com/spreadsheets/d/10vhpAY80jSUrEzoKHYR-qveSCtYnjgJR7Ar6RTAMHu0/edit?usp=sharing
+
+## Authors
+
+* **Jakob Fipke** - Term 2 Student, BCIT CST
+
+* **Jonathan Orfani** - Term 2 Student, BCIT CST
+
+* **Justin Xie** - Term 3 Student, BCIT CST
+
+* **Mark Keeble** - Term 3 Student, BCIT CST
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+
+## What's inside?
+
+The important files and directories you'll see in this project
 
     .
     ├── node_modules
@@ -62,6 +104,14 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 
 2.  **`/src`**: This directory will contain all of the code related to what you will see on the front-end of your site (what you see in the browser) such as your site header or a page template. `src` is a convention for “source code”.
 
+In the **`/src`** directory, there are a few folders.
+
+**`/src/components`**: Contains all of the react components which the app is made with. There is a seperate folder for .css and non-component script files. The components are seperated into folders based on which pages they relate to. Components which are used on multiple pages are located at the top-level of **`/src/components`**.
+
+**`/src/pages`**: Contains the high-level .js files which dictate what to render at each page (path).
+
+**`/src/images`**: Contains the images used in the app.
+
 3.  **`.gitignore`**: This file tells git which files it should not track / not maintain a version history for.
 
 4.  **`.prettierrc`**: This is a configuration file for [Prettier](https://prettier.io/). Prettier is a tool to help keep the formatting of your code consistent.
@@ -76,24 +126,13 @@ A quick look at the top-level files and directories you'll see in a Gatsby proje
 
 9.  **`LICENSE`**: Gatsby is licensed under the MIT license.
 
-10. **`package-lock.json`** (See `package.json` below, first). This is an automatically generated file based on the exact versions of your npm dependencies that were installed for your project. **(You won’t change this file directly).**
+## Acknowledgments
 
-11. **`package.json`**: A manifest file for Node.js projects, which includes things like metadata (the project’s name, author, etc). This manifest is how npm knows which packages to install for your project.
+* Build a Video App With Twilio + Gatsby (with Nathaniel Okenwa) — Learn With Jason: https://www.youtube.com/watch?v=K02SnxY6c_0& - Jason Lengstorf & Nathaniel Okenwa
+This tutorial was followed to both initially set up our Gatsby/React app, as well as to create the functionality for Twilio's programmable video.
 
-12. **`README.md`**: A text file containing useful reference information about your project.
+* how to mute/unmute pause/unpause audio and video in twilio video call: https://stackoverflow.com/a/57901308 - Nagesh Tripathi
+This was used to create the controls within the twilio rooms. IE muting audio, pausing video, etc.
 
-## 🎓 Learning Gatsby
-
-Looking for more guidance? Full documentation for Gatsby lives [on the website](https://www.gatsbyjs.org/). Here are some places to start:
-
-- **For most developers, we recommend starting with our [in-depth tutorial for creating a site with Gatsby](https://www.gatsbyjs.org/tutorial/).** It starts with zero assumptions about your level of ability and walks through every step of the process.
-
-- **To dive straight into code samples, head [to our documentation](https://www.gatsbyjs.org/docs/).** In particular, check out the _Guides_, _API Reference_, and _Advanced Tutorials_ sections in the sidebar.
-
-## 💫 Deploy
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)
-
-[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/import/project?template=https://github.com/gatsbyjs/gatsby-starter-default)
-
-<!-- AUTO-GENERATED-CONTENT:END -->
+* WebpackError: ReferenceError: IDBIndex is not defined while building with Gatsby.JS (ver #2.15.21): https://github.com/firebase/firebase-js-sdk/issues/2222#issuecomment-538072948 - hsubox76 
+Firebase doesn't run well within Node, so this block of code essentially told Webpack to import Firebase only when building the HTML.

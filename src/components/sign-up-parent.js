@@ -6,6 +6,7 @@ import "./css/temp.css"
 
 const AuthContext = React.createContext(null);
 
+// Parent Signup Form
 const ParentSignup = () => {
     const [firstName, setFirstName] = useState("");
     const [phNumber, setPhNumber] = useState("");
@@ -30,7 +31,7 @@ const ParentSignup = () => {
                     }
                     generateUserDocument(res.user, fields)
                     .then(result => function() {
-                    db.collection('users').add(result);
+                        db.collection('users').add(result);
                     }).then(res => {
                         window.location.replace("./");
                     });
@@ -79,6 +80,7 @@ const ParentSignup = () => {
             <div className="box">
                 <input type="submit" className="btn btn-white btn-animation-1"/>
             </div>
+            <span>{error}</span>
         </form>
     )
 }

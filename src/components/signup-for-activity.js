@@ -5,16 +5,19 @@ import $ from "jquery"
 import {db} from "./js/firebase"
 import { firebase } from "./js/firebase"
 
+// This component is the signup form that appears when you attempt to signup for an activity.
 const Signup = () => {
+    // Adds an activity to the users 'myActivities' field.
     async function AddToActivities() {
         let key = $('#signup-form-activity-key').html();
-        // console.log('signing up for an activity');
         const snapshot = await firebase.firestore().collection('activities').get();
-        // console.log(snapshot.docs);
+        // Look through the activities to find the one with the key that matches the selected activity.
         for (let i = 0; i < snapshot.docs.length; i++) {
             if (snapshot.docs[i].data().key === key) {
+                // Assign this activity to a variable.
                 let activity = snapshot.docs[i].data();
                 firebase.auth().onAuthStateChanged(function (user) {
+                    // if the user is signed in
                     if (user) {
                         // No more room
                         if (activity.occupants.length >= activity.size) {
@@ -34,7 +37,7 @@ const Signup = () => {
                             })
                     }
 
-                    // Children
+                    // Get the selected children
                     let childrenchecks = $(".child-select");
                     let childrenAdded = [];
                     for (let i = 0; i < childrenchecks.length; i++) {
@@ -46,7 +49,7 @@ const Signup = () => {
                         }
                     }
 
-                    // Notifications
+                    // Get the selected contact options
                     let contactchecks = $(".contact-select");
                     let contactsAdded = [];
                     for (let i = 0; i < contactchecks.length; i++) {
@@ -63,6 +66,7 @@ const Signup = () => {
                     }
 
                     alert("You've signed up for " + activity.title + "!");
+                    // Update the myActivities field with the information gathered.
                     db.collection("users").doc(user.uid)
                     .update({
                         myActivities: firebase.firestore.FieldValue.arrayUnion({
@@ -76,13 +80,14 @@ const Signup = () => {
         }
     }
 
+    // When the form is submitted, run the AddToActivities method and close the signup form.
     const handleForm = e => {
         e.preventDefault();
         AddToActivities();
-        var signup = document.getElementById('signupForm');
-        signup.classList.toggle('active');
+        CloseSignup();
     }
 
+    // Close the signup form.
     function CloseSignup() {
         let signupForm = $('#signupForm');
         signupForm.removeClass('active');

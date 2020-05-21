@@ -2,8 +2,10 @@ import React from "react";
 import "./css/temp.css"
 import $ from "jquery"
 
-
+// This component is the first step in the signup process. It contains the buttons that allow you to choose whether you are 
+// creating a parent account, a worker account, or if perhaps you already have an account.
 const ChooseRole = () => {
+    // All of these functions simply show/hide elements depending on which button was clicked.
     function ChoseParent() {
         $('#parent-form').removeClass('inactive');
         $('#worker-form').addClass('inactive');

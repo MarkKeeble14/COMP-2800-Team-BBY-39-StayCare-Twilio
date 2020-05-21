@@ -1,19 +1,16 @@
 import React from 'react'
 import "./css/temp.css"
-import FormArea from "./form-area"
-import Intro from "./intro"
 import NAV from "./nav"
-import SearchResults from "../components/search-results"
+import SearchResults from "./search-results"
+import Profile from "./profile"
 
+// The basic contents of the profile page.
 const LandingContents = () => {
     return (
     <div id="gradient">
         <NAV></NAV>
         <SearchResults/>
-         <div id="content">
-            <Intro></Intro>
-            <FormArea></FormArea>
-         </div>
+        <Profile></Profile>
     </div>
     )
 }

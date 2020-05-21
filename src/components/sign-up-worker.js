@@ -6,6 +6,7 @@ import "./css/temp.css"
 
 const AuthContext = React.createContext(null);
 
+// Worker Signup Form
 const WorkerSignup = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -15,6 +16,7 @@ const WorkerSignup = () => {
     const [error, setErrors] = useState("");
   
     const Auth = useContext(AuthContext);
+    
     const handleForm = e => {
         e.preventDefault();
 
@@ -87,6 +89,7 @@ const WorkerSignup = () => {
             <div className="box">
                 <input type="submit" className="btn btn-white btn-animation-1"/>
             </div>
+            <span>{error}</span>
         </form>
     )
 }

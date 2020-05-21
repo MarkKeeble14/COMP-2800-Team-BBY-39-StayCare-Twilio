@@ -2,14 +2,15 @@ import React from 'react'
 import "./css/temp.css"
 import NAV from "./nav"
 import SearchResults from "./search-results"
-import Profile from "./profile"
+import PostActivity from "./post-form"
 
+// The basic contents of the post-activity page.
 const LandingContents = () => {
     return (
     <div id="gradient">
         <NAV></NAV>
         <SearchResults/>
-        <Profile></Profile>
+        <PostActivity></PostActivity>
     </div>
     )
 }

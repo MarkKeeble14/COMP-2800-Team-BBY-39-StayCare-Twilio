@@ -4,12 +4,16 @@ import {db} from "./js/firebase"
 import {ref} from "./js/firebase"
 import {firebase} from "./js/firebase"
 
-import "./css/featured_activities.css"
+import "./css/featured-activities.css"
 import "./css/temp.css"
 
+// This component contains the carousel featured on the landing page that contains the featured activities.
+// For this, we used a basic bootstrap carousel and altered it to fit our needs - https://getbootstrap.com/docs/4.0/components/carousel/
 const FeaturedActivities = () => {
     let activityDocs = []; 
 
+    // Read all activities from the database, order them within the array in order of most populated.
+    // Population is determined by doing: current occupants / max occupants
     function getActivities() {   
         db.collection("activities").get()
         .then(function (snap) {      
@@ -20,6 +24,8 @@ const FeaturedActivities = () => {
                         let lastRating = activityDocs[i - 1].data().occupants.length / activityDocs[i - 1].data().size;
                         let thisRating = activityDocs[i].data().occupants.length / activityDocs[i].data().size;
     
+                        // This is comparing the population of each activity and will swap them if the one in the 
+                        // i - 1 position has a lower population than the one in the i position.
                         if (lastRating < thisRating) {
                             let tmp = activityDocs[i - 1];
                             activityDocs[i - 1] = activityDocs[i];
@@ -33,39 +39,7 @@ const FeaturedActivities = () => {
         })
     }
 
-    function getWrittenDate(dateString) {
-        let hour = parseInt(dateString.substr(0, 2));
-        
-        let ampm = "AM";
-        if (hour > 12) {
-          hour -= 12;
-          ampm = "PM";
-        }
-        
-        let minutes = dateString.substr(3, 3);
-        let time = hour + ":" + minutes + " " + ampm;
-      
-        let monthNum = parseInt(dateString.substr(6, 7));
-        const MONTHS = ["January", "February", "March", "April", "May", "June",
-          "July", "August", "September", "October", "November", "December"
-        ];
-      
-        let monthName = MONTHS[monthNum - 1];
-      
-        let day = parseInt(dateString.substr(9, 10));
-      
-        let year = parseInt(dateString.substr(12, 15));
-      
-        let date = monthName + " " + day + ", " + year;
-      
-      
-        return {
-          date: date,
-          time: time
-        }
-      }
-
-
+    // Shows the top 5 activities within the carousel.
     function showFeaturedActivities() {
         for (let i = 0; i < 5; i++) {
             let id = "#featured" + (i + 1);
@@ -90,9 +64,10 @@ const FeaturedActivities = () => {
             });
         }
     }
-    
     getActivities();
 
+    // This is the function attached to the button on each slide. It checks which slide is currently active, then searches through 
+    // the activities to find the one that matches the key. It then adds that activity to the current users myActivities field.
     async function AddToActivities() {
         let signupForm = $('#signupForm');
         if (signupForm.hasClass('active')) {
@@ -133,6 +108,34 @@ const FeaturedActivities = () => {
                     }
                   })
             }
+        }
+    }
+
+    // Converts a date to a string.
+    function getWrittenDate(dateString) {
+        let hour = parseInt(dateString.substr(0, 2));
+        let ampm = "AM";
+        if (hour > 12) {
+          hour -= 12;
+          ampm = "PM";
+        }
+        
+        let minutes = dateString.substr(3, 3);
+        let time = hour + ":" + minutes + " " + ampm;
+      
+        let monthNum = parseInt(dateString.substr(6, 7));
+        const MONTHS = ["January", "February", "March", "April", "May", "June",
+          "July", "August", "September", "October", "November", "December"
+        ];
+      
+        let monthName = MONTHS[monthNum - 1];
+        let day = parseInt(dateString.substr(9, 10));
+        let year = parseInt(dateString.substr(12, 15));
+        let date = monthName + " " + day + ", " + year;
+      
+        return {
+          date: date,
+          time: time
         }
     }
 

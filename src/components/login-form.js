@@ -4,20 +4,22 @@ import { Link } from "gatsby"
 import "./css/temp.css"
 const AuthContext = React.createContext(null);
 
+// The Login form used within the 'form-area' component.
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setErrors] = useState("");
 
   const Auth = useContext(AuthContext);
+
+  // On submit, attempt to sign in to the account that matches the given email and password.
   const handleForm = e => {
     e.preventDefault();
     firebase
     .auth()
     .signInWithEmailAndPassword(email, password)
     .then(res => {
-      console.log(res)
-      console.log(res.user.displayName);
+      // Reload window
       window.location.replace("./");
     })
     .catch(e => {
