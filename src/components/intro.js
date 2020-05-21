@@ -18,14 +18,14 @@ const Intro = () => {
                 watch tv or play video games!
             </p>
 
-            <h3>Follow us on twitter!</h3>
+            <h3 className='intro-padded'>Follow us on twitter!</h3>
 
             <Follow
                 username="StayCareApp"
                 options={{size:"large"}}
             />
 
-            <h3>Or give us a like on Facebook!</h3>
+            <h3 className='intro-padded'>Or give us a like on Facebook!</h3>
 
             <FacebookProvider appId="886355398508956">
             <Like href="https://www.facebook.com/StayCare-102492371484201/" colorScheme="dark" showFaces share />

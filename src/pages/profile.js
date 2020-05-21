@@ -9,6 +9,7 @@ import "../components/js/firebase.js"
 import "../components/css/main.css"
 import "../components/css/temp.css"
 
+// This is the "My Profile" page as well as other profiles.
 const IndexPage = () => {
   return (
     <Layout>
