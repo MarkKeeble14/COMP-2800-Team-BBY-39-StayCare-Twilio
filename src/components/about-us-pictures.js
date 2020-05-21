@@ -79,6 +79,8 @@ const PictureContainers = () => {
                 <div className="portrait-container" id="jf">
                     <Img alt="Jakob Fipke" filename="Jakob.png" />
                     <h1 className="name">Jakob Fipke</h1>
+                    
+
                 </div>
                 <div className="portrait-container" id="jx">
                     <Img alt="Jakob Fipke" filename="Justin.png" />
