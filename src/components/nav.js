@@ -18,16 +18,14 @@ const Navbar = () => {
                     if (userDoc.exists) {
                         if (userDoc.data().isWorker) {
                             $('#post-link').removeClass('inactive');
-                        } else {
-                            $('#room-link').removeClass('inactive');
                         }
+                        $('#room-link').removeClass('inactive');
+                        $('#activities-link').removeClass('inactive');
                         $('#profile-link').removeClass('inactive');
                         $('#logout-button').html(userDoc.data().email + ', logout?');
                         $('#logout-button').on('click', function() {
                             Logout();
                         })
-                    } else {
-                        console.log('no such document');
                     }
               })
               .catch(function(error) {
@@ -62,10 +60,11 @@ const Navbar = () => {
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
-                    <li className="nav-item inactive" id="post-link"><Link to="/post-activity">Post Activity</Link></li> 
-                    <li className="nav-item inactive" id="room-link"><Link to="/room">My Activities</Link></li>
-                    <li className="nav-item inactive" id="profile-link"> <Link to="/profile">Profile</Link></li>
-                    <li className="nav-item inactive" id="about-us-link"> <Link to="/about">About The Creators</Link></li>
+                    <li className="nav-item inactive" id="post-link"><Link className='nav-bar-link' to="/post-activity">Post Activity</Link></li> 
+                    <li className="nav-item inactive" id="room-link"><Link className='nav-bar-link' to="/room">My Activities</Link></li>
+                    <li className="nav-item inactive" id="activities-link"><Link className='nav-bar-link' to="/activities">All Activities</Link></li>
+                    <li className="nav-item inactive" id="profile-link"><Link className='nav-bar-link' to="/profile">Profile</Link></li>
+                    <li className="nav-item inactive" id="about-us-link"><Link className='nav-bar-link' to="/about">About The Creators</Link></li>
                     <li className="nav-item" id="logout"><p id="logout-button" className=""/></li>
                 </ul>
                 <SearchBar/>

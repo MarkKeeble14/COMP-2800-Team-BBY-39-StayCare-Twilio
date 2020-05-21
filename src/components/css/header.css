@@ -75,7 +75,9 @@
   text-decoration: none;
 }
 
+/*
 #logout-button {
+
   color: #007bff;
   text-decoration: none;
   text-decoration-color: #007bff;
@@ -84,6 +86,12 @@
   cursor: pointer;
   transition: all 0.5s;
   width: fit-content;
+}
+*/
+
+.nav-bar-link {
+  text-decoration: none;
+  color: black;
 }
 
 #logout-button:hover {

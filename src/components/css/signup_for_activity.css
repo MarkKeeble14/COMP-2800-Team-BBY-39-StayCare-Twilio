@@ -4,7 +4,7 @@
     left: 50%;
     transform: translate(-50%, -50%);
 
-    width: 80%;
+    width: fit-content;
     padding: 2%;
     background: #fff;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
@@ -14,6 +14,7 @@
     opacity: 0;
     transition: 0.5s;
     text-align: center;
+    z-index: 300;
     
 }
 
@@ -56,6 +57,14 @@ h3 {
     font-size: 18px;
 }
 
+#signupCancel {
+  height: 50%;
+  width: 50%;
+  padding: 2%;
+  background-color: #f9c803;
+  font-size: 18px;
+}
+
 #contactMethod {
     font-size: 18px;
 
@@ -68,24 +77,6 @@ h3 {
     margin: 0 auto;
 }
 
-/*Need to continue working on checkboxes, they do not look the way they should yet, also need to set up requiring at least 1 chosen in JS file */
-input[type='checkbox'] {
-    -webkit-appearance:none;
-    width:5vw;
-    height:5vw;
-    background:white;
-    border-radius:5px;
-    border:2px solid #555;
-
-    margin: 2%;
-
-    transform: translateY(50%);
-}
-
-input[type='checkbox']:checked {
-    background: red;
-}
-
 #register {
     text-align: right;
 }
@@ -93,3 +84,61 @@ input[type='checkbox']:checked {
 .response-container {
     margin-bottom: 8%;
 }
+
+
+#signupForm input[type=checkbox] + label {
+    display: block;
+    margin: 2%;
+    cursor: pointer;
+    padding: 2%;
+  }
+  
+  #signupForm input[type=checkbox] {
+    display: none;
+  }
+  
+  #signupForm input[type=checkbox] + label:before {
+    content: "\2714";
+    border: 0.1em solid #000;
+    border-radius: 0.2em;
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    padding-left: 0.3em;
+    padding-bottom: 0.3em;
+    margin-right: 0.6em;
+    vertical-align: middle;
+    color: transparent;
+    transition: .2s;
+  }
+  
+  #signupForm input[type=checkbox] + label:active:before {
+    transform: scale(0);
+  }
+  
+  #signupForm input[type=checkbox]:checked + label:before {
+    background-color: MediumSeaGreen;
+    border-color: MediumSeaGreen;
+    color: #fff;
+  }
+  
+  #signupForm input[type=checkbox]:disabled + label:before {
+    transform: scale(1);
+    border-color: #aaa;
+  }
+  
+  #signupForm input[type=checkbox]:checked:disabled + label:before {
+    transform: scale(1);
+    background-color: #bfb;
+    border-color: #bfb;
+  }
+
+  .btn {
+    border: 1px outset;
+  }
+
+  .btn:active {
+    border: 1px inset;
+  }
+
+  

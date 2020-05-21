@@ -1,0 +1,15 @@
+#all-activities-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    min-height: 100vh;
+}
+
+.inFocus {
+    position: absolute;
+    top: 10%;
+    left: 5%;
+    z-index: 200;
+    width: 90%;
+    transition: 1s;
+}

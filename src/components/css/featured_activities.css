@@ -39,12 +39,17 @@
 
 .carousel-item img {
     background: white;
-    height: 25vh;
+    height: 35vh;
     border-radius: 0% 0% 0% 0% / 0% 0% 0% 0% ;
     color: white;
     box-shadow: 20px 20px rgba(0,0,0,.15);
     transition: all .4s ease;
     margin: 0 auto;
+    border: 1px solid #AAAAAA;
+}
+
+.carousel-item img:hover {
+    transform: scale(0.9) translateX(10%);
 }
 
 .activityInfo {

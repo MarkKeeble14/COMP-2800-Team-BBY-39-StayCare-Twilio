@@ -1,6 +1,4 @@
 import React from "react"
-import $ from "jquery"
-
 import "./css/post.css"
 import "./file-select"
 import {postActivity} from "./js/post"

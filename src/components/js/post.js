@@ -34,8 +34,13 @@ function uploadImage(file, ref) {
 let worker;
 
 firebase.auth().onAuthStateChanged((user) => {
-    worker = (user.uid);
-    console.log(worker);
+    db.collection("users").doc(user.uid).get()
+    .then(function (doc) {
+        worker = doc.data().firstName + " " + doc.data().lastName;
+        console.log(worker);
+    })
+    //worker = (user.uid);
+    
 })
 /**
  * For clicking post button at bottom of form.
@@ -127,9 +132,12 @@ function postActivity() {
             "worker": worker
         }).then(function () {
             if (file) {
-                uploadImage(file, fileRef);        
+                uploadImage(file, fileRef);
+                console.log("uploaded");        
             }
             refreshSearchResults();
+            
+        }).then(function () {
             window.location.replace("./");
         });
     }

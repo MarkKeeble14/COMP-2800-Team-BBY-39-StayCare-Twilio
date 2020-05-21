@@ -8,7 +8,7 @@ import "../components/css/main.css"
 const AboutPage = () => {
     return (
       <Layout>
-        <SEO title="StayCare | About"/>
+        <SEO title="About"/>
         <LandingContents></LandingContents>
         <AboutPictures></AboutPictures>
       </Layout>

@@ -21,13 +21,14 @@ var db = firebase.firestore();
 var ref = firebase.storage().ref();
 var auth = firebase.auth();
 
+// Firebase login with google
 const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => {
   auth.signInWithPopup(provider);
 };
 
+/* Firebase user features */
 export const generateUserDocument = async (user, additionalData) => {
-  console.log(user);
   if (!user) return;
 
   const userRef = db.doc(`users/${user.uid}`);

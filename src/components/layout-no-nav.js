@@ -7,15 +7,12 @@
 
 import React from "react"
 import PropTypes from "prop-types"
-
-import Profile from "../components/profile";
-import Footer from "./footer"
-import NAV from "./nav"
-import SearchResults from "../components/search-results"
+import SignUpForActivity from "./signup-for-activity"
 
 const Layout = ({ children }) => {
   return (
     <>
+    <SignUpForActivity></SignUpForActivity>
       <main id="layout-contents">
         {children}
       </main>

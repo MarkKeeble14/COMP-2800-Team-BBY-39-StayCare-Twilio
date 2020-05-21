@@ -2,19 +2,16 @@ import React from "react"
 
 import Layout from "../components/layout-no-nav"
 import SEO from "../components/seo"
-
+import LandingContents from "../components/landing-cotents-activities"
 import "../components/js/firebase.js"
-import LandingContents from "../components/landing-cotents"
-import FeaturedActivities from "../components/featured-activities"
 import "../components/css/main.css"
 import "../components/css/temp.css"
 
 const IndexPage = () => {
   return (
     <Layout>
-      <SEO title="Home"/>
+      <SEO title="Activities"/>
       <LandingContents></LandingContents>
-      <FeaturedActivities></FeaturedActivities>
     </Layout>
   )
 }

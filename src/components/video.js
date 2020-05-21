@@ -1,6 +1,9 @@
 import React, { useEffect, useRef } from "react"
 import $ from "jquery"
 import { query } from "./custom-query-string"
+import {name} from "./signed-up-for"
+
+$("#activityName").text(name);
 
 // Twilio
 let TwilioVideo = null;
@@ -23,26 +26,6 @@ const Video = ({token}) => {
     const remoteVidRef = useRef(null);
     const streamCont = useRef(null);
 
-    // Move these to a seperate file eventually
-    function switchDisplay() {
-        var classes = streamCont.current.classList;
-        if (classes.contains('config-one')) {
-            classes.add('config-two');
-            classes.remove('config-one');
-        }
-        else if (classes.contains('config-two')) {
-            classes.add('config-three');
-            classes.remove('config-two');
-        }
-        else if (classes.contains('config-three')) {
-            classes.add('config-four');
-            classes.remove('config-three');
-        }
-        else if (classes.contains('config-four')) {
-            classes.add('config-one');
-            classes.remove('config-four');
-        }
-    }
   
     useEffect(() => {
       // Can put code here to set database info on room -------------------
@@ -76,11 +59,13 @@ const Video = ({token}) => {
             var localParticipant = room.localParticipant;
             localParticipant.audioTracks.forEach(function(track) {
               if ( track.track.isEnabled === true ) {
-                    console.log("disabling audio track");
-                    track.track.disable();
+                  console.log("disabling audio track");
+                  track.track.disable();
+                  $("#mute-audio").css("background", "red");
               } else {
                   console.log("enabling audio track");
                   track.track.enable();
+                  $("#mute-audio").css("background", "lime");
               }
               });
             }
@@ -89,18 +74,25 @@ const Video = ({token}) => {
               var localParticipant = room.localParticipant;
               localParticipant.videoTracks.forEach(function(track) {
                 if ( track.track.isEnabled === true ) {
-                      console.log("disabling video track");
-                      track.track.disable();
+                    console.log("disabling video track");
+                    track.track.disable();
+                    $("#mute-video").css("background", "red");
                 } else {
                     console.log("enabling video track");
                     track.track.enable();
+                    $("#mute-video").css("background", "lime");
                 }
                 });
               }
+
+            function reloadTracks() {
+
+            }
   
             // Add event listener
             $('#mute-video').on('click', event => {
               unmute_mute_video();
+              
             })
   
             $('#mute-audio').on('click', event => {
@@ -109,11 +101,9 @@ const Video = ({token}) => {
   
             $('#disconnect').on('click', event => {
               room.disconnect();
+              window.location.replace('../room');
             });
   
-            $('#swap-config').on('click', event => {
-              switchDisplay();
-            });
   
             // Disconnect
             room.on('disconnected', room => {
@@ -133,18 +123,17 @@ const Video = ({token}) => {
     return  (
         <div className="content">
             <div id="controls">
-                <input type="button" id="mute-video" value="Video"/>
-                <input type="button" id="mute-audio" value="Audio"/>
+                <input type="button" id="mute-video" value="Video On/Off"/>
+                <input type="button" id="mute-audio" value="Mute/Unmute"/>
                 <input type="button" id="disconnect" value="Leave"/>
             </div>
             
             <div id="room-info">
-                <h2 className="room-name">Room Name</h2>
-                <h3 className="room-activity">Room Activity</h3>
+                <h2 className="room-activity" id="activityName"></h2>
             </div>
             <div id="stream-container" className="config-one" ref={streamCont}>
                 <div id="local" ref={localVidRef}/>
-                <div id="remote" ref={remoteVidRef}/>
+                <div id="remote" ref={remoteVidRef}><div id="giveSpace"></div></div>
             </div>
         </div>
     )

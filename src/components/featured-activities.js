@@ -1,11 +1,11 @@
 import React from 'react'
-import "./css/featured_activities.css"
-import "./css/temp.css"
-import "./js/carousel_controller.js"
 import $ from "jquery"
 import {db} from "./js/firebase"
 import {ref} from "./js/firebase"
 import {firebase} from "./js/firebase"
+
+import "./css/featured_activities.css"
+import "./css/temp.css"
 
 const FeaturedActivities = () => {
     let activityDocs = []; 
@@ -14,7 +14,19 @@ const FeaturedActivities = () => {
         db.collection("activities").get()
         .then(function (snap) {      
             snap.forEach(function (doc) {
-                activityDocs.push(doc);
+                if (doc.data().occupants.length < doc.data().size) {
+                    activityDocs.push(doc);
+                    for (let i = 1; i < activityDocs.length; i++) {
+                        let lastRating = activityDocs[i - 1].data().occupants.length / activityDocs[i - 1].data().size;
+                        let thisRating = activityDocs[i].data().occupants.length / activityDocs[i].data().size;
+    
+                        if (lastRating < thisRating) {
+                            let tmp = activityDocs[i - 1];
+                            activityDocs[i - 1] = activityDocs[i];
+                            activityDocs[i] = tmp;
+                        }
+                    }
+                }
             });
         }).then(function () {  
             showFeaturedActivities();      
@@ -61,7 +73,8 @@ const FeaturedActivities = () => {
             let path = data.image;
             let thisDate = getWrittenDate(data.time);
             let sched = "Scheduled for: " + thisDate.time + " on " + thisDate.date; 
-            let size = "Room Size: " + data.size + " spots";
+            let size = data.occupants.length;
+            let maxSize = data.size;
             let key = data.key;
             ref.child(path).getDownloadURL().then(function(url) {
                 // console.log("image found at path: " + path);
@@ -69,8 +82,7 @@ const FeaturedActivities = () => {
                 $(id + " .activityInfo .title").text(data.title + " with " + data.worker);
                 $(id + " .activityInfo .description").text(data.description);
                 $(id + " .activityInfo .schedule").text(sched);
-                $(id + " .activityInfo .roomSize").text(size);
-
+                $(id + " .activityInfo .roomSize").text(size + " out of " + maxSize + " seats are currently taken.");
                 $(id + " .activityInfo .keyValue").text(key);
                 $(id + " .activityInfo .keyValue").addClass('inactive');
             }).catch(function(error) {
@@ -82,27 +94,44 @@ const FeaturedActivities = () => {
     getActivities();
 
     async function AddToActivities() {
+        let signupForm = $('#signupForm');
+        if (signupForm.hasClass('active')) {
+            signupForm.removeClass('active');
+            return;
+        }
+
         let activeItem = $('.active')[0];
         let slide = activeItem.id.substring(activeItem.id.length - 1, activeItem.id.length);
         let key = $('#keyValue' + slide).html();
 
-        console.log($('#keyValue' + slide).html());
-        console.log('signing up for an activity');
         const snapshot = await firebase.firestore().collection('activities').get();
-        console.log(snapshot.docs);
         for (let i = 0; i < snapshot.docs.length; i++) {
             if (snapshot.docs[i].data().key == key) {
                 firebase.auth().onAuthStateChanged(function (user) {
-                if (user) {
-                    alert("You've signed up for " + snapshot.docs[i].data().title + '!');
-                    db.collection("users").doc(user.uid)
-                    .update({
-                        myActivities: firebase.firestore.FieldValue.arrayUnion(snapshot.docs[i].data()) //Add the result object to "my activities" database
-                    });
-                } else {
-                    alert('please login or signup for an account');
-                }
-                })
+                    if (user != null) {
+                        db.collection("users").doc(user.uid).get()
+                        .then(function (snap) {
+                            if (snap.data().children != undefined) {
+                                $('.children-response-container').replaceWith("<div class='children-response-container'></div>");
+                                for (let i = 0; i < snap.data().children.length; i++) {
+                                    let child = snap.data().children[i];
+                                    let id = child + '-Check';
+                                    $('.children-response-container').append("<input type='checkbox' class='child-select' id='" + id + 
+                                        "' name='" + id + "' value='" + child + "'/>" +
+                                        "<label for='" + id + "'>" + child + "</label>");
+                                }
+                
+                                signupForm.addClass('active');
+                                $('#signup-form-activity-title').html(snapshot.docs[i].data().title);
+                                $('#signup-form-activity-key').html(snapshot.docs[i].data().key);
+                                $('#signup-form-activity-worker').html(snapshot.docs[i].data().worker);
+                                $('#signup-form-activity-time').html(snapshot.docs[i].data().time);
+                            } else {
+                                alert("You don't currently have any children attached to your account.");
+                            }
+                        })
+                    }
+                  })
             }
         }
     }
