@@ -1,5 +1,4 @@
 #featuredActivities {
-    border: 1px solid black;
     padding: 4%;
 
     height: 80vh;
@@ -30,7 +29,7 @@
 
 #title {
     text-align: center;
-    font-size: 250%;
+    font-size: 64px;
     padding: 2%;
 }
 
@@ -39,11 +38,20 @@
 }
 
 .carousel-item img {
+    background: white;
     height: 35vh;
-    display: block;
-    margin: auto;
+    border-radius: 0% 0% 0% 0% / 0% 0% 0% 0% ;
+    color: white;
+    box-shadow: 20px 20px rgba(0,0,0,.15);
+    transition: all .4s ease;
+    margin: 0 auto;
+    border: 1px solid #AAAAAA;
+}
+
+.carousel-item img:hover {
+    transform: scale(0.9) translateX(10%);
 }
 
 .activityInfo {
-    margin-top: 3%;
+    margin-top: 10%;
 }

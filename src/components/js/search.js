@@ -91,7 +91,7 @@ function autocomplete(input, array) {
       e.preventDefault();
       if (currentFocus > -1) {
         // and simulate a click on the "active" item
-        if (x) {
+        if (x && x[currentFocus]) {
           x[currentFocus].click();
         }
         currentFocus = -1;
@@ -119,6 +119,7 @@ function autocomplete(input, array) {
     }
   }
 
+  // removes search suggestions div
   function closeAllLists(element) {
     let x = $(".autocomplete-items");
     for (let i = 0; i < x.length; i++) {
@@ -133,6 +134,13 @@ function autocomplete(input, array) {
   })
 }
 
+// hides search results
+function hideSearchResults() {
+  console.log('search results hidden');
+  $("#searchResultsActivities *").remove();
+}
+
+//shows any activities that were in the search suggestions
 function showSearchResults() {
   toggleNav();
 
@@ -142,40 +150,70 @@ function showSearchResults() {
 
     let searchInput = $("#myInput").val();
     $("<h4 id='showingFor'>Showing search results for \"" + searchInput + "\"</h4>").appendTo("#searchResultsActivities");
-    $("#showingFor").css("padding", "5%");
+    $("<input type='button' id='hideSearchResults' value='Hide Search Results' class='btn btn-white btn-animation-1'></input>").appendTo("#searchResultsActivities");
+    $("#hideSearchResults").on('click', function() {
+      console.log('search results hidden');
+      $("#searchResultsActivities *").remove();
+    })
+    $("<div id='searchResultsActivitiesContainer'></div>").appendTo("#searchResultsActivities");
     results.forEach(result => showActivity(result));    
   }
 }
 
+// displays activity when passed an object that is an activity document
 function showActivity(result) {
   let resultId = "#" + result.id;
-  $("<div class='card flex' id='" + result.id + "'></div>").appendTo("#searchResultsActivities");
+  $("<div class='card flex' id='" + result.id + "'></div>").appendTo("#searchResultsActivitiesContainer");
 
+  console.log(result.data().image);
   ref.child(result.data().image).getDownloadURL().then(function (url) {
     $("<img class='card-img-top' src='" + url + "'></img>").prependTo(resultId);
   })
   $("<div class='card-body'></div>").appendTo(resultId);
 
   $("<h4 class='card-title left'>" + result.data().title + "</h4>").appendTo(resultId + " .card-body");
+  $("<p class='card-worker left'>" + "with " + result.data().worker + "</p>").appendTo(resultId + " .card-body");
   $("<p class='card-text left'>" + result.data().description + "</p>").appendTo(resultId + " .card-body");
 
-  let scheduledTime = getWrittenDate(result.data().time);
-  let timeHtml = "<p class='card-text left'>Scheduled for: " + scheduledTime.time + " on " + scheduledTime.date + "</p>";
+  let scheduledTime = result.data().time;
+  let timeHtml = "<p class='card-text left'>Scheduled for: " + scheduledTime + "</p>";
   $(timeHtml).appendTo(resultId + " .card-body");
 
   $("<p class='card-text left'>Room Size: " + result.data().size + " spots</p>").appendTo(resultId + " .card-body");
 
-  $("<button id='signUpButton'>Sign Up</button>").appendTo(resultId + " .card-body");
+  $("<div class='box'><input type='submit' id='signUpButton' class='btn btn-white btn-animation-1 middled-button' value='Sign Up!'/></div>").appendTo(resultId + " .card-body");
 
+  
   function signUp() {
     $('#signUpButton').on('click', function() {
-      console.log('signing up for an activity');
       firebase.auth().onAuthStateChanged(function (user) {
-        if (user) {
-          db.collection("users").doc(user.uid)
-            .update({
-              myActivities: firebase.firestore.FieldValue.arrayUnion(result.data()) //Add the result object to "my activities" database
-            });
+        if (user != null) {
+            db.collection("users").doc(user.uid).get()
+            .then(function (snap) {
+                $('.children-response-container').replaceWith("<div class='children-response-container'></div>");
+                if (snap.data().children != undefined) {
+                  for (let i = 0; i < snap.data().children.length; i++) {
+                    let child = snap.data().children[i];
+                    let id = child + '-Check';
+                    $('.children-response-container').append("<input type='checkbox' class='child-select' id='" + id + 
+                      "' name='" + id + "' value='" + child + "'/>" +
+                      "<label for='" + id + "'>" + child + "</label>");
+                  }
+                  let signupForm = $('#signupForm');
+                      if (signupForm.hasClass('active')) {
+                        signupForm.removeClass('active');
+                      } else {
+                        signupForm.addClass('active');
+                      }
+                      
+                      $('#signup-form-activity-title').html(result.data().title);
+                      $('#signup-form-activity-key').html(result.data().key);
+                      $('#signup-form-activity-worker').html(result.data().worker);
+                      $('#signup-form-activity-time').html(result.data().time);
+                } else {
+                  alert("You don't currently have any children attached to your account. Please go to your Profile and add them.");
+                }
+            })
         }
       })
     })
@@ -184,8 +222,10 @@ function showActivity(result) {
   signUp();
 }
 
-function getWrittenDate(dateString) {
 
+/*Currently not in use -- was meant to interpret format given by 
+datetimepicker which is currently not working*/
+function getWrittenDate(dateString) {
 
   let hour = parseInt(dateString.substr(0, 2));
   
@@ -219,10 +259,12 @@ function getWrittenDate(dateString) {
 
 }
 
+
 function clearInput() {
   $("#myInput").val("");
 }
 
+// toggles collapsible nav menu
 function toggleNav() {
   let expanded = $("#navToggler").attr("aria-expanded");
   if (expanded === "true" && window.innerWidth < 992) {
@@ -236,7 +278,6 @@ export {getSearchResults}
 export {autocomplete}
 export {showSearchResults}
 export {showActivity}
-export {getWrittenDate}
 export {clearSearchResults}
 export {clearInput}
 export {toggleNav}

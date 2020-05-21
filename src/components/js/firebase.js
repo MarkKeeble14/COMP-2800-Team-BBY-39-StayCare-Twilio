@@ -21,13 +21,14 @@ var db = firebase.firestore();
 var ref = firebase.storage().ref();
 var auth = firebase.auth();
 
+// Firebase login with google
 const provider = new firebase.auth.GoogleAuthProvider();
 export const signInWithGoogle = () => {
   auth.signInWithPopup(provider);
 };
 
-export const generateUserDocument = async (user, additionalData) => {
-  console.log(user);
+/* Firebase use features */
+export const generateUserDocument = async (user, additionalData) => { //Creates user document
   if (!user) return;
 
   const userRef = db.doc(`users/${user.uid}`);
@@ -49,6 +50,7 @@ export const generateUserDocument = async (user, additionalData) => {
   return getUserDocument(user.uid);
 };
 
+/*Reads user document from the database */
 const getUserDocument = async uid => {
   if (!uid) return null;
   try {

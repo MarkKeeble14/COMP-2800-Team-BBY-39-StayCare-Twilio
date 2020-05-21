@@ -1,0 +1,39 @@
+.active {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.activity {
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+    padding: 2%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    height: fit-content;
+}
+
+.activity > input {
+    margin: 2%;
+}
+
+.info {
+    margin: 0;
+    padding-top: 2%;
+}
+
+#tmp {
+    margin-bottom: 2%;
+}
+
+#signed-up-for {
+    min-height: 50vh;
+}
+
+#no-activities-scheduled > p {
+    text-align: center;
+    font-size: 32px;
+    margin: 0 auto;
+    position: relative;
+    top: -25vh;
+}

@@ -1,14 +1,13 @@
 import React from "react"
 import PropTypes from "prop-types"
-import NAV from "./nav"
-import SearchResults from "../components/search-results"
+import SignUpForActivity from "./signup-for-activity"
 
-// Standard layout of pages.
+// Basic layout for pages without the navbar embedded. 
+// The navbar will be embedded within the div with the id 'gradient' if this Layout should be used.
 const Layout = ({ children }) => {
   return (
     <>
-      <NAV />
-      <SearchResults/>
+    <SignUpForActivity></SignUpForActivity>
       <main id="layout-contents">
         {children}
       </main>

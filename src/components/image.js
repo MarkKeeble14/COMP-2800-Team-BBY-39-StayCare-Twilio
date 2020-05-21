@@ -2,8 +2,7 @@ import React from 'react';
 import { StaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
-// Note: You can change "images" to whatever you'd like.
-
+// Gatsby image component
 const Image = props => (
   <StaticQuery
     query={graphql`

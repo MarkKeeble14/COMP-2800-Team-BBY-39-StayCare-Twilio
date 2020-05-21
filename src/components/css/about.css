@@ -1,19 +1,13 @@
 #about-us-container {
     display: grid;
     grid-template-columns: auto;
-    padding: 2%;
-    border: 1px solid black;
-}
-
-#about-us-container p {
-    font-size: 24px;
-    text-align: left;
 }
 
 #images-container h1 {
     padding: 2%;
     font-size: 32px;
     text-align: center;
+    position: relative;
 }
 
 @media only screen and (max-width: 800px) {
@@ -40,12 +34,33 @@
     }
 }
 
-.portrait-container Img {
-    padding: 2%;
-}
-
 #egg-container {
     display: none;
     text-align: center;
+}
+
+#about-us-container p {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+#project-paragraph-container {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    padding-top: 2%;
+}
+
+#project-paragraph-container > p {
+    font-size: 24px;
+}
+
+#personal-paragraph-container {
+    padding-bottom: 4%;
+}
+
+#personal-paragraph-container > p {
+    font-size: 18px;
+    width: 70%;
+    margin: 0 auto;
 }
 

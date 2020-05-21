@@ -1,11 +1,10 @@
 // customQueryStringComponent.js
-
 import React from "react"
 import PropTypes from "prop-types"
 import withLocation from "./with-location"
 let query;
-export { query };
 
+// This component is used to access queries inside of the url
 const CustomQueryStringComponent = ({ search }) => {
   const { room } = search;
   query = room ;
@@ -17,3 +16,6 @@ CustomQueryStringComponent.propTypes = {
 }
 
 export default withLocation(CustomQueryStringComponent)
+
+// this variable can be accessed from other files and read.
+export { query };

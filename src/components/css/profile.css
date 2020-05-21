@@ -1,26 +1,10 @@
 #profile-card {
-    position: fixed;
-    top: 150%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    width: 80%;
+    width: 50%;
     padding: 2%;
     background: #fff;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.5);
     font-size: 36px;
-
-    visibility: hidden;
-    opacity: 0;
-    transition: 0.5s;
-    z-index: 300;
-}
-
-#profile-card.active {
-    top: 50%;
-    visibility: visible;
-    opacity: 1;
-    transition: 0.5s;
+    margin: 0 auto;
 }
 
 #blur.active {
@@ -29,14 +13,30 @@
     transition: 0.5s;
 }
 
+.childname {
+    font-size: 18px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 2%;
+}
+
 #blur {
     filter: blur(0px);
     pointer-events: all;
     transition: 0.5s;
 }
 
-.image-container {
-    position: relative;
+#add-child {
+    margin: 0 auto;
+    font-size: 18px;
+    height: fit-content;
+    width: fit-content;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.image-container > img {
+    margin: 0 auto;
 }
 
 .info {
@@ -47,7 +47,7 @@
 .label {
     width: 100%;
     display: grid;
-    grid-template-columns: 10% 90%;
+    grid-template-columns: 20% 80%;
 }
 
 .textbox {
@@ -70,19 +70,21 @@
     padding-left: 2%;
 }
 
-.main-container {
-    padding: 2%;
+.title {
+    padding-top: 2%;
+    padding-bottom: 2%;
 }
 
-.title h2 {
-    position: absolute;
-    left: 4%;
-    bottom: 4%;
+#display-name {
+    font-size: 32px;
+    text-align: center;
+
+    transform: translateY(2%);
 }
 
-.title-text {
-    font-size: 10vw;
-    color: #fff;
+#child-form {
+    display: grid;
+    grid-template-columns: 100%;
 }
 
 #child-container {
@@ -100,4 +102,39 @@
     font-size: 36px;
     text-align: right;
     padding: 2%;
+}
+
+#child-box-title {
+    padding: 2%;
+    margin: 0 auto;
+}
+
+#profile-created-activities {
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    font-size: 18px;
+    margin: 0 auto;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+#profile-created-activities * {
+    margin: 0 auto;
+}
+
+.favorites-title {
+    text-decoration: underline;
+    text-align: center;
+}
+
+.favorites-body {
+    height: 28vh;
+    border: 1px solid black;
+    overflow-y: scroll;
+}
+
+.favorites-text {
+    font-size: 3vh;
+    text-align: center;
 }

@@ -1,7 +1,7 @@
 import $ from "jquery"
 import { db } from "../js/firebase"
 import {search} from "./search"
-
+import { firebase } from "./firebase"
 import {getSearchResults} from "./search"
 import {autocomplete} from "./search"
 
@@ -28,9 +28,20 @@ let postId = newPostId();
 function uploadImage(file, ref) {
     ref.put(file).then(function() {
         console.log("uploaded file");
+        window.location.replace("../room");
     })
 }
 
+let worker;
+firebase.auth().onAuthStateChanged((user) => {
+    db.collection("users").doc(user.uid).get()
+    .then(function (doc) {
+        worker = doc.data().firstName;
+        if (doc.data().lastName !== undefined) {
+            worker += " " + doc.data().lastName;
+        }
+    })
+})
 /**
  * For clicking post button at bottom of form.
  */
@@ -42,6 +53,8 @@ function postActivity() {
     let opt = sel.options[sel.selectedIndex]; 
     let maxOccupants = parseInt(opt.text);
 
+
+    // messages to display when a field isn't filled out properly
     const MESSAGE = {
         IMAGE: "Please add an image.", 
         TITLE: "Title for activity required.",
@@ -49,6 +62,12 @@ function postActivity() {
         SIZE: "Please select an option.",
         TIME: "Please schedule a time for this activity."
     }
+
+
+    /*Each field is checked to see if it is filled out.
+    If one of them is not filled out, an error will be inserted after the field where the
+    error is with the corresponding error message. If they are all filled out correctly, the
+    errors are removed and boolean shouldipost remains true.*/
 
     let shouldipost = true;
 
@@ -107,43 +126,95 @@ function postActivity() {
     } else {
         $("#sizeError").remove();
     }
-    console.log(shouldipost);
-    if (shouldipost) {
+
+    /*Posts activity to database, uploads the image to firebase storage, then
+    replaces the window */
+    console.log(worker);
+    let key = Math.random().toString(36).substr(2, 9);
+    function postToDatabase() {
         db.collection("activities").doc(postId).set({
-            "key": Math.random().toString(36).substr(2, 9),
+            "key": key,
             "title": activityName,
             "description": desc,
             "image": fullPath,
             "time": time,
-            "size": maxOccupants
+            "size": maxOccupants,
+            "worker": worker
         }).then(function () {
             if (file) {
-                uploadImage(file, fileRef);        
+                uploadImage(file, fileRef);
+                console.log("uploaded");        
             }
+            AddToActivities(key);
+            alert("Adding this activity to your activities. Please don't exit the window! It will refresh when it's done!");
             refreshSearchResults();
-            window.location.replace("./");
-        });        
+        })
+    }
+
+    if (shouldipost) {
+        postToDatabase();
     } else {
         console.log("error. did not upload");
     }
 }
 
+function AddToActivities(key) {
+    db.collection("activities").get()
+    .then(function (snap) {      
+        snap.forEach(function (doc) {
+            if (doc.data().key === key) {
+                // Assign this activity to a variable.
+                let activity = doc.data();
+                firebase.auth().onAuthStateChanged(function (user) {
+                    // if the user is signed in
+                    if (user) {
+                        if (activity.occupants !== undefined) {
+                            // No more room
+                            if (activity.occupants.length >= activity.size) {
+                                alert('There is no more room in this activity. Sorry!');
+                                return;
+                            }
+                            // already signed up for room
+                            for (let j = 0; j < activity.occupants.length; j++) {
+                                if (activity.occupants[j] === user.email) {
+                                    alert("You're already signed up for this activity");
+                                    return;
+                                }
+                            }
+                        }
+                        db.collection('activities').doc(doc.id)
+                        .update({
+                            occupants: firebase.firestore.FieldValue.arrayUnion(user.email)
+                        })
+
+                        let childrenAdded = [];
+                        let contactsAdded = [];
+
+                        // Update the myActivities field with the information gathered.
+                        db.collection("users").doc(user.uid)
+                        .update({
+                            myActivities: firebase.firestore.FieldValue.arrayUnion({
+                                mainActivity: activity,
+                                contactInfo: contactsAdded,
+                                childrenInfo: childrenAdded
+                            }) //Add the result object to "my activities" database
+                        });
+                    }
+                })
+            }
+        })
+    })
+}
+
+
 // resets search results
 function refreshSearchResults() {
     clearSearchResults();
     getSearchResults(["activities"]);
-    
     autocomplete($("#myInput"), search);
 }
 
-/*
-document.getElementById("worker-link").onclick = function () {
-    clearForm();
-    hideElement("featuredActivities");
-    hideElement("post-form");
-    showElement("worker-registration-form");
-}*/
-
+// reset fields in form
 function clearForm() {
     photo.css("background-image", "url('images/img_placeholder.png')");
     $("#activityName").val("");

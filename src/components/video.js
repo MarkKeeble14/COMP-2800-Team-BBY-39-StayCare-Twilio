@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import $ from "jquery"
-import { query } from "./custom-query-string"
+import {query} from "./query-string"
+import {name} from "./my-activities"
 
 // Twilio
 let TwilioVideo = null;
@@ -23,29 +24,8 @@ const Video = ({token}) => {
     const remoteVidRef = useRef(null);
     const streamCont = useRef(null);
 
-    // Move these to a seperate file eventually
-    function switchDisplay() {
-        var classes = streamCont.current.classList;
-        if (classes.contains('config-one')) {
-            classes.add('config-two');
-            classes.remove('config-one');
-        }
-        else if (classes.contains('config-two')) {
-            classes.add('config-three');
-            classes.remove('config-two');
-        }
-        else if (classes.contains('config-three')) {
-            classes.add('config-four');
-            classes.remove('config-three');
-        }
-        else if (classes.contains('config-four')) {
-            classes.add('config-one');
-            classes.remove('config-four');
-        }
-    }
-  
     useEffect(() => {
-      // Can put code here to set database info on room -------------------
+      // Connect to twilio using the token and the current keyed roomname
         TwilioVideo.connect(token, { video: true, audio: true, name: roomname }).then(
           room => {
         console.log("Joining: " + roomname);
@@ -54,8 +34,8 @@ const Video = ({token}) => {
             localVidRef.current.appendChild(track.attach())
           })  
   
+          // Adds a participant
           const addParticipant = participant => {
-            //console.log("New Participant: " + participant.identity);
             participant.tracks.forEach(publication => {
               if (publication.isSubscribed) {
                 const track = publication.track;
@@ -72,47 +52,52 @@ const Video = ({token}) => {
           room.participants.forEach(addParticipant)
           room.on('participantConnected', addParticipant)
   
+          // Toggling muting and unmuting audio
           function unmute_mute_audio() {
             var localParticipant = room.localParticipant;
             localParticipant.audioTracks.forEach(function(track) {
               if ( track.track.isEnabled === true ) {
-                    console.log("disabling audio track");
-                    track.track.disable();
+                  console.log("disabling audio track");
+                  track.track.disable();
+                  $("#mute-audio").css("background", "red");
               } else {
                   console.log("enabling audio track");
                   track.track.enable();
+                  $("#mute-audio").css("background", "lime");
               }
               });
             }
   
+            // Toggling pausing and unpausing video
             function unmute_mute_video() {
               var localParticipant = room.localParticipant;
               localParticipant.videoTracks.forEach(function(track) {
                 if ( track.track.isEnabled === true ) {
-                      console.log("disabling video track");
-                      track.track.disable();
+                    console.log("disabling video track");
+                    track.track.disable();
+                    $("#mute-video").css("background", "red");
                 } else {
                     console.log("enabling video track");
                     track.track.enable();
+                    $("#mute-video").css("background", "lime");
                 }
                 });
               }
   
-            // Add event listener
+            // Add event listener for video toggle
             $('#mute-video').on('click', event => {
               unmute_mute_video();
             })
   
+            // Add event listener for audio toggle
             $('#mute-audio').on('click', event => {
               unmute_mute_audio();
             })
   
+            // Add event listener for leaving room
             $('#disconnect').on('click', event => {
               room.disconnect();
-            });
-  
-            $('#swap-config').on('click', event => {
-              switchDisplay();
+              window.location.replace('../room');
             });
   
             // Disconnect
@@ -133,23 +118,20 @@ const Video = ({token}) => {
     return  (
         <div className="content">
             <div id="controls">
-                <input type="button" id="mute-video" value="Video"/>
-                <input type="button" id="mute-audio" value="Audio"/>
+                <input type="button" id="mute-video" value="Video On/Off"/>
+                <input type="button" id="mute-audio" value="Mute/Unmute"/>
                 <input type="button" id="disconnect" value="Leave"/>
             </div>
             
             <div id="room-info">
-                <h2 className="room-name">Room Name</h2>
-                <h3 className="room-activity">Room Activity</h3>
+                <h2 className="room-activity" id="activityName"></h2>
             </div>
             <div id="stream-container" className="config-one" ref={streamCont}>
                 <div id="local" ref={localVidRef}/>
-                <div id="remote" ref={remoteVidRef}/>
+                <div id="remote" ref={remoteVidRef}><div id="giveSpace"></div></div>
             </div>
         </div>
     )
 }
 
 export default Video;
-
-//<input type="button" id="swap-config" value="Swap"/>

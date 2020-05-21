@@ -1,14 +1,15 @@
 import React from "react"
-import Layout from "../components/layout"
+import Layout from "../components/layout-no-nav"
 import SEO from "../components/seo"
-import PostForm from "../components/post_form"
+import LandingContents from "../components/contents-post"
 import "../components/css/main.css"
 
+// This is the page where workers can post an activity.
 const PostActivityPage = () => {
     return (
       <Layout>
-        <SEO title="StayCare | Post"/>
-        <PostForm></PostForm>
+        <SEO title="Post An Activity"/>
+        <LandingContents></LandingContents>
       </Layout>
     )
   }

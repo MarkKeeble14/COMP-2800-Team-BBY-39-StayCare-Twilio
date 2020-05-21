@@ -5,6 +5,8 @@
  */
 
 // You can delete this file if you're not using it
+// https://github.com/firebase/firebase-js-sdk/issues/2222#issuecomment-538072948 - hsubox76 
+// Firebase doesn't run well within Node, so this block of code essentially told Webpack to import Firebase only when building the HTML.
 exports.onCreateWebpackConfig = ({ stage, actions, getConfig }) => {
     if (stage === 'build-html') {
       actions.setWebpackConfig({
