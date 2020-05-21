@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import $ from "jquery"
-import { query } from "./query-string"
-import {name} from "./signed-up-for"
-
-$("#activityName").text(name);
+import {query} from "./query-string"
+import {name} from "./my-activities"
 
 // Twilio
 let TwilioVideo = null;
@@ -26,6 +24,7 @@ const Video = ({token}) => {
     const remoteVidRef = useRef(null);
     const streamCont = useRef(null);
 
+    // $("#activityName").text(name);
   
     useEffect(() => {
       // Can put code here to set database info on room -------------------

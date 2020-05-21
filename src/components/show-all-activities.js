@@ -7,22 +7,7 @@ import $ from "jquery"
 import "./css/show-all-activities.css"
 
 const ShowAllActivities = () => {
-    let activeCard = false;
     const [activity, setActivity] = useQueryParam("activity", StringParam);
-
-    function ShowQueriedActivity() {
-        if (activity === undefined) {
-            console.log('no activity queried');
-            return;
-        }
-        if (activeCard) {
-            $('.card').removeClass('inFocus');
-            activeCard = false;
-        } else {
-            $('#' + activity).addClass('inFocus');
-            activeCard = true;
-        }
-    }
 
     let activities = [];
     function GetActivities() {
@@ -51,8 +36,8 @@ const ShowAllActivities = () => {
             $("<p class='card-worker left'> with " + activities[i].worker + "</p>").appendTo(resultId + " .card-body");
             $("<p class='card-text left'>" + activities[i].description + "</p>").appendTo(resultId + " .card-body");
 
-            let scheduledTime = getWrittenDate(activities[i].time);
-            let timeHtml = "<p class='card-text left'>Scheduled for: " + scheduledTime.time + " on " + scheduledTime.date + "</p>";
+            let scheduledTime = activities[i].time;
+            let timeHtml = "<p class='card-text left'>Scheduled for: " + scheduledTime + "</p>";
             $(timeHtml).appendTo(resultId + " .card-body");
 
             $("<p class='card-text left'>Room Size: " + activities[i].size + " spots</p>").appendTo(resultId + " .card-body");
@@ -93,48 +78,8 @@ const ShowAllActivities = () => {
         }
     }
 
-    function getWrittenDate(dateString) {
-        let hour = parseInt(dateString.substr(0, 2));
-        
-        let ampm = "AM";
-        if (hour > 12) {
-          hour -= 12;
-          ampm = "PM";
-        }
-        
-        let minutes = dateString.substr(3, 3);
-        let time = hour + ":" + minutes + " " + ampm;
-      
-        let monthNum = parseInt(dateString.substr(6, 7));
-        const MONTHS = ["January", "February", "March", "April", "May", "June",
-          "July", "August", "September", "October", "November", "December"
-        ];
-      
-        let monthName = MONTHS[monthNum - 1];
-      
-        let day = parseInt(dateString.substr(9, 10));
-      
-        let year = parseInt(dateString.substr(12, 15));
-      
-        let date = monthName + " " + day + ", " + year;
-      
-      
-        return {
-          date: date,
-          time: time
-        }
-      
-      }
-
     return (
         <div id='show-all-activities'>
-            <div className='box'>
-                <input type='button' id='show-query-button' className='btn btn-white btn-animation-1 middled-button inactive' 
-                value='Show Queried Activity' onClick={ShowQueriedActivity}/>
-            </div>
-            <div id='singled-out-activity'>
-                
-            </div>
             <h1 id='title'>Showing All Activities</h1>
             <div id='all-activities-container'>
             </div>

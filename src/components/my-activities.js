@@ -5,50 +5,46 @@ import "./css/my-activities.css"
 import { useQueryParam, StringParam } from "use-query-params";
 import $ from "jquery"
 
-let activities = [];
 let name;
 
-// 
 const MyActivities = () => {
+    let activities = [];
     const [room, setRoom] = useQueryParam("room", StringParam);
     
     // Clears the current myActivities elements, and then gets the myActivities field in the current users document 
     // and adds them to the activities array.
     // Once done, it then calls method ShowActivities();
     function GetActivities() {
-        const clear = (new Promise(ClearMyActivities))  
-        .then(
-            firebase.auth().onAuthStateChanged(function (user) {
-                console.log(user.uid);
-                if (user != null) {
-                    // if there is a user, access the current users document
-                    db.collection("users").doc(user.uid).get()
-                    .then(function (snap) {
-                        // if the current user doesn't have a myActivities field or they are not currently signed up for 
-                        // any activities, display the message saying that they don't have any activities.
-                        if (snap.data().myActivities === undefined || snap.data().myActivities.length === 0) {
-                            $('#no-activities-scheduled').removeClass('inactive');
-                        } else {
-                            $('#no-activities-scheduled').addClass('inactive');
-                            if (activities.length === 0) {
-                                for (let i = 0; i < snap.data().myActivities.length; i++) {
-                                    if (snap.data().myActivities[i].mainActivity !== undefined) {
-                                        let id = "activity" + i;
-                                        let name = snap.data().myActivities[i].mainActivity.title;
-                                        let key = snap.data().myActivities[i].mainActivity.key;
-                                        let worker = snap.data().myActivities[i].mainActivity.worker;
-                                        let time = snap.data().myActivities[i].mainActivity.time;
-                                        let createdActivity = [id, name, key, worker, time];
-                                        activities.push(createdActivity);
-                                    }
-                                } 
-                            }
-                            ShowActivities();
+        firebase.auth().onAuthStateChanged(function (user) {
+            if (user != null) {
+                ClearMyActivities();
+                // if there is a user, access the current users document
+                db.collection("users").doc(user.uid).get()
+                .then(function (snap) {
+                    // if the current user doesn't have a myActivities field or they are not currently signed up for 
+                    // any activities, display the message saying that they don't have any activities.
+                    if (snap.data().myActivities === undefined || snap.data().myActivities.length === 0) {
+                        $('#no-activities-scheduled').removeClass('inactive');
+                    } else {
+                        $('#no-activities-scheduled').addClass('inactive');
+                        if (activities.length === 0) {
+                            for (let i = 0; i < snap.data().myActivities.length; i++) {
+                                if (snap.data().myActivities[i].mainActivity !== undefined) {
+                                    let id = "activity" + i;
+                                    let name = snap.data().myActivities[i].mainActivity.title;
+                                    let key = snap.data().myActivities[i].mainActivity.key;
+                                    let worker = snap.data().myActivities[i].mainActivity.worker;
+                                    let time = snap.data().myActivities[i].mainActivity.time;
+                                    let createdActivity = [id, name, key, worker, time];
+                                    activities.push(createdActivity);
+                                }
+                            } 
                         }
-                    })
-                }       
-            })
-        )
+                        ShowActivities();
+                    }
+                })
+            }       
+        })
     }
     GetActivities();
 
@@ -104,7 +100,6 @@ const MyActivities = () => {
                 }
             });
             }).then(function() {
-                console.log(activity);
                 alert('Removing ' + activity.mainActivity.title + ' from your scheduled activities');
                 // Remove the activity from myActivities
                 db.collection('users').doc(user.uid)
@@ -114,7 +109,6 @@ const MyActivities = () => {
                 db.collection("activities").get()
                 .then(function (snap) {      
                     snap.forEach(function (doc) {
-                        console.log(doc.data());
                         if (doc.data().key === key) {
                             db.collection('activities').doc(doc.id)
                             .update({
@@ -136,6 +130,7 @@ const MyActivities = () => {
     }
 
     function ClearMyActivities() {
+        activities = [];
         $('#signed-up-for').replaceWith("<div id='signed-up-for' class='active'></div>");
     }
 
