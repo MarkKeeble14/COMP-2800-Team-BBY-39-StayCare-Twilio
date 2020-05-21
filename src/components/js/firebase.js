@@ -27,8 +27,8 @@ export const signInWithGoogle = () => {
   auth.signInWithPopup(provider);
 };
 
-/* Firebase user features */
-export const generateUserDocument = async (user, additionalData) => {
+/* Firebase use features */
+export const generateUserDocument = async (user, additionalData) => { //Creates user document
   if (!user) return;
 
   const userRef = db.doc(`users/${user.uid}`);
@@ -50,6 +50,7 @@ export const generateUserDocument = async (user, additionalData) => {
   return getUserDocument(user.uid);
 };
 
+/*Reads user document from the database */
 const getUserDocument = async uid => {
   if (!uid) return null;
   try {
