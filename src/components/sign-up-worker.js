@@ -20,12 +20,13 @@ const WorkerSignup = () => {
     const handleForm = e => {
         e.preventDefault();
 
+        //If the worker terms and conditions are checked create a new Worker
         if (document.getElementById('worker-terms').checked) {
             firebase
                 .auth()
                 .createUserWithEmailAndPassword(email, password)
                 .then(res => {
-                    const fields = {
+                    const fields = { //Sets the user information from the form submitted
                         firstName: firstName,
                         lastName: lastName,
                         phoneNumber: phNumber,
@@ -33,8 +34,8 @@ const WorkerSignup = () => {
                     }
                     generateUserDocument(res.user, fields)
                     .then(result => function() {
-                    db.collection('users').add(result);
-                    }).then(res => {
+                    db.collection('users').add(result); //Adds the user information to the database
+                    }).then(res => { //Once the user information is added, the page will refresh itself
                         window.location.replace("./");
                     });
                 })

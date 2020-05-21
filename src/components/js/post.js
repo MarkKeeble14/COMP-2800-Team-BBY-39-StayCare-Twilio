@@ -28,16 +28,18 @@ let postId = newPostId();
 function uploadImage(file, ref) {
     ref.put(file).then(function() {
         console.log("uploaded file");
+        window.location.replace("../room");
     })
 }
 
 let worker;
-
 firebase.auth().onAuthStateChanged((user) => {
     db.collection("users").doc(user.uid).get()
     .then(function (doc) {
-        worker = doc.data().firstName + " " + doc.data().lastName;
-        console.log(worker);
+        worker = doc.data().firstName;
+        if (doc.data().lastName !== undefined) {
+            worker += " " + doc.data().lastName;
+        }
     })
 })
 /**
@@ -127,9 +129,11 @@ function postActivity() {
 
     /*Posts activity to database, uploads the image to firebase storage, then
     replaces the window */
+    console.log(worker);
+    let key = Math.random().toString(36).substr(2, 9);
     function postToDatabase() {
         db.collection("activities").doc(postId).set({
-            "key": Math.random().toString(36).substr(2, 9),
+            "key": key,
             "title": activityName,
             "description": desc,
             "image": fullPath,
@@ -141,15 +145,12 @@ function postActivity() {
                 uploadImage(file, fileRef);
                 console.log("uploaded");        
             }
+            AddToActivities(key);
+            alert("Adding this activity to your activities. Please don't exit the window! It will refresh when it's done!");
             refreshSearchResults();
-            
-        }).then(function () {
-            alert("Activity has been posted.");
-            window.location.replace("../");
-        });
+        })
     }
 
-    console.log(shouldipost);
     if (shouldipost) {
         postToDatabase();
     } else {
@@ -157,7 +158,53 @@ function postActivity() {
     }
 }
 
+function AddToActivities(key) {
+    db.collection("activities").get()
+    .then(function (snap) {      
+        snap.forEach(function (doc) {
+            if (doc.data().key === key) {
+                // Assign this activity to a variable.
+                let activity = doc.data();
+                firebase.auth().onAuthStateChanged(function (user) {
+                    // if the user is signed in
+                    if (user) {
+                        if (activity.occupants !== undefined) {
+                            // No more room
+                            if (activity.occupants.length >= activity.size) {
+                                alert('There is no more room in this activity. Sorry!');
+                                return;
+                            }
+                            // already signed up for room
+                            for (let j = 0; j < activity.occupants.length; j++) {
+                                if (activity.occupants[j] === user.email) {
+                                    alert("You're already signed up for this activity");
+                                    return;
+                                }
+                            }
+                        }
+                        db.collection('activities').doc(doc.id)
+                        .update({
+                            occupants: firebase.firestore.FieldValue.arrayUnion(user.email)
+                        })
 
+                        let childrenAdded = [];
+                        let contactsAdded = [];
+
+                        // Update the myActivities field with the information gathered.
+                        db.collection("users").doc(user.uid)
+                        .update({
+                            myActivities: firebase.firestore.FieldValue.arrayUnion({
+                                mainActivity: activity,
+                                contactInfo: contactsAdded,
+                                childrenInfo: childrenAdded
+                            }) //Add the result object to "my activities" database
+                        });
+                    }
+                })
+            }
+        })
+    })
+}
 
 
 // resets search results

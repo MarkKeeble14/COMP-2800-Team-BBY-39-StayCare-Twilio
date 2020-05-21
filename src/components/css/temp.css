@@ -264,3 +264,8 @@
     background-color: #bfb;
     border-color: #bfb;
   }
+
+  .intro-padded {
+    padding-top: 2%;
+    padding-bottom: 2%;
+  }

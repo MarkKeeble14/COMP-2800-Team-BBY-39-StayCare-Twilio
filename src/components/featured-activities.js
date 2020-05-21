@@ -18,7 +18,7 @@ const FeaturedActivities = () => {
         db.collection("activities").get()
         .then(function (snap) {      
             snap.forEach(function (doc) {
-                if (doc.data().occupants !== undefined && doc.data().occupants.length < doc.data().size) {
+                if ((doc.data().occupants !== undefined) && doc.data().occupants.length < doc.data().size) {
                     activityDocs.push(doc);
                     for (let i = 1; i < activityDocs.length; i++) {
                         let lastRating = activityDocs[i - 1].data().occupants.length / activityDocs[i - 1].data().size;
@@ -45,8 +45,7 @@ const FeaturedActivities = () => {
             let id = "#featured" + (i + 1);
             let data = activityDocs[i].data();
             let path = data.image;
-            let thisDate = getWrittenDate(data.time);
-            let sched = "Scheduled for: " + thisDate.time + " on " + thisDate.date; 
+            let time = data.time;
             let size = data.occupants.length;
             let maxSize = data.size;
             let key = data.key;
@@ -55,7 +54,7 @@ const FeaturedActivities = () => {
                 $(id + " img").attr("src", url);
                 $(id + " .activityInfo .title").text(data.title + " with " + data.worker);
                 $(id + " .activityInfo .description").text(data.description);
-                $(id + " .activityInfo .schedule").text(sched);
+                $(id + " .activityInfo .schedule").text(time);
                 $(id + " .activityInfo .roomSize").text(size + " out of " + maxSize + " seats are currently taken.");
                 $(id + " .activityInfo .keyValue").text(key);
                 $(id + " .activityInfo .keyValue").addClass('inactive');
@@ -108,34 +107,6 @@ const FeaturedActivities = () => {
                     }
                   })
             }
-        }
-    }
-
-    // Converts a date to a string.
-    function getWrittenDate(dateString) {
-        let hour = parseInt(dateString.substr(0, 2));
-        let ampm = "AM";
-        if (hour > 12) {
-          hour -= 12;
-          ampm = "PM";
-        }
-        
-        let minutes = dateString.substr(3, 3);
-        let time = hour + ":" + minutes + " " + ampm;
-      
-        let monthNum = parseInt(dateString.substr(6, 7));
-        const MONTHS = ["January", "February", "March", "April", "May", "June",
-          "July", "August", "September", "October", "November", "December"
-        ];
-      
-        let monthName = MONTHS[monthNum - 1];
-        let day = parseInt(dateString.substr(9, 10));
-        let year = parseInt(dateString.substr(12, 15));
-        let date = monthName + " " + day + ", " + year;
-      
-        return {
-          date: date,
-          time: time
         }
     }
 
