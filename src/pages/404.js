@@ -1,6 +1,6 @@
 import React from "react"
-import Layout from "../components/layout"
-import SEO from "../components/seo"
+import Layout from "../elements/components/used-across-pages-components/layout"
+import SEO from "../elements/components/used-across-pages-components/seo"
 
 // This is the error page.
 const NotFoundPage = () => (

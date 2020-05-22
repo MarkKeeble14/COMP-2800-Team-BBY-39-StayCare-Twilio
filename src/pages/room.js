@@ -1,20 +1,18 @@
 import React, { useState } from "react"
 import axios from "axios"
-
-import Layout from "../components/layout-no-nav"
-import SEO from "../components/seo"
 import $ from "jquery"
-import "../components/js/firebase.js"
-import "../components/css/main.css"
-import "../components/css/room.css"
-import "../components/css/start-form.css"
-import CustomQueryString from "../components/query-string"
-import SignedUpFor from "../components/my-activities"
-import Video from "../components/video"
-import NAV from "../components/nav"
-import SearchResults from "../components/search-results"
-
-import { roomname } from "../components/video"
+import Layout from "../elements/components/used-across-pages-components/layout-no-nav"
+import SEO from "../elements/components/used-across-pages-components/seo"
+import CustomQueryString from "../elements/components/used-across-pages-components/query-string"
+import SignedUpFor from "../elements/components/room-components/my-activities"
+import Video from "../elements/components/room-components/video"
+import NAV from "../elements/components/used-across-pages-components/nav"
+import SearchResults from "../elements/components/used-across-pages-components/search-results"
+import "../elements/js/firebase.js"
+import "../elements/css/main.css"
+import "../elements/css/room.css"
+import "../elements/css/start-form.css"
+import { roomname } from "../elements/components/room-components/video"
 
 const JoinRoomForm = ({storeToken}) => {
   const [name, setName] = useState('')

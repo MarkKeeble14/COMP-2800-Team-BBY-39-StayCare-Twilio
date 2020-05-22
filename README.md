@@ -28,7 +28,7 @@ Note: This project has only been worked on using a windows PC, and so these inst
 
 4. Install gatsby CLI by running 'npm install -g gatsby-cli'
 
-5. Run command 'npm install'
+5. Run command 'npm install'. This will install all of the dependencies that our app uses onto your machine.
 
 6. Start localhost by running 'yarn develop'. This will start the server at url 'localhost:8000'
 
@@ -44,7 +44,11 @@ To run, you'll need...
 
 3. Some kind of text editor, ie Visual Studio, Notepad, etc.
 
-This project uses Firebase, and as such the firebase configuration is located in **`/src/components/js/firebase.js`**.
+This project uses Firebase, and as such the firebase configuration is located in **`/src/elements/js/firebase.js`**.
+
+## Testing
+
+Here is our test plan: https://docs.google.com/spreadsheets/d/10vhpAY80jSUrEzoKHYR-qveSCtYnjgJR7Ar6RTAMHu0/edit?usp=sharing
 
 ## Languages / Frameworks
 
@@ -64,10 +68,6 @@ For this project, we used...
 
 7. JQuery
 
-## Testing
-
-Here is our test plan: https://docs.google.com/spreadsheets/d/10vhpAY80jSUrEzoKHYR-qveSCtYnjgJR7Ar6RTAMHu0/edit?usp=sharing
-
 ## Authors
 
 * **Jakob Fipke** - Term 2 Student, BCIT CST
@@ -77,6 +77,10 @@ Here is our test plan: https://docs.google.com/spreadsheets/d/10vhpAY80jSUrEzoKH
 * **Justin Xie** - Term 3 Student, BCIT CST
 
 * **Mark Keeble** - Term 3 Student, BCIT CST
+
+If anyone wants to make any additions/modifications to the application and requires any passwords/api keys, they can email me at 
+
+markkeeble01@gmail.com
 
 ## License
 
@@ -106,7 +110,7 @@ The important files and directories you'll see in this project
 
 In the **`/src`** directory, there are a few folders.
 
-**`/src/components`**: Contains all of the react components which the app is made with. There is a seperate folder for .css and non-component script files. The components are seperated into folders based on which pages they relate to. Components which are used on multiple pages are located at the top-level of **`/src/components`**.
+**`/src/elements`**: Contains all of the elements which the app is made with, which is to say the react components as well as the css and JavaScript files. Inside of the components folder, the components are seperated into folders based on which pages they relate to. Components which are used on multiple pages are located within **`/src/elements/components/used-across-pages-components`**.
 
 **`/src/pages`**: Contains the high-level .js files which dictate what to render at each page (path).
 
@@ -129,10 +133,17 @@ In the **`/src`** directory, there are a few folders.
 ## Acknowledgments
 
 * Build a Video App With Twilio + Gatsby (with Nathaniel Okenwa) — Learn With Jason: https://www.youtube.com/watch?v=K02SnxY6c_0& - Jason Lengstorf & Nathaniel Okenwa
+
 This tutorial was followed to both initially set up our Gatsby/React app, as well as to create the functionality for Twilio's programmable video.
 
 * how to mute/unmute pause/unpause audio and video in twilio video call: https://stackoverflow.com/a/57901308 - Nagesh Tripathi
+
 This was used to create the controls within the twilio rooms. IE muting audio, pausing video, etc.
 
 * WebpackError: ReferenceError: IDBIndex is not defined while building with Gatsby.JS (ver #2.15.21): https://github.com/firebase/firebase-js-sdk/issues/2222#issuecomment-538072948 - hsubox76 
+
 Firebase doesn't run well within Node, so this block of code essentially told Webpack to import Firebase only when building the HTML.
+
+* Simple Email and Google Auth with React and Firebase: https://medium.com/better-programming/dead-simple-auth-with-react-and-firebase-592e40ff43c5 - Indrek Lasn
+
+This tutorial was followed to set up basic authentication, which we then modified to fit our needs.
