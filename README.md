@@ -22,17 +22,19 @@ Note: This project has only been worked on using a windows PC, and so these inst
 
 1. Clone the repo onto your local machine
 
-2. Ensure that you have Yarn installed by running command 'yarn develop' on your command line
+2. Ensure that you have Yarn installed by running command 'yarn --version' on your command line. If you do not have yarn installed, visit https://classic.yarnpkg.com/en/docs/install/#windows-stable and click "Download Installer" and follow the installation process till it is intalled.
 
 3. Navigate into the cloned repo
 
-4. Install gatsby CLI by running 'npm install -g gatsby-cli'
+4. Ensure that you have gatsby CLI installed by running command 'gatsby -v' on your command line. If you do not have gatsby CLI installed, run command 'npm install -g gatsby-cli'.
 
 5. Run command 'npm install'. This will install all of the dependencies that our app uses onto your machine.
 
 6. Start localhost by running 'yarn develop'. This will start the server at url 'localhost:8000'
 
-7. In your browser, enter url 'localhost:800'
+7. In your browser, enter url 'localhost:8000'
+
+8. This repo is using GitFlow Workflow, so any additions you make should first be made on your own feature branch off of branch dev.
 
 ### Prerequisites
 
