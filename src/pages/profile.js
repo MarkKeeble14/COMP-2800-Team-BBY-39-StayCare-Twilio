@@ -1,13 +1,12 @@
 import React from "react"
+import Layout from "../elements/components/used-across-pages-components/layout-no-nav"
+import SEO from "../elements/components/used-across-pages-components/seo"
+import LandingContents from "../elements/components/profile-components/contents-profile"
+import CustomQueryString from "../elements/components/used-across-pages-components/query-string"
 
-import Layout from "../components/layout-no-nav"
-import SEO from "../components/seo"
-import LandingContents from "../components/contents-profile"
-import CustomQueryString from "../components/query-string"
-
-import "../components/js/firebase.js"
-import "../components/css/main.css"
-import "../components/css/temp.css"
+import "../elements/js/firebase.js"
+import "../elements/css/main.css"
+import "../elements/css/temp.css"
 
 // This is the "My Profile" page as well as other profiles.
 const IndexPage = () => {

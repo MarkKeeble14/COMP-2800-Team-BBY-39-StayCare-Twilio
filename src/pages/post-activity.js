@@ -1,8 +1,9 @@
 import React from "react"
-import Layout from "../components/layout-no-nav"
-import SEO from "../components/seo"
-import LandingContents from "../components/contents-post"
-import "../components/css/main.css"
+import Layout from "../elements/components/used-across-pages-components/layout-no-nav"
+import SEO from "../elements/components/used-across-pages-components/seo"
+import LandingContents from "../elements/components/post-activity-components/contents-post"
+
+import "../elements/css/main.css"
 
 // This is the page where workers can post an activity.
 const PostActivityPage = () => {

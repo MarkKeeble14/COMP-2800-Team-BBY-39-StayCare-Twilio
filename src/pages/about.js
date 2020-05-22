@@ -1,10 +1,10 @@
 import React from "react"
-import SEO from "../components/seo"
-import Layout from "../components/layout-no-nav"
-import LandingContents from "../components/contents-about"
-import AboutPictures from "../components/about-us-pictures"
+import Layout from "../elements/components/used-across-pages-components/layout-no-nav"
+import SEO from "../elements/components/used-across-pages-components/seo"
+import LandingContents from "../elements/components/about-components/contents-about"
+import AboutPictures from "../elements/components/about-components/about-us-pictures"
 
-import "../components/css/main.css"
+import "../elements/css/main.css"
 
 // This is the "About Us" Page.
 const AboutPage = () => {

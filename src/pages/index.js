@@ -1,12 +1,12 @@
 import React from "react"
-import Layout from "../components/layout-no-nav"
-import SEO from "../components/seo"
-import LandingContents from "../components/landing-contents"
-import FeaturedActivities from "../components/featured-activities"
+import Layout from "../elements/components/used-across-pages-components/layout-no-nav"
+import SEO from "../elements/components/used-across-pages-components/seo"
+import LandingContents from "../elements/components/landing-page-components/landing-contents"
+import FeaturedActivities from "../elements/components/landing-page-components/featured-activities"
 
-import "../components/js/firebase.js"
-import "../components/css/main.css"
-import "../components/css/temp.css"
+import "../elements/js/firebase.js"
+import "../elements/css/main.css"
+import "../elements/css/temp.css"
 
 // This is the index (home) page.
 const IndexPage = () => {
