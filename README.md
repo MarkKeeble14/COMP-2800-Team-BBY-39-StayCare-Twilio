@@ -147,3 +147,11 @@ Firebase doesn't run well within Node, so this block of code essentially told We
 * Simple Email and Google Auth with React and Firebase: https://medium.com/better-programming/dead-simple-auth-with-react-and-firebase-592e40ff43c5 - Indrek Lasn
 
 This tutorial was followed to set up basic authentication, which we then modified to fit our needs.
+
+* How to Send an SMS With Node.js Using Twilio:https://www.twilio.com/blog/2016/09/how-to-send-an-sms-with-node-js-using-twilio.html
+
+This was used to send text messages using twilio. This task were never fully implemented into our final deliverable
+
+* Node js Send Email using nodemailer and gmail: https://www.youtube.com/watch?v=NB71vyCj2X4
+
+This was the tutorial used for sending emails out. This task were never fully implemented into our final deliverable
